@@ -33,8 +33,12 @@ chrysalyst stellt stattdessen gezielte Rückfragen, erkennt Widersprüche und L�
 
 - **Code- oder Implementierungs-Generierung** — chrysalyst endet bei der Spezifikation; es erzeugt keinen Code, keine technischen Entwürfe, keine Architektur-Vorschläge für das Zielprodukt.
 - **Markt-, Wettbewerbs- oder Pricing-Analyse als Ergebnisartefakt** — die optionale LLM-Websuche dient nur dazu, bessere Rückfragen zu stellen; ein Markt- oder Konkurrenzbericht ist kein Ausgabeprodukt.
-- **Mehrbenutzer-Kollaboration, Cloud-Hosting, Accounts** — chrysalyst läuft lokal für eine Person; kein Echtzeit-Co-Editing, kein SaaS.
+- **Echtzeit-Kollaboration** — kein gleichzeitiges Co-Editing einer Session durch mehrere Personen.
 - **Projekt- und Aufgabenverwaltung** — kein Ticket-Tracking, keine Sprints, keine Roadmap-Pflege.
+
+## Geplant, nicht in der ersten Version
+
+- **Gehostete Bereitstellung mit Feature-Parität** — chrysalyst soll später zusätzlich als Webapp nutzbar sein, gleichwertig zur lokalen Installation; die lokale Installation bleibt für jede:n möglich. Auch im gehosteten Betrieb wird das LLM-Backend automatisch erkannt oder vom Nutzer beigesteuert — kein aufgezwungenes Cloud-LLM. Mehrbenutzer-Modell, Authentifizierung und serverseitige Persistenz sind offen und werden in einem eigenen Plan geklärt, sobald die lokale Version steht. Die hexagonale Architektur (austauschbare Persistenz- und Server-Adapter, konfigurierbarer Bind-Host) hält diesen Weg offen, ohne dass die erste Version dafür Aufwand trägt.
 
 ## Domain Glossary
 
@@ -126,7 +130,7 @@ chrysalyst/
 
 ## Constraints
 
-- **Technical**: Lokale Web-App auf `localhost` in einem modernen Browser; keine Cloud, keine Accounts. Netzzugriff nur für die optionale LLM-Websuche und für Modell-/Backend-Downloads — das Kern-Interview funktioniert ohne Netz. Ist kein LLM-Backend erreichbar, erkennt die App dies beim Start und führt durch das Setup des gewählten Backends; das Interview bleibt blockiert, bis ein Backend verfügbar ist. Bestehende Sessions bleiben in diesem Zustand lesbar und exportierbar.
+- **Technical**: Die erste Version läuft rein lokal auf `localhost` in einem modernen Browser; keine Accounts, kein serverseitiger Speicher, Server bindet nur die Loopback-Schnittstelle. Eine später gleichrangige gehostete Bereitstellung ist vorgesehen (siehe »Geplant, nicht in der ersten Version«). Netzzugriff nur für die optionale LLM-Websuche und für Modell-/Backend-Downloads — das Kern-Interview funktioniert ohne Netz. Ist kein LLM-Backend erreichbar, erkennt die App dies beim Start und führt durch das Setup des gewählten Backends; das Interview bleibt blockiert, bis ein Backend verfügbar ist. Bestehende Sessions bleiben in diesem Zustand lesbar und exportierbar.
 - **Business**: Das Projekt ist auch ein Machbarkeits-Statement — kleine, lokal laufende Modelle sollen für strukturierte Interviewführung ausreichen. UI und Spec-Ausgabe sind zweisprachig (Deutsch und Englisch). Keine Telemetrie ohne ausdrückliche Zustimmung.
 - **Performance**: Das Interview muss sich flüssig anfühlen. LLM-Antworten werden gestreamt; die erste spürbare Reaktion soll trotz kleinem Modell innerhalb weniger Sekunden erscheinen.
 

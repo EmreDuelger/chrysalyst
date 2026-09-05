@@ -5,8 +5,10 @@
 chrysalyst verwandelt vage Produktideen per geführtem Interview (lokales kleines LLM)
 in klare, widerspruchsfreie, entwicklungsreife Specs.
 
-**Stack:** _noch offen — wird in `/speq:mission` festgelegt. Build-/Test-/Lint-Befehle
-unten im Cheatsheet eintragen, sobald bekannt._
+**Stack:** pnpm-Monorepo `packages/{core,server,web}` · TypeScript · Node ≥ 20 ·
+React + Vite (web) · Fastify (server) · Vitest · Hexagonal (Ports & Adapters).
+LLM- und Such-Anbindung als Adapter-Schicht (Ollama/llama.cpp/LM Studio; SearXNG).
+Persistenz: Dateien (Markdown + JSON) pro Session. Details in `specs/mission.md`.
 
 ## Arbeitsweise
 
@@ -77,7 +79,12 @@ Abkürzen ist erlaubt (Leitplanke, kein Gate) — **aber auf Ansage + Begründun
 | Spec-Health prüfen | `/speq:audit` |
 | Specs durchsuchen / validieren | `/speq:cli` |
 | Wiki regenerieren | `openwiki` |
-| Build / Test / Lint | _TBD nach `/speq:mission`_ |
+| Dev (web + server) | `pnpm dev` |
+| Build | `pnpm -r build` |
+| Test | `pnpm -r test` |
+| Coverage (~90 % in `core`) | `pnpm -r test --coverage` |
+| Lint / Format | `pnpm lint` · `pnpm format` |
+| Typecheck | `pnpm typecheck` |
 
 <!-- OPENWIKI:START -->
 <!-- OpenWiki trägt hier nach `openwiki --init` seinen Verweis auf das `openwiki/`-Verzeichnis ein. -->

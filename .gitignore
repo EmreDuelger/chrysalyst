@@ -10,6 +10,9 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Claude Code — per-user, not shared
+.claude/settings.local.json
+
 # Build / dependency / tooling output
 node_modules/
 dist/

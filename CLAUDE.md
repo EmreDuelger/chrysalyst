@@ -5,8 +5,8 @@
 chrysalyst verwandelt vage Produktideen per geführtem Interview (lokales kleines LLM)
 in klare, widerspruchsfreie, entwicklungsreife Specs.
 
-**Stack:** pnpm-Monorepo `packages/{core,server,web}` · TypeScript · Node ≥ 20 ·
-React + Vite (web) · Fastify (server) · Vitest · Hexagonal (Ports & Adapters).
+**Stack:** pnpm-Monorepo `packages/{core,server,web}` · TypeScript · Node ≥ 22.18 ·
+React + Vite (web) · Hono + @hono/node-server (server) · Vitest · Hexagonal (Ports & Adapters).
 LLM- und Such-Anbindung als Adapter-Schicht (Ollama/llama.cpp/LM Studio; SearXNG).
 Persistenz: Dateien (Markdown + JSON) pro Session. Details in `specs/mission.md`.
 
@@ -17,13 +17,13 @@ frische Lib-Docs über context7, Codebase-Gedächtnis über OpenWiki.
 
 ### Tool-Rollen
 
-| Tool | Besitzt | Nicht dafür |
-|---|---|---|
-| **speq** | `mission → plan → implement → record`, Spec-Bibliothek, adversariale Plan-/Code-Reviews, TDD-Guardrails | — |
+| Tool            | Besitzt                                                                                                                                                                                                           | Nicht dafür                                                |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| **speq**        | `mission → plan → implement → record`, Spec-Bibliothek, adversariale Plan-/Code-Reviews, TDD-Guardrails                                                                                                           | —                                                          |
 | **superpowers** | `brainstorming` (nur bei echt unklarer Idee), `systematic-debugging`, `using-git-worktrees`, `verification-before-completion`, `finishing-a-development-branch`, `requesting-code-review` (Nicht-speq-Änderungen) | `writing-plans` / `executing-plans` — speq besitzt Planung |
-| **impeccable** | Visuelle Design-Direction jedes UI-Features — als Subphase in `/speq:plan`; approved Comp → Referenz in `plan.md` | — |
-| **context7** | Frische externe Lib-/API-Docs — Pflicht vor Code gegen eine externe Lib | interne Fragen, Refactoring, Business-Logik-Debug |
-| **OpenWiki** | Lebendes `openwiki/`-Wiki über die Codebase — Agent-Kontext #1 | — |
+| **impeccable**  | Visuelle Design-Direction jedes UI-Features — als Subphase in `/speq:plan`; approved Comp → Referenz in `plan.md`                                                                                                 | —                                                          |
+| **context7**    | Frische externe Lib-/API-Docs — Pflicht vor Code gegen eine externe Lib                                                                                                                                           | interne Fragen, Refactoring, Business-Logik-Debug          |
+| **OpenWiki**    | Lebendes `openwiki/`-Wiki über die Codebase — Agent-Kontext #1                                                                                                                                                    | —                                                          |
 
 **TDD-Konflikt:** speqs `code-guardrails` gewinnen (failing-test-first, evidence-rule).
 `superpowers:test-driven-development` nicht separat aufrufen — gleiche Idee, speqs Variante
@@ -70,21 +70,21 @@ Abkürzen ist erlaubt (Leitplanke, kein Gate) — **aber auf Ansage + Begründun
 
 ## Befehls-Cheatsheet
 
-| Zweck | Befehl |
-|---|---|
-| Mission anlegen / aktualisieren | `/speq:mission` |
-| Feature planen | `/speq:plan <name>` |
-| Plan umsetzen | `/speq:implement <name>` |
-| Specs mergen + Plan archivieren | `/speq:record <name>` |
-| Spec-Health prüfen | `/speq:audit` |
-| Specs durchsuchen / validieren | `/speq:cli` |
-| Wiki regenerieren | `openwiki` |
-| Dev (web + server) | `pnpm dev` |
-| Build | `pnpm -r build` |
-| Test | `pnpm -r test` |
-| Coverage (~90 % in `core`) | `pnpm -r test --coverage` |
-| Lint / Format | `pnpm lint` · `pnpm format` |
-| Typecheck | `pnpm typecheck` |
+| Zweck                           | Befehl                                  |
+| ------------------------------- | --------------------------------------- |
+| Mission anlegen / aktualisieren | `/speq:mission`                         |
+| Feature planen                  | `/speq:plan <name>`                     |
+| Plan umsetzen                   | `/speq:implement <name>`                |
+| Specs mergen + Plan archivieren | `/speq:record <name>`                   |
+| Spec-Health prüfen              | `/speq:audit`                           |
+| Specs durchsuchen / validieren  | `/speq:cli`                             |
+| Wiki regenerieren               | `openwiki`                              |
+| Dev (web + server)              | `pnpm dev`                              |
+| Build                           | `pnpm -r build`                         |
+| Test                            | `pnpm -r --include-workspace-root test` |
+| Coverage (~90 % in `core`)      | `pnpm -r test --coverage`               |
+| Lint / Format                   | `pnpm lint` · `pnpm format`             |
+| Typecheck                       | `pnpm typecheck`                        |
 
 <!-- OPENWIKI:START -->
 <!-- OpenWiki trägt hier nach `openwiki --init` seinen Verweis auf das `openwiki/`-Verzeichnis ein. -->

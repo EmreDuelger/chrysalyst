@@ -1,0 +1,31 @@
+{
+  "name": "chrysalyst",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": "^22.18.0 || >=24"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "test": "vitest run",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "globals": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
+  }
+}

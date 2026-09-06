@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "*.config.ts",
+    "**/*.test-d.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": ["**/node_modules", "**/.claude", "**/dist", "**/coverage"]
+}

@@ -64,10 +64,10 @@ chrysalyst stellt stattdessen gezielte Rückfragen, erkennt Widersprüche und L�
 | Layer | Technology | Purpose |
 |-------|------------|---------|
 | Sprache | TypeScript | Durchgängig für Core, Server und Web |
-| Runtime | Node.js ≥ 20 | Server und Tooling |
+| Runtime | Node.js ≥ 22.18 | Server und Tooling |
 | Paketmanager | pnpm (Workspaces) | Monorepo aus drei Paketen |
 | Frontend | React + Vite | Lokale Web-App im Browser (Interview-UI, Live-Spec-Vorschau, Template-Auswahl) |
-| Server | Fastify (Alternative Hono — im ersten Plan festgelegt) | HTTP-API, LLM-/Such-Adapter-Proxy, Session-Datei-I/O |
+| Server | Hono + `@hono/node-server` | HTTP-API, LLM-/Such-Adapter-Proxy, Session-Datei-I/O |
 | LLM-Anbindung | Adapter-Schicht: Ollama, llama.cpp (node-llama-cpp), LM Studio | Lokale Inferenz für Interviewführung, Widerspruchsprüfung, Destillation |
 | Websuche | Adapter: SearXNG (selbstgehostet) | Optionale Anreicherung der Rückfragen |
 | Persistenz | Dateisystem — Markdown + JSON pro Session | Kein Datenbank-Setup; Sessions transparent und versionierbar |
@@ -87,7 +87,7 @@ pnpm dev
 pnpm -r build
 
 # Test
-pnpm -r test
+pnpm -r --include-workspace-root test
 
 # Gather Code Coverage
 pnpm -r test --coverage
@@ -108,7 +108,7 @@ chrysalyst/
 │   ├── core/       # Domänenlogik: Interview-Engine, Fragebaum, Destillation,
 │   │               #   Widerspruchsprüfung, Template-Rendering. Framework-frei,
 │   │               #   ohne Netz-/Dateisystem-Zugriff. Definiert die Ports.
-│   ├── server/     # Fastify-Server: HTTP-API + Adapter (Ollama/llama.cpp/LM Studio,
+│   ├── server/     # Hono-Server: HTTP-API + Adapter (Ollama/llama.cpp/LM Studio,
 │   │               #   SearXNG, Dateisystem-Session-Store).
 │   └── web/        # React + Vite: Interview-UI, Live-Spec-Vorschau, Template-Auswahl.
 ├── specs/          # speq: mission.md, Feature-Specs, Pläne, Decision-Log.

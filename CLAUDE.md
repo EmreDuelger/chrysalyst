@@ -54,6 +54,13 @@ PHASE 4  Wiki + Branch-Abschluss
        superpowers:finishing-a-development-branch
 ```
 
+**Was als Nächstes?** `specs/roadmap.md` hält die geordneten Meilensteine M1 … M18
+bis »v1 komplett« plus den Post-v1-Meilenstein, dazu die technischen Leitplanken
+(kein Agent-Framework in `core`; `LlmPort`-Adapter über Vercel AI SDK; `schemaVersion`
+ab M2). Regel: immer den **obersten noch offenen** Meilenstein nehmen und seine Pläne
+der Reihe nach durch die Standard-Route oben schicken — kein Vorgreifen ohne Ansage.
+Status im Roadmap-Dokument nach jedem `/speq:record` fortschreiben.
+
 Abkürzen ist erlaubt (Leitplanke, kein Gate) — **aber auf Ansage + Begründung**:
 
 - Doku- / Config-Einzeiler → direkt umsetzen; danach `openwiki`, falls Architektur betroffen

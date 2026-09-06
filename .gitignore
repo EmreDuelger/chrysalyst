@@ -9,3 +9,10 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# Build / dependency / tooling output
+node_modules/
+dist/
+coverage/
+.vite/
+target/

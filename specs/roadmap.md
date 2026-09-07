@@ -54,7 +54,7 @@ erste Meilenstein sie berührt.
 | M0 | Monorepo-Scaffold | ✅ erledigt (`001-add-monorepo-scaffold`) | — | — |
 | C1 | `openwiki --init` *(Chore)* | ⬜ offen | M0 | — |
 | C2 | Minimale CI *(Chore)* | ⬜ offen | M0 | — |
-| M1 | Ollama-LLM-Adapter | ⬜ offen | C1, C2 | 1 |
+| M1 | Ollama-LLM-Adapter | ✅ erledigt (`002-add-ollama-llm-adapter`) | C1, C2 | 1 |
 | M2 | Dateisystem-Session-Store | ⬜ offen | M0 | — |
 | M3 | Walking Skeleton: eine echte Frage E2E + Engine-Spike | ⬜ offen | M1, M2 | 1 (dünn) |
 | M4 | CI-Test-Stufen + `core`-Coverage-Gate | ⬜ offen | M3 | — (Leitplanke) |
@@ -112,16 +112,16 @@ absichtlich kaputter Test lässt den Lauf fehlschlagen.
 
 **Liefert:** Ein Adapter in `packages/server`, der `status`/`complete`/`stream`
 über das **Vercel AI SDK** gegen eine lokale Ollama-Instanz erfüllt. `AbortSignal`
-wird respektiert; ein unerreichbares Backend liefert `LlmBackendStatus` mit der
-Liste lokaler Modelle, **nie** einen Throw.
+wird respektiert; ein unerreichbares Backend liefert `LlmBackendStatus` mit
+leerer Modell-Liste, **nie** einen Throw.
 
-**Pläne:** `ollama-llm-adapter`
+**Pläne:** `add-ollama-llm-adapter`
 
 **Fertig, wenn:** Gegen ein laufendes Ollama mit einem Modell ≤ 4B: `complete`
 liefert einen ganzen String, `stream` liefert Chunks in Reihenfolge, `stream` mit
 abgebrochenem Signal stoppt, `status` bei gestopptem Ollama meldet »nicht
-verfügbar« + Modell-Liste. `live`-getaggte Tests gegen das echte Backend, dazu
-Fake-basierte Adapter-Tests für die Fehlerübersetzung.
+verfügbar« mit leerer Modell-Liste, ohne zu werfen. `live`-getaggte Tests gegen
+das echte Backend, dazu Fake-basierte Adapter-Tests für die Fehlerübersetzung.
 
 **Entscheidet außerdem:** ADR zur Vercel-AI-SDK-Wahl · Form der `live`-Test-Stufe.
 

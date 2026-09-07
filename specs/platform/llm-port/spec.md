@@ -4,7 +4,7 @@ Declares `LlmPort`, the boundary through which chrysalyst's domain logic reaches
 
 ## Background
 
-`LlmPort` is a type declaration in `@chrysalyst/core`: no implementation and no adapter. The port is expressed in the domain's vocabulary, never in a provider's. Test doubles that stand in for `LlmPort` live in `@chrysalyst/core`'s own test files.
+`LlmPort` is a type declaration in `@chrysalyst/core`, which holds no implementation and no adapter of its own; adapters live in `packages/server`. The port is expressed in the domain's vocabulary, never in a provider's. Test doubles that stand in for `LlmPort` live in `@chrysalyst/core`'s own test files.
 
 ## Scenarios
 
@@ -27,7 +27,8 @@ Declares `LlmPort`, the boundary through which chrysalyst's domain logic reaches
 * *GIVEN* a test double implementing `LlmPort` whose backend is unreachable
 * *WHEN* a caller awaits `status`
 * *THEN* the result MUST report the backend as unavailable
-* *AND* the result MUST expose the list of locally available model names
+* *AND* the result MUST carry a list of model names
+* *AND* the list MAY be empty, because an adapter that learns its models by asking the backend has nothing to report once the backend stops answering
 
 ### Scenario: A long-running LLM call is cancellable
 

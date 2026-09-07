@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a0b50d2a50f1298d7529daa43c42710fc99e6cda1e16409f960c527bda1dedc6",
+  "claims": [
+    {
+      "id": "claim_46564d5605e941d38fb088ba19b801bd",
+      "statement": "Every external dependency version is declared once in the catalog: block of pnpm-workspace.yaml and packages reference it with the catalog: specifier; tests/workspace.test.ts fails if a manifest hardcodes a version range for a catalog-managed tool, and internal packages reference each other with workspace:*.",
+      "evidence": [
+        {
+          "resource": "repo://pnpm-workspace.yaml",
+          "version": "repo-file-v1:sha256:4871c540f2350fdddf995e5367445140e870eaf1d4973e8d0aae31f2026c39b9"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L197-L212",
+          "version": "repo-lines-v1:sha256:05b1d5d3855133b63de1f7fd4e764c47edaf383d2a954a286120cf2e35a4466d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyNmY5YTZmNzEwZDdhOGIyMjgyNmMwNjUwZjRjYWI1NTc5YmFhZDU5YTMwYmQ4NTIzYjEzZjc1MDRjNGM4ZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdjYTE3Y2Q3ZmEzMzAwZjI0YmQ3OTU1YTY1MTQ5YTJlMWFjYzE0YjhmZWM0NTQ5MDkxZTNjZDMyYWYyN2EzMWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzZmY3NTZlZmE1NjY1ZmRlODg0NDlmYmVjZTk2NmFlNTM0N2Y0MzAxYWM1YWU1ZGI5NGI0ZDJjZTMyY2Y0ZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_abb07cc666764fdcb4693dc4c43b8384",
+      "statement": "Because Node >=22.18 strips TypeScript types at runtime, the test and typecheck scripts need no prior build: build is tsc --noEmit for core and server and vite build for web, and tests/workspace.test.ts asserts the root test and typecheck scripts contain no build step.",
+      "evidence": [
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:fce3deb6d283d9479b8383df3ae8d407861a5b974751f324562ead84fd090367"
+        },
+        {
+          "resource": "repo://packages/core/package.json",
+          "version": "repo-file-v1:sha256:2683590c29d584886efec40c85c2d4a678db769bf604deafe0fc56595548fba1"
+        },
+        {
+          "resource": "repo://packages/server/package.json",
+          "version": "repo-file-v1:sha256:7937cb4b5ecd422648daf6954c52281268e78403e88572560b18596891fb3567"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L228-L238",
+          "version": "repo-lines-v1:sha256:1927931722c20224a8702eac81c6290b49946a3aa8985db9b2292c344b0dfeb2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwNTFlYzhmZDdmNDZmZjlhNzMyYmQ2OGMzMGFiY2YwNGVmMTQ1Nzk0Nzc3OWNhNGNkYzJjZWM3MGI2NDAzNDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3OTFiNTIwZjI4MDMxNTgyNzVkOWFmMDNjMTBlNDNlY2NiYzA5NmQ2MDYzM2NmZDgyMTdiNzNhMGJmNDA5NDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1YmZjZTVlZWNlMmFiOGU5MGE1YTNiNDhiZDBhZmY1YWI0NjUzMmMxNDFiOGQ2MGNhOWQ0MzNkNWJjNjliOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlYmE1M2Q4OWZkMWU1YjhkMjg2ZDI2ZDc1ODhlNTY5NjliM2I3N2UwYTVkNGUxYmQyNDkzNGY5N2U3MGU3NDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c847ff0037a54f85a6201564e09a8413",
+      "statement": "tsconfig.base.json enforces noEmit, verbatimModuleSyntax, erasableSyntaxOnly, isolatedModules, allowImportingTsExtensions and moduleResolution 'bundler', so every import names its .ts extension.",
+      "evidence": [
+        {
+          "resource": "repo://tsconfig.base.json",
+          "version": "repo-file-v1:sha256:d28c560c0a9197eb2acb21619545a053166ad7829eed18c55cf9579a53c04c1d"
+        }
+      ]
+    },
+    {
+      "id": "claim_e48317ebb2ad4c43863e651cd292329c",
+      "statement": "Each package has its own vitest.config.ts plus one at the repo root: core and server enable typecheck-in-test (so type tests surface as test failures), web uses the jsdom environment with the React plugin, and the root config includes only tests/**/*.test.ts.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/vitest.config.ts",
+          "version": "repo-file-v1:sha256:d2b8eab0df0fe56a24e5240313c9a21ed478c413857f224639b5d2564c25b6d5"
+        },
+        {
+          "resource": "repo://packages/server/vitest.config.ts",
+          "version": "repo-file-v1:sha256:528420c7eb559f5c47f08653f22d368d2feef930f9bad3bed070ed4e33eabc90"
+        },
+        {
+          "resource": "repo://packages/web/vitest.config.ts",
+          "version": "repo-file-v1:sha256:7d8aed032ef0df3b551d9a05a72701e11cc1ee149b7f3f98fa9ce805e45388c3"
+        },
+        {
+          "resource": "repo://vitest.config.ts",
+          "version": "repo-file-v1:sha256:2846af4b83071765d5b30efeed7d5cda4e9a3f10a65fcd67fd945b871842b110"
+        }
+      ]
+    },
+    {
+      "id": "claim_c0655cb56d2c450bb16fcdf23d290e12",
+      "statement": "ESLint applies js.configs.recommended and tseslint.configs.strictTypeChecked to every .ts/.tsx file via a projectService, disabling only @typescript-eslint/no-unsafe-assignment and @typescript-eslint/require-await for **/*.test.ts; no-implied-eval stays active in test files, which is why tests/workspace.test.ts evaluates guard expressions with node:vm's runInNewContext rather than new Function.",
+      "evidence": [
+        {
+          "resource": "repo://eslint.config.js",
+          "version": "repo-file-v1:sha256:578e5f08154417084d195b53ed5b7d9c01cb7a5ee39bf075c832000e164d8e4f"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L1-L5",
+          "version": "repo-lines-v1:sha256:9ca566c22fd08f3329255b272bcbdd45e7816b600f1a1e20c6d0d7c55c5a2f32:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzIwNWIxYTQ4MjVlZGM1YTJiZmIxYjk3NDhmZjZlOTQyOThlNTkyOTUzYmVkMzQ2YjFlM2IzODJkNjU3Zjc4NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjYwM2E2NGE3OTNhYzVkYTQxZmJlN2JiODNhMzY4M2JlZjNjNzU1NTc1NDA3Y2U4YjVhOGYyMzljMzEwMTk2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTNjYmI1NzE5NjE0ZDMwMDA5YWJiMzYwYjQxZjRjMTYzMjlkYWU2YzFkZTY1MDE0MzM4ZGQ2ZjRhYzBjYzUyYSJ9"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L186-L189",
+          "version": "repo-lines-v1:sha256:1a6bcf00cf4569f523e746e8815adbf7c34cd0baaf9dc26c417b141e29a6115c:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDM0MTM2NDViZDA3ZjY3OTU5NGE1MWZjODg1NjcwMjQ1ZjQyNDRjNmY4YTExYmNiNzA5ODJjMTRkZWI1NzlkMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTZhZWEzMTRiZWRlZWVjMzQxMDBkYmRkM2RjYTYxNzY1NmViOTJmMWJmNGI4MjU2MGIwMjNlNjAyZWFhYTBiNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzM3YjAzMDQ2ZDlkOTg2N2UxMGMxZjA5OTU3MzJkZmE2YTY3M2JkN2M0NjYzMjVkMjc0NDIyZTExOGI3OGU3OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d5c6cfdac0e3427f85c4311b59256c86",
+      "statement": "Tests run in two tiers: hermetic by default (no network, adapters driven through injected stubs) and a live tier of *.live.test.ts files that talk to real infrastructure and run only when CHRYSALYST_LIVE_LLM holds a non-empty value.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.live.test.ts#L9-L24",
+          "version": "repo-lines-v1:sha256:9f35198ccd19ed6676c598eac6b0cd6fc97df3911e845b85f7fc55537a633445:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3MzI3NzVlZWU3NzAwMThkYjdkNzlkMDM1YTAxNjMwMTVhMDE2ZGUxN2ViYmY4ODg0OTAyZWM2ZDFkOWZjZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MjliYzZjZDhiM2Y1NGFjYjk5YTExOTM4ZjViYjZiYWQxODJmZTI1YmYyMTE1N2NmZDIzZmFlNGNkNzdhNWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkMWVjNDFhMTNhOWZlYWRkYmRjMjU1YzJjOTRhMDk5MjY0Yjk4MjRjOGIxZjcxMmNkMWM1ZGQyNTIxNGI4YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiYzIzNDNkYTQ4OWYzYTA2MTM2NTM2OTQ4MjE0OTg1M2Y3MDA3NjdiOTM1MmQyM2U1NTFlM2U5MjIxNjU0MjcifQ"
+        },
+        {
+          "resource": "repo://specs/platform/monorepo-workspace/spec.md#L55-L78",
+          "version": "repo-lines-v1:sha256:fb95ba6938d342fc00566ccb4cb0be6c595593750c210d1d6bb30c996b91197d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhMjA4NzYyNDczMmQ5OTg3NTgxNmEwMDIxMzAzMzI1OTY4OGY3OTFiMWJkMzcxMTE0YTAxYzg2Y2I0ZTI5NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE0Nzc1ZDdiN2QyNWY3MjQ0Yjk3ODM4MjA1N2UyYjZhMTUyNDhlZTkzYmJiNzcyM2YyN2I5MjI4YTI2OTkzZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6add804f03624652ae4596fe36aa3279",
+      "statement": "Every *.live.test.ts gates its suite with describe.skipIf((process.env.CHRYSALYST_LIVE_LLM ?? '') === '') so an unset variable and an empty string both disable it, and holds no top-level await so collecting the file contacts nothing.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.live.test.ts#L21-L24",
+          "version": "repo-lines-v1:sha256:c58a4ee357aff93a0ba244384728b2012de283974bd4b7e097da58a9b1465994:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2QyZTk1MTY2NWY5ZWJhZWEzZTYyMWQxZDEzZTUwNzgxZGFkNWQ5NTJiMzEzYzkwMjI1ZWQ2YzJjMmZjZWY1ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTQyOWJjNmNkOGIzZjU0YWNiOTlhMTE5MzhmNWJiNmJhZDE4MmZlMjViZjIxMTU3Y2ZkMjNmYWU0Y2Q3N2E1YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzlmZWU0MmYxN2I0NzJkNWRjM2YxOTVkNTc1NDYzNzAwZDVmN2JjMzEwZmEwNThkYjNhNGFhMGVlMGRlYWI3YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2JjMjM0M2RhNDg5ZjNhMDYxMzY1MzY5NDgyMTQ5ODUzZjcwMDc2N2I5MzUyZDIzZTU1MWUzZTkyMjE2NTQyNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_21875c79739f41dc8f27b632b667a259",
+      "statement": "tests/workspace.test.ts mechanically enforces the live-tier convention for every *.live.test.ts it finds: the skipIf guard must name CHRYSALYST_LIVE_LLM and no module-scope line may start with await, and the extracted guard expression is evaluated with runInNewContext against a stub process requiring skip for unset and '' and run for '1'.",
+      "evidence": [
+        {
+          "resource": "repo://tests/workspace.test.ts#L155-L191",
+          "version": "repo-lines-v1:sha256:ef4dce7e258dffd19d2fbd4a361a3796a09119cac81e952897e2a50478d4c322:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1MGVkZDNhOWYyYzFlMzc1M2NiYmRmZDk2ZDYwNzFmMzQ2ZjhjMzZlYzgyYjMwOTQ5NTkxOTIwMDMzYTAwMGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmMDZjZjdmZGY4M2U3NjBmYWE3OWE1Y2EyNTUwNDFkYWRkYTU1NTM2MjkxM2Q4YmFlNGIyNGVjZDRmNWNlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzNzcwMjg0M2JiMTVmZTY0NDU5NGJhZmZlMDA0ZmUxM2EzYzY2ZGEyYjM0ZmI1MDkzZDkxMmEzYWNmYjRhYTMifQ"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L337-L358",
+          "version": "repo-lines-v1:sha256:6e1fbd9d70b92c84e603084231230e1e44748ad0def246e7ab6911ea03bbeac4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiN2FjNzI0NmIxZWE3NmI0M2ZmOWUyNmM2NDJjMWM4NzA1NTQ3ZjlkM2I3N2U2YmIyYjQ5ZDA5NzMwOTIwMmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1YmE4NTNhMzMzMTVjMDE2NzZhMzE4NjFlM2YzZDkyM2Y0NTliNDNjZWRkMzhlODlmNDNkMDRiMjU1ZTBiMzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-07T20:27:51.484Z"
+  }
+}

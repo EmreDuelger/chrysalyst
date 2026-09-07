@@ -94,5 +94,9 @@ Abkürzen ist erlaubt (Leitplanke, kein Gate) — **aber auf Ansage + Begründun
 | Typecheck                       | `pnpm typecheck`                        |
 
 <!-- OPENWIKI:START -->
-<!-- OpenWiki trägt hier nach `openwiki --init` seinen Verweis auf das `openwiki/`-Verzeichnis ein. -->
+
+## OpenWiki
+
+See [AGENTS.md](AGENTS.md) for OpenWiki agent instructions.
+
 <!-- OPENWIKI:END -->

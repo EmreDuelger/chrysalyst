@@ -52,7 +52,7 @@ erste Meilenstein sie berührt.
 | # | Meilenstein | Status | Hängt ab von | Core Capability |
 |---|---|---|---|---|
 | M0 | Monorepo-Scaffold | ✅ erledigt (`001-add-monorepo-scaffold`) | — | — |
-| C1 | `openwiki --init` *(Chore)* | ⬜ offen | M0 | — |
+| C1 | `openwiki --init` *(Chore)* | ✅ erledigt | M0 | — |
 | C2 | Minimale CI *(Chore)* | ⬜ offen | M0 | — |
 | M1 | Ollama-LLM-Adapter | ✅ erledigt (`002-add-ollama-llm-adapter`) | C1, C2 | 1 |
 | M2 | Dateisystem-Session-Store | ⬜ offen | M0 | — |

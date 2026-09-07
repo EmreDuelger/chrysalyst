@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:416d0e21f6739934ce11eb0b702b195680152abe1894fd5b1b83e45b112fb2c4",
+  "claims": [
+    {
+      "id": "claim_25b956f5858e42dcbe559ea6955ab44b",
+      "statement": "@chrysalyst/core is a type-only package: its entry point packages/core/src/index.ts re-exports port declarations with `export type *`, so importing the package emits no runtime binding and pulls in no adapter.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/index.ts",
+          "version": "repo-file-v1:sha256:28e1225323b71499257aeae99cd7151bebd017bc3d29d0ba323a934c34d801e1"
+        },
+        {
+          "resource": "repo://packages/core/src/ports/index.ts",
+          "version": "repo-file-v1:sha256:b1c98cba10f3d5ee18a5f204ae9e8a838a3f4fe4feac0a917818ff3476f0038c"
+        }
+      ]
+    },
+    {
+      "id": "claim_f939bf4cfa104e9b859549292e187750",
+      "statement": "The type-only, dependency-free nature of @chrysalyst/core is an enforced invariant: packages/core/package.json declares no `dependencies`, and tests/workspace.test.ts fails if any non-test source file under packages/core/src imports a Node built-in or third-party module.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/package.json",
+          "version": "repo-file-v1:sha256:2683590c29d584886efec40c85c2d4a678db769bf604deafe0fc56595548fba1"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L240-L254",
+          "version": "repo-lines-v1:sha256:6b0892fea26281151991a6bee5243cbda582b6355f4a6512b578fcc930b768ea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmOTRiNjQ3ZmY3MWUyMmMxZGU2YjMzNThmMTFkZGFiYWYyNmY1NzU5MDllYTdkODhmZmUzNGU2NWY2Nzk2ZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1ZDQ0ZmYyYjJhN2MyZGU4MDM3ODc0NDRmOGM0MjgxMmZjMzRiYTc0NzY1YTAwZjM4MGI4NmY5N2M2M2FmMmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlYzQ1ZTY3YzcwNjc2OGNlY2QzNzY0ZjBhM2I1MmIxODczMWU4Yzg1MTZhOGEyOTNhN2UzNmVkMTFiY2FjODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiNDU2YWM0OTFhYWE1MDYxYTdiZWY2M2Y3ZjZkNTllZjBlNjhmNjEyN2M1YjUzNjEzYjE1Y2FlOTcxY2FmNDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bed86f734fac4b02b4c7d5399a08eefa",
+      "statement": "CoreDependencies<TState> makes `llm`, `sessions` and `clock` required and `search` the single optional member, so the domain can run an interview without web enrichment but the compiler forces every caller to handle an absent search.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/dependencies.ts",
+          "version": "repo-file-v1:sha256:125e499ce35cd877d011aed16286c86eaf35f03cd0c3ed37d558374c05e09f0b"
+        },
+        {
+          "resource": "repo://packages/core/src/ports/ports.test-d.ts#L98-L110",
+          "version": "repo-lines-v1:sha256:1810d9f6b318089181dde20d7a12d8b3ea07b03d213cdf734100ecd3cf59a014:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4MTNiM2E3NGY1YzAwODc3MTc0ZTExOTY5NjQ3ZWI0MjllNjA0YWJlNTZlMmEwYTAzZDg4Mzc1ZjNlZjY4YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3NzlkMTE4ZDZlM2NiZjQ1MDUzOTc0OGRlZTdhNDMwN2FjYmU2NDQ2Y2JhMjk3ZjI3NjBmYTVkMGJiYTFiYzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzMGUwY2M3NWY5OWFlZGVmMGY1Yzg5NWZlNjQ3OTZhNzBhYjIzMDU1OTEzMmZlZmIxNTZiZGY3NTIxY2NhMmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_666de01d11554a6a968b99091c0a06ae",
+      "statement": "LlmPort exposes status, complete and stream as separate methods, each accepting an optional AbortSignal, because the callers differ: complete returns the whole string, stream yields chunks in order, and status answers whether the backend can serve a request.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/llm.ts#L34-L53",
+          "version": "repo-lines-v1:sha256:215b716063d3fcf2d26015f51383a716c626b401a811683faa199ecb2da363b7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MTRhZDViNzI0M2JmNDZhZmViZDllMjZmNDFmYWJmZDlmZDIzMzJmMzRlNGI3ZmExMjA4YTMwMjIzNzRmYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_50deaabbec8a4e0fb804ae92016a17b5",
+      "statement": "LlmBackendStatus always carries a `models` array but it may be empty, because an adapter that learns its models by asking the backend has nothing to report once the backend stops answering.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/llm.ts#L22-L32",
+          "version": "repo-lines-v1:sha256:47122b0acd85cde81336ab2e1ecf2f521215edd48b55b0242bb7e951c7291c45:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEzYWQ4OTk4YzA0ZWE1YmYyOTdkMzA5ZDg0OTZjMzRjNDM0YzhjYTQ3MjQ4ZGUxYTc0N2I5YmViNGJiZTdjNGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3NGE2Y2JmYWFjMWVhMDZkNGQ3ZTliOGI0OGQ4ODA5YWI0NzEyNmIwYzlmZmZmNTA3ZDY2ZDcyYjViOTY5NjUifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/ports/ports.test.ts#L105-L112",
+          "version": "repo-lines-v1:sha256:e7ef3f3d52dbffbb4a4395ad8d462a39d1ebc935cdacbdc4871f51c7389057a8:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzMxMDY2YTU0NmNlMTVmYzJhMzVmZTAzMTczZmZjM2U3ZmFjZGE5ZWE5MTQ1Y2IwMGNmNjI5MGFjZjkzZWZhYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EzZTQ2Zjk0Mjc2YjZmNmY0ZWQxZjAyYWY3OGJlZjZhMmVlMWM0MzlkZDU1ODRiOTczOTQ4MzEzMjE0ZDJiNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTA1OGFlMzUzYTVmNGJjMGYzYzFmY2RjOTY1NTc5NTExM2JmYTI4ZjFmMWZmNGFjZGExMjE1MmQzYjBmNmEyZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGI4ZjEwMzc0MGFmNTliZjdmYzRhYTJkMTU0ZmEyMGNkNDliZjVlNTJjOTMzYjNiZDI2OTllYjAzNmJmOGQ3MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0d9012454ba1464c9b2e397d854ced88",
+      "statement": "SessionStorePort<TState> is generic over the persisted state and deliberately omits a delete method; load of an unknown SessionId resolves to undefined rather than throwing.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/session-store.ts#L15-L36",
+          "version": "repo-lines-v1:sha256:91612bbc21274dbd3734f0c634c204f94230b10255be6a09a25a8916b940c0fc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4NzBjODVhMDVhZmQ1MTQyMjk1YjY2ZGQ5NWQ4ZjQ4NjcwM2MwZWU3MGEzNjMzNjk3Zjk3NmE5NzZlNTE5YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_586ba58170104529be773ed4563f802a",
+      "statement": "ClockPort injects the current instant as a dependency instead of reading the ambient system clock, so session bookkeeping and interview timestamps are reproducible under test.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/clock.ts",
+          "version": "repo-file-v1:sha256:9307516503d352731b526556d7066534e552463f8587fe5e6b956c24c91b7d09"
+        }
+      ]
+    },
+    {
+      "id": "claim_c3e1e019951243cb9c473d574267b242",
+      "statement": "The port contract is verified on two levels inside packages/core: ports.test.ts checks observable behaviour with hand-built test doubles, and ports.test-d.ts runs under Vitest's typecheck mode to assert the entry-point exports and reject non-conforming implementations.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/ports.test-d.ts#L79-L125",
+          "version": "repo-lines-v1:sha256:b4bcb5c23e62c90dfd3c0ff0fffa43e01b2b21d47002b1f5b5b7985e97873ac6:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NDE1N2FiN2ZiZWQ0NjBkYTg4OGQ0YmViNTFiMzVkODI3YWFmYzVlYmFlNWU5ZmFhY2E3MDgwOWUzMDE3MDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwYjViMjdlMTU4MmI1YzhjZjI3ZmYzNWMzMjM4OGI3NGVjMTRlNGE3NTg2ZTFmMGU5NGM2ODBmMjIzMGRhMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/ports/ports.test.ts#L25-L45",
+          "version": "repo-lines-v1:sha256:a573d54cd51f372e62413629897bd098cfc41f44af66a7a9c264de110839b814:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2NzUxNTYzMzg5ZjM3NWJmNjMzYmRjYmJlOTAzZWJkODBhM2Q3MjJjNWE2NDEyNmUzYjNkNzFjYmE1ZTExM2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmMDdkOWUwYTBkYjFmNTYwMDg3YWMyMWNjM2EyMjRjZDBlZjBmOTIxYTZiN2Q4YjNlMzZkNGNlOTYyZjgxNjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjMmEwYWE0ODk3N2JiYmE0ODgzZDYzZWNlZDUwZDNmNTBhNWMxOGFmYzdiOTljYWMyNTE1OWZhNjY2NjkzMDAifQ"
+        },
+        {
+          "resource": "repo://packages/core/vitest.config.ts",
+          "version": "repo-file-v1:sha256:d2b8eab0df0fe56a24e5240313c9a21ed478c413857f224639b5d2564c25b6d5"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-07T20:27:51.484Z"
+  }
+}

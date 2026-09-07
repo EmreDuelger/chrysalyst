@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7e3d7c384a1f4846bbe0b089de2584d3f61dd814085c9fb1137d684fb0660174",
+  "claims": [
+    {
+      "id": "claim_65b8aa41a34049f59b486e6a7daa2ed1",
+      "statement": "openai-compatible-llm.ts is the first real LlmPort implementation; it confines the fact that a language model is reached over HTTP to this one module, imports LlmPort/LlmRequest/LlmBackendStatus from @chrysalyst/core as types only, and adds no new type crossing into core.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L1-L45",
+          "version": "repo-lines-v1:sha256:91cea46f20e390df4569682a694cc42ecb17ae70cfff3ab0c87e70ae8e2dfcab:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNTk2MzJmN2FmMGNiYzQ5MzUzOWEzZDgwM2I3OGUzNmJiNzNjOTJiZmY2YTFkZTQ1M2RjN2ZmOWVhYzA1Y2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNWU0ZjAyMTM3ODg4ZWI3NjkyMjRhYzJlNGQ0MDM1MDJlNmQyNzBiODVkZDYxMjFjODc3YmIxMjhjYTY4YWEifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/ollama-llm-adapter/spec.md#L1-L11",
+          "version": "repo-lines-v1:sha256:d5bdc1aaf432c203ecba8a5be3fe294c110275f360db33c9ab92ba8b7a4c0014:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNTA2ZTE0ODI3NWYwMDU1YmU0YWJjYmY2ZjE4ZTk1ODE2YzVmY2YxMmJjYzhiODA3YmJmNDBlMWJiYjMxNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyY2JiNDhiYjllMmFkYjIzMGNlYzY3ODk4ZTZjMjVhNjVmM2Y1YjUyNjJhYzJlYzg2NDYxMTIwMmEwMGZlZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4MjgyYTY1ZWRhM2ZjODQ5N2NmYmFmNzIwZGRlMTQ4NDI2ZmRmMDIyMGM0MmY3N2QzMzg0OGIwNDJhYzM5M2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d261fa680179474ebfc2ea5b322f70af",
+      "statement": "The module exports createOpenAiCompatibleLlm(config) returning an LlmPort and llmConfigFromEnv(env?) resolving the base URL and default model; OpenAiCompatibleLlmConfig carries baseUrl, defaultModel and an optional fetch override that defaults to globalThis.fetch and is the test seam.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L10-L45",
+          "version": "repo-lines-v1:sha256:c9aa0603f4a48c6566cfe5a870539895417d520dec2eeb2991485d357f18af69:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2NjIwNjJlNTY1MDI3Y2Q4ZTkxOGJjMDJkYjY5YmM4NjU0YzlkNGJjZjIzNzkwMDA0MzVlNmVlNTgyOGVkZTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4OGQ0M2FkMThkZWJjZWM0ZjRhNjQwMGYwMzYwZGM4YTUwZmYxNjNlNDk1MmJlMmE4ZjdhNjkxOTcwNWU5YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNWU0ZjAyMTM3ODg4ZWI3NjkyMjRhYzJlNGQ0MDM1MDJlNmQyNzBiODVkZDYxMjFjODc3YmIxMjhjYTY4YWEifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L121-L133",
+          "version": "repo-lines-v1:sha256:1ef297f4fb075e8fe6fac0ebd4b7f8ef3406c51785c993f2f667cb2d501f2ab6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5NWZhMGYxMTE3YjVlYTQwNDM0MTQwZGRlMWEzNDBjNzIwZGRiZjMyNjIxMmUxOTE4MzhkNGIxNTZkMzE2YmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY3NDM0Yzc2OGUyYWVkY2E4OWE1MWY3OGFhNDk3OWE1Y2I0YzQ0YWY4ZDQ5Y2EyY2ExMDNjYWFlZDk4YzY1ZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bd462ed19ff5445b98abec6f4cee68f3",
+      "statement": "llmConfigFromEnv reads CHRYSALYST_LLM_BASE_URL (default http://127.0.0.1:11434/v1) and CHRYSALYST_LLM_MODEL (default llama3.2:3b), an empty string falls back to the default, and it reads no file so no dotenv loader enters the dependency set.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L121-L141",
+          "version": "repo-lines-v1:sha256:5a9c411d5113b8a784de0104324211dc2429f78cb591b108e21cb7ad89f2d35b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlOTQwMTIxNmU3ODE2NWYwM2ViMzY1MTdkOTc1NDMyNGQzN2EwMmJiY2YwZjNkYzNiZWEwNGJmY2ZiNTYxMjMifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L5-L6",
+          "version": "repo-lines-v1:sha256:06571021b0616683c2ad0d5d90b16107f5940fa59952c4ca91f8bb69c33d91f8:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTViOTU2ZjNlOTg1MDY3Yjk0ZmMwZTgzOWE2MjAyYTJiN2MxNDI5ZGNlM2I2N2YxYzFmYTY2MjExNDUyMmEyMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTlhNGQ0NmMyZTBlNDk4ODY3YjhjZDczZjU1ZmExMmFkNGMyNGYyNzJiMmE5NzBiMzI5NjllZWZhODc5MWRiYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDQxMWY3YmVjOTgxOWU5NGRhNGU0OTU4NWE2NjhlNmRjNjllNzExYWVjMGJjOTcyMzY1NWRkYzBjZTc0ZmY2MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTg4ZDQzYWQxOGRlYmNlYzRmNGE2NDAwZjAzNjBkYzhhNTBmZjE2M2U0OTUyYmUyYThmN2E2OTE5NzA1ZTliYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_da4525eda2ce48169826d457bd75d3b1",
+      "statement": "status bypasses the AI SDK and issues a plain GET on new URL('models', baseUrl) with the trailing slash normalised through config.fetch, narrows the body with an explicit guard, and maps every non-abort failure (thrown error, non-ok response, a 200 the guard rejects) to { available: false, models: [] } while letting a cancelled probe reject.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L135-L168",
+          "version": "repo-lines-v1:sha256:10960205c5803f2242b8c8e36dd4ce9b13cadd8ed4b18cbff939056136d16a26:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0MDcwNjVkNTUzZjI2YTY2Y2JmMTA0M2IzNjgxMzk0MWM1OTc2ZDg2ZTc4ZTViMjU5MzZiZjlkNzhiZTRmOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIyZGM0ZTI2ZDE2ZTFmODA3MTc3MTZjYzZhNDYyZWViMDhmMzZiZmZmYTNkMDkwYjU1YTE3OWY4MmIwZmU2NzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzODA0Nzk5ZTE5YWNlYmM5MWNhN2RiZGM1NjQ0N2RmMTJhMzI4MjgzYjEwNWIzMTJjOTcwZGMwNjA4ODdmYjIifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L42-L67",
+          "version": "repo-lines-v1:sha256:d2d3fec5092956cd35dfed8cc1f1ba90245327b00d611bb59aa005167ba95c2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZTRkOWFiZGU5MGY3MzZjZDRjMzkyN2NlNDAzZTIyMzk5NjBmYTU0ZDUyMDM3MTgxODI3ZmFjZmI5MWZlMWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5NmI2ZmRiYzU5YTkwNzU1NDNmMDk2ZmRiNGE2YWU4OGFhZTdlOWQxNWFiNmU4OGE2MmEyMDhmNGQ5MzBmOTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0YzNkM2JkYzNiZjJiOTU0ZmZjNzE1ZTdjNWM0MjFlOWM0NjZhZjM3YzI1ZDQ1ZDU5ZDM0MzUzZGM5ODcyZDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxMzg5ZmI3ZTFiYWJjY2E4OGRmYmFmOWQwNzQ3NWMyMTlhNzFkZDRjZjllNTAyZTY2Y2JjMjE2MTVhZThkNDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3a9ccbaf7ae040ee8f1b1d75b5d1cf1a",
+      "statement": "complete awaits generateText and returns .text; every generateText and streamText call passes a createOpenACompatible(...) model instance rather than a bare model-id string and maxRetries: 0, so ai@6's transitive @ai-sdk/gateway reaches no hosted-inference endpoint.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L37-L44",
+          "version": "repo-lines-v1:sha256:4b2085256b2fde7ee8e6131d55c78b1369b646863723dfbba057be5274c19b36:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWRmZTQzOGZjN2UyNTczMmUwYzhiMDA3YTkzMzg2YzcwMGFlZmRhZTliMTY0YjFhNmQ3ZTU3ZWI5YmIyMDk4NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTY3NTdjMTBkMzRiNzA2Y2M4YWM3YzAwZmM5NzA5NTViODQyNWY5NGI0ZjNiNTg5MmVhNmQ2YWI2ZWJmMmVkMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTMzNTMwNTIxNDI1YjliNjMzNjc0YjFiZjNkM2I5Y2M0MGY2YjFlYmMwY2NiMTY3MzJlNTYxOTdlN2FmZDBhNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWI5NzhkNDhkMGM0OWRiNzBhODhjMTgzYWMwNTk5ZWYyNTAyYjA2OWY5Y2RhZTdhNzg2NjM0ZTE1ZGQzZTJjNyJ9"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L69-L99",
+          "version": "repo-lines-v1:sha256:5d6ac6a892d77834cf3e2d14a5c3db779084e318ff3187f02f2a18dcb01a9df2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0ODgzYjQ2NTQyMGEyM2IxMDE4ZTJhYmE2NWNiNWVjYThlYTc0MTE2YjE1ZGZkOTBlZWE5ZWY2MzEwMmQ5ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5YzEzZThiZmNiNTNjZjEyNDMwNDdkYjJmY2ZiMjE1OTZiZDEyZGJhOGFkOGMzNTNjYTkyNGViMmU4ZDhkYzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0NDg4MWUyNzBiMjcxMDg0ZTVmMGI1YjUyNDc4NGFkMmQzMTExNDYwM2E2ZGEyNDU3YzQ1MTk1ZWJmZDhiZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxYWUxODliYjIzZmI1YTE4ZjhhOGI1Yjc0YWY0ZDZmMzJhNjc0NTQ3YWYyYzk3MmNjYzM0YmMxYmU2ZWI0ZjUifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/002-add-ollama-llm-adapter.md#L13-L15",
+          "version": "repo-lines-v1:sha256:712cf9d5931825fc993ee7dd7fb0c90cf39a47ad38ed666df6ff309a22147c59:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGNlZDZkYzBlYjJkNDIxNTNiZTdiM2ZiYmEwMmY2NjZlMjI4NDI0ZWI1MWM4NzY1NDE0NjZlNjBmNDRjMTRlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGFiNTA1NmEyZDRjNWMwYTAzOTlmYmY4MTIzNWQ1ZmZhYjQ3Yjc2MTUzZWMyZjhhZTU5YzkxNjhkOGYxNmY4OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDM1N2M4ZDYxODY1NDRiZTU3NTU3ZGUzNTY4ODBlNzkwNWM5NGRiZWMwZWVmZjMwZTI2NmI3ZDQ3ZWJmODIzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjYwN2MwMWMzYWUwOWI3ZTBhN2ZhZWY4NzllNDA0OGNiMjYyZjhlYmQ5NDZmNWViYjM1OTFhYTc4NTVlZDg4OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_475149107c544e0e922ae43905db8a17",
+      "statement": "stream has two reachable throw sites: a pre-stream transport failure ends textStream quietly and arrives via onError, which the adapter re-throws after the loop; a connection dropped mid-body makes textStream throw an APICallError caught in the catch block. A cancelled stream ends quietly with a return.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L86-L116",
+          "version": "repo-lines-v1:sha256:7abfff16471b714bea9061d6e32ad3cc152bbda33fc819413235e2b726a57103:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmMzk0ZThiOTMwZDkwMGM3YTQzOGM3ZWNmZTQ0OTU4MTJjODdhMmRiMDhmNTYyMmY5ZDNmNTEyYTJlZjE3OTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0NDg4MWUyNzBiMjcxMDg0ZTVmMGI1YjUyNDc4NGFkMmQzMTExNDYwM2E2ZGEyNDU3YzQ1MTk1ZWJmZDhiZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmMDFhMWFlODc1ZjNjM2I5ZjI5ODNlOGYxM2Y0MTBiMjg4MWIzMGEyN2NjNTE4MDUzMjRlMzMzOTZlMmNmN2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4ab32a1c6a824ddf8707f4ad63f212d5",
+      "statement": "complete and stream rewrap a transport failure in an Error reading 'Cannot reach the language model at <baseUrl>' keeping the ai error as cause, and detect a caller's cancellation via signal.aborted === true rather than the error name, so a custom abort reason is not misclassified as a transport failure.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L139-L145",
+          "version": "repo-lines-v1:sha256:243f25511baac90a477203d943e6fdde2c0a8c58be8544ac1755267152f51537:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzhmYjE2Y2UwNjNkM2U4MWIzMzM3NDFhMDUzZmE3NGNlNDFlYTBjZjI1Y2IzMzA4OTlkMDgzZGFjNjQyODIxOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTIwNDBlMDk1YTk0ZTJhZGE3NGU0MjFmMzcxODc1MWE5MWE4MTBiZmQ2NmY0OGY0ZTkzOWM3Yjc0ODBlYjY3MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODU3YjE2OTVjYjIyNzJiZWZmZDU1ZWNlZDI1MmZmZTRlZWY3MWI3ODEzZDQwYTI4MjZhZTA1NDBhYzQ0ZTE1NyJ9"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L69-L116",
+          "version": "repo-lines-v1:sha256:503cd67a739903ea0094dc10b6f5827487597d6ec359ae0c832fe8549916c481:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0ODgzYjQ2NTQyMGEyM2IxMDE4ZTJhYmE2NWNiNWVjYThlYTc0MTE2YjE1ZGZkOTBlZWE5ZWY2MzEwMmQ5ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0NDg4MWUyNzBiMjcxMDg0ZTVmMGI1YjUyNDc4NGFkMmQzMTExNDYwM2E2ZGEyNDU3YzQ1MTk1ZWJmZDhiZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmMDFhMWFlODc1ZjNjM2I5ZjI5ODNlOGYxM2Y0MTBiMjg4MWIzMGEyN2NjNTE4MDUzMjRlMzMzOTZlMmNmN2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7fb7b97dea794a8e818bfdb7af32344a",
+      "statement": "Hermetic tests drive the whole adapter through an injected fetch stub with four response fixtures and a request recorder, asserting URLs, the absent Authorization header and the request body model field without opening a socket.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.test.ts#L1-L70",
+          "version": "repo-lines-v1:sha256:253cbc9664009f081ff4793cff1b91b316dc63d544c1ecd78ca08d2ba7eff67d:eyJzZWxlY3RlZExpbmVDb3VudCI6NzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YWRjNmU5Y2ExNjhjYTVkMmFhMGVjM2IwMjdiNTk3ZGY1NGI1ZDEzN2Y5Zjc4ODU0MzkwMGI4NTZiNmUyODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5YmEwNzY5Y2E0NjU3M2VjNTg5NTQ2ZThlYTQ3ZTlkOWFjMGQzOTNlZTFhZWJlMGI2ZWRiMDA4MWIxNDNkYWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzMjZmYzUyYTdiYWM5ODlmMjc5MzNhYjNkYzAyNWE3NWE1MDI5NTZhZTU0NzNmY2U0MTdmNmM3NDI0NGI1M2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5fe53804133745498d7af5eafb55bca4",
+      "statement": "The live test tier lives in openai-compatible-llm.live.test.ts, is gated by describe.skipIf((process.env.CHRYSALYST_LIVE_LLM ?? '') === '') so an unset or empty value skips it, sets testTimeout to 120000 ms, holds no top-level await, and drives status/complete/stream plus a mid-stream abort against a real Ollama daemon.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.live.test.ts",
+          "version": "repo-file-v1:sha256:5198670e9576fe3f87ab44a4d1166a1ead152d193ee924eb7ca5165652824793"
+        }
+      ]
+    },
+    {
+      "id": "claim_71ef282bfa814210beca95ca062c2dbf",
+      "statement": "The adapter depends on three exactly-catalogued runtime packages — ai 6.0.277, @ai-sdk/openai-compatible 2.0.74, zod ^4.5.4 — pinned to the ai-v6 line rather than latest because @ai-sdk/openai-compatible 3.x builds on ai v7's provider generation; all three resolve to one @ai-sdk/provider 3.0.15.",
+      "evidence": [
+        {
+          "resource": "repo://pnpm-workspace.yaml",
+          "version": "repo-file-v1:sha256:4871c540f2350fdddf995e5367445140e870eaf1d4973e8d0aae31f2026c39b9"
+        },
+        {
+          "resource": "repo://specs/_decision/002-add-ollama-llm-adapter.md#L28-L52",
+          "version": "repo-lines-v1:sha256:2a966bdc5ad7653aefa68389dccb92f8db99a3de71b3042fadd2326ed3ffbcbb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZTljMWZlNGY5ZTJjZmU1N2IyMmYzMmY1MzJhYjllOTcwNmYyNzg3OGJkMDEwMjg4NWNhYmQ1Mzg1YjdmZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwN2JhZjg1YTAwZWY4Nzc0ZTQ3NDc5MTAwODlkYmQyMWUyOWI0ODJkMjRkOWUwOGJjNzlkYjY2NTJjMGFmNmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3NDM1YzA5YjQxYWUyZWY5YTQwZDM2YjUyMzZjYTI0NGUyYzFhNThmMWYxYWZkMTIzYjRmZjRhMjFkYTIwNTIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-07T20:27:51.484Z"
+  }
+}

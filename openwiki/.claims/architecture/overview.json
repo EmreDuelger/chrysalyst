@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3da9a3012cec2e2796fce06533de74536e76a64f086cc380d28547def45e2623",
+  "claims": [
+    {
+      "id": "claim_97742f8d2604481990ae3151eeb95d84",
+      "statement": "The pnpm workspace contains exactly three private ESM packages under packages/: @chrysalyst/core (the domain boundary, no runtime dependency), @chrysalyst/server (adapters plus the HTTP process), and @chrysalyst/web (the browser shell).",
+      "evidence": [
+        {
+          "resource": "repo://pnpm-workspace.yaml",
+          "version": "repo-file-v1:sha256:4871c540f2350fdddf995e5367445140e870eaf1d4973e8d0aae31f2026c39b9"
+        },
+        {
+          "resource": "repo://specs/platform/monorepo-workspace/spec.md#L1-L7",
+          "version": "repo-lines-v1:sha256:bb6d18457c552fd5f4ad6b6a3de781fcf8de261beb10dc3793a8160a86151638:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDIyYmFiNzAzNDYxYmM5NDFmZGY2OWU0NmQ0MGRlZWE3NmZiMzBkYjQ5YjQ0OGEzMDU5ZmQ1MGJmMWVmMTg1YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWFlNDQxMjkwODUxNDEzZTAwZDAwMDRkMzk2OGJmYmEyNTc3NmFiMTZlZGI2MTc5YjY2YTcwNWMyMzRjMjcwNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjgyODJhNjVlZGEzZmM4NDk3Y2ZiYWY3MjBkZGUxNDg0MjZmZGYwMjIwYzQyZjc3ZDMzODQ4YjA0MmFjMzkzYiJ9"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L8-L12",
+          "version": "repo-lines-v1:sha256:95109f4750115abd74f32055e340ee8c23010e5ea3d9aaf18182c419d30d50db:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGEwMzQ5ZTIwNDg1YmU0NTUyZjRlZWFhZTA3ZTczM2ZhZWZkNTE4YmZhOTQzNmEzNzNkNmQwMTk1NGQ1ZjIwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGQxMDIwZDI5MzVjZWQ4YTE1ZDdhZjU4YTFjNTMzZGY4MGNjOWFkZDNjZDQyMWUxYWJmOTY5MzAwZTdlOTY2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2I5OTY1NTE3ZGJlMTc5MzQzN2U5YTE2MDA1YjkwYzBlOGIxMzUxZmQ5ZDk3MGY3NjcyYjA0NTc1MTBhZDBhNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f7adda8e780d4a1986c5184eca1dc783",
+      "statement": "The dependency direction runs strictly outside-in: @chrysalyst/server depends on @chrysalyst/core via workspace:*, @chrysalyst/core depends on nothing internal and imports no Node built-in or third-party module in non-test source, and @chrysalyst/web depends on neither core nor server.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/index.ts",
+          "version": "repo-file-v1:sha256:28e1225323b71499257aeae99cd7151bebd017bc3d29d0ba323a934c34d801e1"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L189-L196",
+          "version": "repo-lines-v1:sha256:5a24417e7737f43d7a2416cfd0b0c5e3cae22f22e715770268aaa24b5a05e1d5:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGNhMGE4ODI1ODVjNmU2Nzk1MWU2ZTJmNGNhNmRlYTlmOGEyNjI1ZTZhMWIzYzFmYzhjNWQ1MWQzOGU1NmJmMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2M2NmZlZWJlYWJlYTQwYmUzMWQ1N2VjM2U1NmVjNGNjOGQzNWQ5OWY2M2JlYTg5OGViOTYwMjY5YjNjMGEwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTdkNTA4MjVkNTU3NmZmZDZlZTU2MjQ4MTU2OWM1YTQ3ZGUzZjIyYzgwMjI0OTU0ZDMyMDhlODgyZGRmODUzZSJ9"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L256-L278",
+          "version": "repo-lines-v1:sha256:870286c8d01f6a03bab0bda8d1333329637b110bc9ea84cd9100aeab9d3a1a5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjODZhNGJkZTI1ZDEyYzAzNjk5NzI3NjNhMDE1NDg4MWZiZDM3YzkzMDgwOTdlMjIzMWEzMDg2MzA5M2Q0NTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2NGZlMjUyMDBiNTYwNGZjZWQ4M2M5ZGJkOWQ2NTdkNDA0ZTUyZTMyZjE5YTM0ZGE5OTZhMWE3MTI1YmMyNjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiN2FlZDEwZmYyYTI2ZmY0OTE5MDQzMzhlY2MxY2FlZDFlNjVmNzJiYjQ5YjQ2ZWMwZGMzNGExZGQ4MmU3YjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4ZmE0MGQyNDQ4NTBlZjA0ZGE1Mjc0YmZhMTE5ZDk2MzljOGIyYjRkNWU0MzcxZTBiNGRlZmNlZjk2MWUzZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_73ed3f289f11465d8e11c6bbbe5f658d",
+      "statement": "tests/workspace.test.ts is the executable guard for the workspace invariants: exactly three packages under packages/, every package ESM and private with build/test/typecheck/dev scripts, core's entry point resolving to TypeScript source, server->core on the workspace protocol, and every catalog-managed external dependency referenced with the catalog: specifier.",
+      "evidence": [
+        {
+          "resource": "repo://tests/workspace.test.ts#L152-L212",
+          "version": "repo-lines-v1:sha256:71703f8da31c8c096fbe304a8f605ad1ad84757bd91db88ee11ca8822703648c:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1ZmU1Njg2NjUwMjg4MmNjYjFlMGIyMjQxYmYzMDVjODlhMzUwZTY2NDQ3YjlmOWJjNTBkODAzMGUxYjMzMjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMTJiYWE3MGE3ZTI1ZDdmNzYwNjQ5NTNjN2JjNjEwOTJjZTg4YTc0MjhlMjBhYjhiNTkzZDZmZGRlYzhkYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzZmY3NTZlZmE1NjY1ZmRlODg0NDlmYmVjZTk2NmFlNTM0N2Y0MzAxYWM1YWU1ZGI5NGI0ZDJjZTMyY2Y0ZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3fffeac70e664a139f3012094e6db33f",
+      "statement": "Packages resolve each other through TypeScript source rather than built output (@chrysalyst/core exports ./src/index.ts), and because Node >=22.18 strips types at runtime the test and typecheck scripts need no prior build; build is only tsc --noEmit for core/server and vite build for web.",
+      "evidence": [
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:fce3deb6d283d9479b8383df3ae8d407861a5b974751f324562ead84fd090367"
+        },
+        {
+          "resource": "repo://packages/core/package.json",
+          "version": "repo-file-v1:sha256:2683590c29d584886efec40c85c2d4a678db769bf604deafe0fc56595548fba1"
+        },
+        {
+          "resource": "repo://specs/platform/monorepo-workspace/spec.md#L45-L62",
+          "version": "repo-lines-v1:sha256:573d794b1e1daadfcc0c1041d5bf4214ae893b80a93d3e1ed281d3907d3855a4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxMWY1ODMyY2E1YTZjMjA5MDIzZGM1ZDlhOWIwNWQ5ZDZhNDUwYTI5MmY2ZmMyZTg4M2Q5NDlhOGE5ZDA5MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0ZTgxZTlmYzFkMDgzMmM4Y2IzNDE4MTgyNjdkMWU5OGM2YjFlYTAwMjFmMDc4MzM0ODljMjIyZTZlMDNkNTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3NTQ0MTg1NjlkNmEyMzdjN2RiZjlkN2RmNmI0OTYwMWM0ZDM4ZWM0MjQzODQ0ODhkMjVlNzI3OWNjYzM2ZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjczYmRlYmU2NWZjYWE1YmQ2NjhiY2E4ODdiMjUwZmZlZTY3ODQ0ZTdiMjU1MThmOWFlNDBmMzI5NmU1ZmE2MzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6a5651f9d1aa4899976ae101e4983ec0",
+      "statement": "The web package currently renders only a placeholder: App() returns a single <h1>chrysalyst</h1> and visual design is explicitly out of scope for the web_shell feature until the first UI feature.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/App.tsx",
+          "version": "repo-file-v1:sha256:e287ac224eacc45a1bd79b61b2d9fd4e230a8f3fd4686d17b372765b552eea82"
+        },
+        {
+          "resource": "repo://specs/platform/web-shell/spec.md#L1-L9",
+          "version": "repo-lines-v1:sha256:58edfdf620e19ea45702dc215467374fcf69c181ed775da178174aa64d089471:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNlOGY4YmFmMGFhNzcxMmQxMDQ3MDk4ZTY0MGQxZGNjOWYxNjQ3ZDgyYzMzNzA0YjE3YWVjN2MyMjAzZDM4MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlNWY1ZWQ5ZjE4NmI5MDg5MTIzYTJkOTVhZTMyZjFkNGMwMTczMWIwYWU2NmNlY2M1YTI5NDg3ZTY1YjQxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWYxMDEzZWVhYmVhZWQzMjI3ZjFlOWFlNDJmZGMwMDYzZmQ0NmViYzk0YmVkYTg4ZTliYzQ2ZGMwY2IyMGVmZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f96543f75db429d866896883d3f48d6",
+      "statement": "The roadmap orders work as milestones M0..M18 plus one post-v1 milestone, with a walking-skeleton strategy: M1-M3 build a thin vertical slice through every layer before the question tree, distillation or contradiction checking exist. M0 and M1 are done; M2 (filesystem session store) is next.",
+      "evidence": [
+        {
+          "resource": "repo://specs/roadmap.md#L52-L75",
+          "version": "repo-lines-v1:sha256:bb308f076403bfb08044578c51b4a4514742243586270032be2af59c05181497:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwODhlYTJlMDY0YWU2NWJkMWZiNjY4NTNmNTFjZmNjYzdjOGQ2NWMzNzQxZWI0YTM5MjVhY2UyMmJkZWZkZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4OTE1Y2I1OGMwNjNiYzM3ZjE2Y2M0OWMzNjUyZDg0MjBhZWFmMjI1OTgyZGI5NmY1Zjc4OWU0YzI1ZDU4NjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNGY1YmU5ZGQxYTVhNjRhNTkxM2M3NGFiYjllMGRiNzFkODZmNmQzMjI1MDRmZDE3YzUzNDkxNTFkZGI1NmMifQ"
+        },
+        {
+          "resource": "repo://specs/roadmap.md#L9-L33",
+          "version": "repo-lines-v1:sha256:3f92f34b8b1838bd47016f6a5b9f6b8258ffd7624b5c08edfc91b86e0b76d47f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmMmJmZWI4NDZlMGM0NDc1Y2Y0MWQ2MzBiNmFmNTE2YWViMTJhMGY5MWI3MmUzMjdiMjM4NzUwNmRmMTU5NGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2ZDM0MjY0ZGFmYjdiMzQxYTMyMzM2MTE0MWM5M2QzM2I2N2M0NTA5OThmYTJhZTgwNDgzYjQ3NzRjNDc1YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5OTc2MTcxNzJkZWQyZmJjYzNkNjM1NzkyOWFkYzk4OTMxMzYzN2VmMzAyZmEzOTljYjUyODUzNzJiOTU5ZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1939d81590b749f486c51e84dacf76fb",
+      "statement": "Roadmap-wide technical guardrails fix: no agent framework in the domain (the interview engine is hand-written deterministic code in packages/core), the LlmPort adapter is the Vercel AI SDK ai v6 in packages/server which core never imports, no cloud LLM SDK anywhere in product code, and every persisted session carries a schemaVersion field from M2 onward.",
+      "evidence": [
+        {
+          "resource": "repo://specs/roadmap.md#L35-L48",
+          "version": "repo-lines-v1:sha256:d8f76b43f55397c8278952c72ed353225185fc9957e07aa9107d9aa6e07f9416:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4MzkyNGU1MzQ2MzA3ZmIxNmM4Mzg3NmJjZTdiODcwYTZmNzUyODcyOTkxNWE1Mjk4Nzk4YzA0YjQ3ZGVmMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwN2VkY2E0NWRjNzljNzViNjliMGMyYjk1MWYzM2M5MTg4ODUzMTAwZTFjYzA1OTIxYTYxOTA2NDJhYTkwOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a52891a313574e62bcc01c1ad816b89e",
+      "statement": "The engine structure (a hand-rolled state machine versus LangGraph.js in core) is still open and will be decided by a throwaway spike in M3 focused on the SessionStorePort persistence integration.",
+      "evidence": [
+        {
+          "resource": "repo://specs/roadmap.md#L43-L43",
+          "version": "repo-lines-v1:sha256:8c9d61c63eb9e06e7cb1df79423e79d8206567b489ab5eb6446fd91c67a11cac:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM5ZDYxYzYzZWI5ZTA2ZTdjYjFkZjc5NDIzZTc5ZDgyMDY1NjdiNDg5YWI1ZWI2NDQ2ZmQ5MWM2N2ExMWNhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM5ZDYxYzYzZWI5ZTA2ZTdjYjFkZjc5NDIzZTc5ZDgyMDY1NjdiNDg5YWI1ZWI2NDQ2ZmQ5MWM2N2ExMWNhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjUxNTZmNWI0ODA4ZmQ4NmJmOWNlZjBhMTE3MzRjNDllNzA4OGNlYmM2ZTljNWFiMmZkNGI1ZjY2OTQzYTM0YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDBiNTUwNThmYzc3MzA1YzMyNmU2ZDRjMGMyZjA2OGZlZjVhZjQyMmE1MDg2MWU5MmNjMTVhNDUxMDY0MWQxYSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-07T20:27:51.484Z"
+  }
+}

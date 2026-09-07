@@ -22,9 +22,9 @@ export interface LlmRequest {
 /**
  * What the domain knows about the local inference backend.
  *
- * The model list is present whether or not the backend answers, so that a
- * caller guiding the user through setup can name what is already downloaded
- * without asking a second question.
+ * The model list is always an array, but it may be empty when the backend
+ * cannot be asked: an adapter that learns its models by querying the backend
+ * has nothing to report once the backend stops answering.
  */
 export interface LlmBackendStatus {
   readonly available: boolean;

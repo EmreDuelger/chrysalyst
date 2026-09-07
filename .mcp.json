@@ -2,11 +2,7 @@
   "mcpServers": {
     "openwiki": {
       "command": "openwiki",
-      "args": [
-        "mcp",
-        "--host",
-        "claude"
-      ]
+      "args": ["mcp", "--host", "claude"]
     }
   }
 }

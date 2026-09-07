@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { runInNewContext } from 'node:vm';
 import { describe, expect, it } from 'vitest';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -112,26 +113,82 @@ function exportPaths(exportsField: unknown): readonly string[] {
   return paths;
 }
 
-function nonTestSourceFiles(packageDir: string): readonly string[] {
+const UNWALKED_DIRS = new Set(['node_modules', 'dist', 'coverage']);
+
+/**
+ * Every file at or below `rootDir` (relative to the repo root) whose base name
+ * satisfies `matches`. Build output and dependency trees are skipped so a scan
+ * from the repo root stays cheap.
+ */
+function filesUnder(
+  rootDir: string,
+  matches: (fileName: string) => boolean,
+): readonly string[] {
   const found: string[] = [];
   const walk = (relDir: string): void => {
     for (const entry of readdirSync(join(repoRoot, relDir), {
       withFileTypes: true,
     })) {
-      const rel = `${relDir}/${entry.name}`;
+      const rel = relDir === '' ? entry.name : `${relDir}/${entry.name}`;
       if (entry.isDirectory()) {
+        if (UNWALKED_DIRS.has(entry.name) || entry.name.startsWith('.'))
+          continue;
         walk(rel);
         continue;
       }
-      if (!entry.name.endsWith('.ts')) continue;
-      if (entry.name.endsWith('.test.ts') || entry.name.endsWith('.test-d.ts'))
-        continue;
-      found.push(rel);
+      if (matches(entry.name)) found.push(rel);
     }
   };
-  walk(`${packageDir}/src`);
+  walk(rootDir);
   return found;
 }
+
+function nonTestSourceFiles(packageDir: string): readonly string[] {
+  return filesUnder(
+    `${packageDir}/src`,
+    (name) =>
+      name.endsWith('.ts') &&
+      !name.endsWith('.test.ts') &&
+      !name.endsWith('.test-d.ts'),
+  );
+}
+
+const AWAIT_AT_MODULE_SCOPE = /(?:^|\W)(?:for )?await /;
+
+function hasModuleScopeAwait(source: string): boolean {
+  return source
+    .split(/\r?\n/)
+    .some((line) => !/^\s/.test(line) && AWAIT_AT_MODULE_SCOPE.test(line));
+}
+
+/**
+ * The argument expression of the first `skipIf(...)` call in `source`, read by
+ * balancing parentheses so a guard containing its own parens comes back whole.
+ */
+function skipIfGuardExpression(source: string): string {
+  const marker = 'skipIf(';
+  const markerAt = source.indexOf(marker);
+  expect(markerAt, 'a live test file must gate its suite with skipIf').not.toBe(
+    -1,
+  );
+  const exprStart = markerAt + marker.length;
+  let depth = 1;
+  for (let i = exprStart; i < source.length; i++) {
+    if (source[i] === '(') depth++;
+    else if (source[i] === ')') {
+      depth--;
+      if (depth === 0) return source.slice(exprStart, i);
+    }
+  }
+  throw new Error('unbalanced skipIf(...) call in a live test file');
+}
+
+function guardSkips(expression: string, value: string | undefined): boolean {
+  const env = value === undefined ? {} : { CHRYSALYST_LIVE_LLM: value };
+  return Boolean(runInNewContext(expression, { process: { env } }));
+}
+
+const liveTestFiles = filesUnder('', (name) => name.endsWith('.live.test.ts'));
 
 function importedSpecifiers(source: string): readonly string[] {
   const specifiers: string[] = [];
@@ -275,5 +332,28 @@ describe('monorepo workspace', () => {
       .filter((name) => name.startsWith(INTERNAL_PACKAGE_SCOPE));
 
     expect(internalDeps).toEqual([]);
+  });
+
+  it('every live test file gates on CHRYSALYST_LIVE_LLM and awaits nothing at module scope', () => {
+    for (const file of liveTestFiles) {
+      const source = readText(file);
+      expect(
+        skipIfGuardExpression(source),
+        `${file} skipIf guard must read CHRYSALYST_LIVE_LLM`,
+      ).toContain('CHRYSALYST_LIVE_LLM');
+      expect(
+        hasModuleScopeAwait(source),
+        `${file} must not await at module scope`,
+      ).toBe(false);
+    }
+  });
+
+  it('every live guard expression skips for unset and empty and runs for any value', () => {
+    for (const file of liveTestFiles) {
+      const guard = skipIfGuardExpression(readText(file));
+      expect(guardSkips(guard, undefined), `${file} guard on unset`).toBe(true);
+      expect(guardSkips(guard, ''), `${file} guard on empty string`).toBe(true);
+      expect(guardSkips(guard, '1'), `${file} guard on "1"`).toBe(false);
+    }
   });
 });

@@ -10,9 +10,12 @@
     "dev": "node --watch src/main.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "catalog:",
     "@chrysalyst/core": "workspace:*",
     "@hono/node-server": "catalog:",
-    "hono": "catalog:"
+    "ai": "catalog:",
+    "hono": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

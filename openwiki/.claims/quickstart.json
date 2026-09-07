@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cf1f9f5d5f4093f154df85793c2b667e6d42ae53a6e95b86ca78e5d5ffa24f9f",
+  "claims": [
+    {
+      "id": "claim_ce4b675f4aac4897b11178f33adcea79",
+      "statement": "chrysalyst is a local web app that turns vague product ideas into structured, contradiction-free, handoff-ready specifications through a guided LLM-assisted interview run against a small local model (Ollama, llama.cpp, LM Studio), producing the spec plus a register of assumptions and open questions.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:5e73bd09213bb64fe650d561381f52bbc5464bb6f6722c5e70a2ffbfd496a17d"
+        },
+        {
+          "resource": "repo://specs/mission.md#L1-L11",
+          "version": "repo-lines-v1:sha256:f80faa1f68df105ea000dfb59c3fbf457d49cef764a45f1ddbb474cfaeda6a7d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwMmJlNDJmYTViYjdhZjAzZDg2ZmYwZWI3MDBiOTZkZjE2ZDQ3ZWFiMWRmOWVkNDI0MDA3ZDlkYmRmZmQ1MDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiYjljZGU2MTA2MDk5MzQzOTFhYjcxMjA0MjVhMTBmOTkzOGIxNDc2ZGI3NGVhOWQ1Zjk4ZmQwNDBkOWM0ZGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzNmRkNTVhOGNjMzRhZTBkMTA3YzA5ZGU1NjAzYzQ3MzBhYzJmZDdmNDIxMTY3NmY4ZDBiZDA4OWM3MjY5MzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e13de8fcafa6465aafc017af0f2a4024",
+      "statement": "The repository is an early-stage pnpm monorepo of exactly three packages under packages/ — @chrysalyst/core, @chrysalyst/server, @chrysalyst/web — with specs/ holding mission, roadmap, feature specs and ADRs, tests/workspace.test.ts guarding the workspace invariants, and openwiki/ holding this wiki.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L3-L11",
+          "version": "repo-lines-v1:sha256:248f3f5571979a4be6bc6d33686126fb8e87d38a0011471bd72acdebe12dd27d:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODA4Nzg0MjcwOTgzMzI3NWJiYmQ1NWZmMzE2OWYyN2Q4NDNmNzhiNjk5ZGNmNmFkNWFiNzM0NjZhMmMyNjIyOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2NmOWQ0Y2FjZTQ1ZWM1Mjc1YTQ3NzM1M2E2YWY2MzZlZWUzY2Q0NzNkNGY0OGIwMzVhOWMxNDQ3ZDBkZDkwMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjIsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTczYTQyYmNhN2EyMjhiMTcwNjI0ZjZmYjEzZjJkMTRhZjhjZTZhMDg3MDUxZjIyMDNkODMyNmZhZWNiNDliZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWI4ZTAwNjRmOGM4YjFiYWE5MzUzM2NmZTBkMTA2MTNjODRjZmVmMmFkMjcwMWMwNmIzZDQ3MjY3ZTE1ZGJjMSJ9"
+        },
+        {
+          "resource": "repo://pnpm-workspace.yaml",
+          "version": "repo-file-v1:sha256:4871c540f2350fdddf995e5367445140e870eaf1d4973e8d0aae31f2026c39b9"
+        }
+      ]
+    },
+    {
+      "id": "claim_141dbf3976ae409daec542a4e759c977",
+      "statement": "Development requires Node >= 22.18 (the concrete version pinned in .nvmrc) and the pnpm version pinned by package.json's packageManager field.",
+      "evidence": [
+        {
+          "resource": "repo://.nvmrc",
+          "version": "repo-file-v1:sha256:08062faf0d7a2d22f5d7933c50e975dd1527034275597be7c1b3b9fd2b9d079a"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:fce3deb6d283d9479b8383df3ae8d407861a5b974751f324562ead84fd090367"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c463a69dcc54598b1163fde896c239a",
+      "statement": "The core developer commands are pnpm install, pnpm dev (web and server in parallel), pnpm -r --include-workspace-root test, pnpm -r build, pnpm typecheck, and pnpm lint / pnpm format / pnpm format:check.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L78-L94",
+          "version": "repo-lines-v1:sha256:b65b4ec7f054c8774002d819c5f15f4c88f6ee3dcf16b424516c7f44a5b8db9c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3ZTAzNWY5ZjY5NDYyMmViZTViODJiOTdiNjA1MWEzOTU1MjNmYjU5OGU2MWY4YzdmZmMwNzFiMGUyMWUwNDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNWQ5YTYwNTc0ZmJhNDQzYWQ4NTExMDgzMzQ1MjQ4YmZhYzQ0NTgwODZmMDE1N2UxODhkOTkxZTUxNjlkN2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkZmZjMWUxMTc3ZTZkYmQwNzFkYjg5OTg1ZmRiMmY2ZWQ4ZjZjMjE4N2E1YjU3YTMxNzE4NjJiNDM0YjFkNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViMWJjNWJjNGEyMzdmNTc4ZTZhZjRhNDE1ZDA2NDdmOTkxMGIwM2IzNjRlMWUyN2MxZjFkYmFhNzQzZDAzYmEifQ"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:fce3deb6d283d9479b8383df3ae8d407861a5b974751f324562ead84fd090367"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-07T20:27:51.484Z"
+  }
+}

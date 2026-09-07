@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1aad0e1dd93220c1d4eb8622d0d6ee89026dc80285cdcb62bd8ae8164e268d67",
+  "claims": [
+    {
+      "id": "claim_a9fcab16515c4bbdba128c5c12021b03",
+      "statement": "The repository is developed spec-driven with speq: no feature enters the code before it is described as a specification with verifiable scenarios, and CLAUDE.md's standard route runs every open milestone through mission -> plan -> implement -> record, then openwiki and branch closure.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L13-L68",
+          "version": "repo-lines-v1:sha256:c9392e019cfbf62e9f53d386d702848539209792e380578cf1d320209d6d69be:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNjY1NDhiZTZmZWNmNTNjZmQ2NWIwOTFmODQ1OGNhZjExYTU5OGM5NDBkMGZlN2ZlNTc3NGE0MzNhNDE3NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2YWMwZTI4MTkxMTkzYTc3NGRjOWQ5MDhhYjM0Y2U4YzY3NzMzOGJkMTZiMDcxZTA5MmYwNjFhMzUwYzA4NjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFiOTc1N2U4NjRmNzBiNDYzM2ExZjE2ZGVkYzZmNjcwZDA2ZGFjZDY3MjQwYzI1NjVlOGEwYzE5MTM2ZGViNTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyYjQ1NjRkNzY5ZjgzZDY4ZTU3MzhkYzVjOWJmMDFjMWIxNGVjYjI4YTY5NGVjMWUxNzhjZjMzOWY2MzEzODgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_61411a09b65b4304ae4a089d6fe97983",
+      "statement": "/speq:plan produces spec deltas, plan.md and decision-log.md under specs/_plans/<name>/ plus an adversarial plan review, and stops for a human to review plan.md before /speq:implement.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L40-L55",
+          "version": "repo-lines-v1:sha256:897531641f9585f2c6541d5f2d44573deb0e0c1f79a7f4a724d032348d228262:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxYTE2MWFhNDEwZDkzMWYzMjI2N2NjNjEyNmQ3ZDBjMWExOWFjMTJmOTdlMTU1MTYzY2U5N2U5MTRiOWNmYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE1MTM0N2U1YTMyNDlhYjU0NWQ3NTU0OGEwODQ3Njg2OTFlN2ZhNTYwYjk4MWJlYjE1M2JjNjM1MWJlYTdiMDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3NGViNjE3MTI0ZDFhMDk2NzFkMDYwNTJlMDdmMmJmZGVkZTFmYmU5MDczZjZlMWNjMjZjNzZkYjdkOTI2MzEifQ"
+        },
+        {
+          "resource": "repo://specs/_recorded/002-add-ollama-llm-adapter/plan.md#L1-L20",
+          "version": "repo-lines-v1:sha256:ee6a0f05bdd8b903b557a4cb2f621eb3e71e50df51a38640ae0040f68468cb24:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MDdmODQzMTYwNmNjNmVlM2UzZTY0YTAwMTMyZDA1N2I5YTBkMDM2MWY4ZGIzZTViY2E2MWI0NDc4Njk3NjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjZWQ2ZGMwZWIyZDQyMTUzYmU3YjNmYmJhMDJmNjY2ZTIyODQyNGViNTFjODc2NTQxNDY2ZTYwZjQ0YzE0ZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1YjY1NmE0MjBhNDkxNTAwYjhlNzNhMzk4YTc2ODYzNDdhMjYwNTg2ZWVmYjlmZGZmODg3ZTU2MzA3NmU3OTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3dfe702530ae45a0bec7259b6bd0046a",
+      "statement": "The standard-route rule is to take the topmost still-open milestone, not to jump ahead without notice, and to update the milestone status in specs/roadmap.md after every /speq:record.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L57-L62",
+          "version": "repo-lines-v1:sha256:24c94becebf06886f99deba1f0522c36c88b32b88211a2558a1ab58dade99834:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU1MDUzMDMyMjA2MDJlMzU2YmZiMmE5NjE4Mjg2NTNmNmY1MDQ4NzBmN2Y2ZWIwMGU0Y2VjNjBhYTRkYjNlMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzA4MTgzYTkzMjlmNTM5YzVhZjhhNGE2ODRlMGUwY2JmZmM3OTRkMzBhMWZmMjkyMzBiN2U3OWY4YTk1OTkxNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzI0Y2MwMDljMDNhMTg5NmRhNDBlMGE5NGM0MTM4Y2JhMDNlYzc5NzVhY2Q3NjczYjE2YTQ5ZTNhNTRkNmQ3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTQxOTNhZTg1YzY5NGY3Y2MyY2NmNTI0MGJiMDU3ZjA3OGQxZmIwNzMyZWMzZjlmYWVkNWRlODUzMjlhNmQyOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_350b1085efa647188300160dc4992690",
+      "statement": "specs/ separates authoritative intent from work state: specs/mission.md owns the what and why, specs/roadmap.md owns the ordering, specs/platform/ and specs/adapters/ hold permanent Gherkin-style feature specs, specs/_plans/ holds in-flight plans, specs/_recorded/NNN-<name>/ holds archived plans, and specs/_decision/NNN-<name>.md holds promoted ADRs.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_decision/002-add-ollama-llm-adapter.md#L1-L6",
+          "version": "repo-lines-v1:sha256:9b6676cfb0a363ce9bde956e109e52f1036f7be6fdf481da9fcaa2ac8c53eab5:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWJkOWMxZmRkMDQ5ZDQzZDI3ZGZjOTNjNWE3YTFmY2EzZTJmNjVkN2Y4NTkwODI5MTA3ZTkxNjUzM2MxMTJkYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWRlNTVlMDI1OTFkNDk4OGE1MGQxMzJmYWMwNmIwMGM2YTI1NjY1MWIwYWE2MGRkYTJhMDgwNmU0NmY3OWU3ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjBmZWZkMTAyNDhlNjBhYzE1ZmRkNmUwZTQwNDk5ZGYxYTgyYjZlZDY1ZmNlMGJjNTIzOTEwNjkwN2JlZTAzNyJ9"
+        },
+        {
+          "resource": "repo://specs/platform/monorepo-workspace/spec.md#L1-L11",
+          "version": "repo-lines-v1:sha256:392b741384c45cd194375e75c0f5a7331ecc928e4960cc7ffc2f6f311a016d2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyMmJhYjcwMzQ2MWJjOTQxZmRmNjllNDZkNDBkZWVhNzZmYjMwZGI0OWI0NDhhMzA1OWZkNTBiZjFlZjE4NWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZjA4OGVkMDYxZjIwNTdhYWQwNWI0ODE0ZmJlYjA5M2E3NmNiZTJmMzBjNTkwNTJmNmM4ZmFhYTc0NzNhZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5NDJkZmFkODg2ZWM1ZDViYWY2OWYwYTVlZDE4ODYzYWM2MGE5M2MwNjc0MDU5NmJhM2Q5NmUwZjEyODg3YTAifQ"
+        },
+        {
+          "resource": "repo://specs/roadmap.md#L1-L7",
+          "version": "repo-lines-v1:sha256:dc9a28c8dd3c5a403805cb328192c897a4adda0f566cc0a842d47e13ff680342:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjhmZDNjNTQ1ZjA3NDNmOWJkZGYwMTMwOWU1OGY0MTJhZWNlMjI2MTBjZmViODM0NDg2NTFlNTEwNWUxZTYxNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjVmNTFlMGRmNGE4MTFlMzI2ZTYyMTVmZGYzMzFmNjg0ZmIzMjQ5YTFjNDAwMGNiNDU1MjRkY2ZjYzI2N2YxOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f99cc3e1e7734fe39aea60b4fd5061ec",
+      "statement": "Two plans have been recorded so far: 001-add-monorepo-scaffold and 002-add-ollama-llm-adapter, each archived under specs/_recorded/ with its plan.md, decision-log.md, spec deltas, reviews and verification-report.md.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_recorded/001-add-monorepo-scaffold/plan.md#L1-L5",
+          "version": "repo-lines-v1:sha256:1fa0c234be27ae3d3d2d25d5f1c3b0cb73956708e3f43241d604c513ef67ff64:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODczZjkxNDFmMTk1MmI0MzQ3MmJjMjI5NzY3Y2M2NjAwY2ZmZmFlNTIwZmI5MDFkYmYzNjUyNjU4MTk3ZWY5NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDFlOTczOTZmMzg5YWQ0MjM2ZjlhMzhmOTUxOWY1NjliMDM0YzAyZWE1NTY2Mjg4ZWY5NGI0MGZmNjAwZjUyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjE2MTQ4MzJjMzhkMTQ5NjdmYzY5NDhhZjVjZDI5OGZmMTBhOWI4NDA2M2Q2ZmFhOTA4MjYxNTM3YTdiM2FjZiJ9"
+        },
+        {
+          "resource": "repo://specs/_recorded/002-add-ollama-llm-adapter/verification-report.md#L1-L10",
+          "version": "repo-lines-v1:sha256:74a0fee2ec619e9391b80ca1daee5b0639ec31fc281799f680a3730ea1ccfe7b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YmQ3OWYxZTk1NTA2YTE2MzBiNDFhNjFhZDFmOGRmYjk3M2U2YWY5NDkzZjUyZGYxMTZjM2NhZWRiZWU2ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NjE2MzRmODY1MDhkM2FmYzdlMzJlNGI4NTViZTYwNWYxYzVjZTdjYTIwYWMxOTE5MjBkNmU3N2I2NWFmNjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlNzBiZjkyZTY5OGU4OTFhOTVjOTQ4NzVkYmFiYWI3NDk2NTlhZWIxODYwMTI4Yjc2MWJkZDljMzdlZDYzZDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8caacaa20e114f05956b11a9a0fe3b22",
+      "statement": "/speq:record promotes the durably relevant entries of a plan's decision-log.md into ADRs under specs/_decision/NNN-<name>.md with ID, Status, Context, Decision, Options Considered and Consequences; 002-add-ollama-llm-adapter.md holds four such ADRs.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_decision/002-add-ollama-llm-adapter.md#L1-L52",
+          "version": "repo-lines-v1:sha256:329fb41ac4b81bdec0610c78e8a2a71fe94011849de16b6593fad11df5f75117:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiZDljMWZkZDA0OWQ0M2QyN2RmYzkzYzVhN2ExZmNhM2UyZjY1ZDdmODU5MDgyOTEwN2U5MTY1MzNjMTEyZGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3NDM1YzA5YjQxYWUyZWY5YTQwZDM2YjUyMzZjYTI0NGUyYzFhNThmMWYxYWZkMTIzYjRmZjRhMjFkYTIwNTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fcaa83c6fdde41d8b63282a8d1f42a82",
+      "statement": "specs/roadmap.md orders work as milestones M0..M18 plus one post-v1 milestone P1 and two chores (C1 openwiki --init, C2 minimal CI); M0 and M1 are done and everything else is open, with M2 (filesystem session store) next.",
+      "evidence": [
+        {
+          "resource": "repo://specs/roadmap.md#L52-L76",
+          "version": "repo-lines-v1:sha256:7727dd161a64ac8d67d08461879e05033289f9a3fc7887f54f55243dcb87df6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwODhlYTJlMDY0YWU2NWJkMWZiNjY4NTNmNTFjZmNjYzdjOGQ2NWMzNzQxZWI0YTM5MjVhY2UyMmJkZWZkZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyNGZhZWNiMTQ1OTQ0MjM2ZjA1ZjA5YzBhZjJlZWZhZjkyMDYwYTNmYTRjMzAxZWVmYjVjNDBlODVmOTczNTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1e16da4259254448a776dfae12c551ad",
+      "statement": "The roadmap's technical guardrails table fixes: no agent framework in the domain (hand-written deterministic engine in packages/core), the LlmPort adapter is the Vercel AI SDK ai v6 in packages/server which core never imports, structured LLM output via Output.object() + zod deferred to M10, no cloud LLM SDK in product code, and a schemaVersion field on every persisted session from M2; the engine structure choice remains open pending an M3 spike.",
+      "evidence": [
+        {
+          "resource": "repo://specs/roadmap.md#L35-L48",
+          "version": "repo-lines-v1:sha256:d8f76b43f55397c8278952c72ed353225185fc9957e07aa9107d9aa6e07f9416:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4MzkyNGU1MzQ2MzA3ZmIxNmM4Mzg3NmJjZTdiODcwYTZmNzUyODcyOTkxNWE1Mjk4Nzk4YzA0YjQ3ZGVmMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwN2VkY2E0NWRjNzljNzViNjliMGMyYjk1MWYzM2M5MTg4ODUzMTAwZTFjYzA1OTIxYTYxOTA2NDJhYTkwOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2155483d1cee440bafb961d32fbf1822",
+      "statement": "CLAUDE.md assigns tool roles: speq owns planning and the spec library, superpowers fills gaps (systematic-debugging, using-git-worktrees, finishing-a-development-branch), impeccable owns UI visual direction, context7 owns fresh external library docs, and OpenWiki is the living openwiki/ wiki treated as agent context #1.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md",
+          "version": "repo-file-v1:sha256:e196ae5aef70399b7f4cd655c0440c5c589dbecac5863d6178aa1c195d5a4325"
+        },
+        {
+          "resource": "repo://CLAUDE.md#L18-L30",
+          "version": "repo-lines-v1:sha256:ad70ecf3f468c1e5b8b1399958e43598b922612bc9bdafaff793a0abe6f771ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNzViMWM5OTEwMjZmYmEzZmEyNDM3ZGFmZjc4NWIyOGYzYWRiMmRkZTFlNjgwZjBhZTgzMWZhMzk5YWI3YjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MmUwZDY4MzNjYjI1ZjY4YzM3ZTI0ODY1Yzk3ZDFhNzYzMzAyMzIwMzA3NTE0ZTMxNjg3ZjQwNmZiZGMwNjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4YzE4ZWYzZDUwMzQwOTRjZDQ5MzRiMmU1YTJhYWIxNmE0NzJmZjdmYzI2OTM5MmUwOGYyNWViNWExNjUwMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxNThiOTdlMzdiN2Y5YzhhMjAyNWQ4ZjU4ODRiOWUxMzYxZThlODk0NjUwZTdjZjBhMWQ2ZjQ4NDkzZmI4ZTcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-07T20:27:51.484Z"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:416d0e21f6739934ce11eb0b702b195680152abe1894fd5b1b83e45b112fb2c4",
+  "pageVersion": "sha256:289045a4bc36b4ff07885516fee642a43bac61028f860441eb89f3d3f6a16b6e",
   "claims": [
     {
       "id": "claim_25b956f5858e42dcbe559ea6955ab44b",
@@ -70,11 +70,15 @@
     },
     {
       "id": "claim_0d9012454ba1464c9b2e397d854ced88",
-      "statement": "SessionStorePort<TState> is generic over the persisted state and deliberately omits a delete method; load of an unknown SessionId resolves to undefined rather than throwing.",
+      "statement": "SessionStorePort<TState> is generic over the persisted state and deliberately omits a delete method; load resolves undefined for an identifier that was never saved but rejects when a record is present and cannot be read back, so undefined reports absence alone and never a failed load.",
       "evidence": [
         {
-          "resource": "repo://packages/core/src/ports/session-store.ts#L15-L36",
-          "version": "repo-lines-v1:sha256:91612bbc21274dbd3734f0c634c204f94230b10255be6a09a25a8916b940c0fc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4NzBjODVhMDVhZmQ1MTQyMjk1YjY2ZGQ5NWQ4ZjQ4NjcwM2MwZWU3MGEzNjMzNjk3Zjk3NmE5NzZlNTE5YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://packages/core/src/ports/session-store.ts#L15-L38",
+          "version": "repo-lines-v1:sha256:43a65348cf7f2cd483a2ba6181fca9b14c073df763713aa483730239ca4f5e49:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4NzBjODVhMDVhZmQ1MTQyMjk1YjY2ZGQ5NWQ4ZjQ4NjcwM2MwZWU3MGEzNjMzNjk3Zjk3NmE5NzZlNTE5YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://specs/platform/session-store-port/spec.md#L20-L30",
+          "version": "repo-lines-v1:sha256:95b3833e697fef0407997a4e748b086a8dd60617ba4f10c690fb2fef3e01758a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3MDc1ZjNhZjFmYzQyZjk4NGEzYWY5MmJmYjYwNDE1MmEzMzc4N2VkZjQ3YTczZjYxZTRmZDlhMzk0ODE2NDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyZDFjNjRmYmU1OTg4YjQ2OTdjMTU4ZTVjMWU1Nzg4NGM2ODQxOTIxZDgxZDE0OThlNTkzMzI3MzNjZmEwMWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiMTE5N2Y5ZWE2MDAyMjZlNjJmNWMxZGVjNjk1YmQ4YWI5MmQyOTJlOGY3ZjM1YjY0NWM4MDRiNzgwNjc0MTMifQ"
         }
       ]
     },
@@ -105,10 +109,42 @@
           "version": "repo-file-v1:sha256:d2b8eab0df0fe56a24e5240313c9a21ed478c413857f224639b5d2564c25b6d5"
         }
       ]
+    },
+    {
+      "id": "claim_c6ad39e451dd43e6b1837501309de74b",
+      "statement": "list must not reject over a single unreadable record, and whether it reports an identifier whose record it cannot read is left to the implementation.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/ports.test.ts#L180-L190",
+          "version": "repo-lines-v1:sha256:1488d90b08d8a3d9d2d55ffd036d35eabddcad2ddccf483979b313650e3ac2e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2Nzk1M2JiY2VmYWVlMjRmODNlMWU0NjBhMDcwOWJjM2NlYTI1ZmUzMjZlOWZlNjk4YTM4NjBlMDk4NjIwMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyMzQ1Yzg2ODM3NmZjNmMxOWRmYTdkMGEwZGFhNTc0NzNiMDYxNGJiNGJiM2E5MDU3MmY3Y2E1MzVlN2U4MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0ODJkOWMxZDEyZTJkMmE4ODUwZmJjMmVlNTExMjk0YzI4ZDU0NDEzZTQ4OTQzYzhhZGVjN2JiOGY3NDJkZDQifQ"
+        },
+        {
+          "resource": "repo://specs/platform/session-store-port/spec.md#L31-L33",
+          "version": "repo-lines-v1:sha256:fb1197f9ea600226e62f5c1dec695bd8ab92d292e8f7f35b645c804b78067413:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTBhOTk0ZWI3ZWE4M2FmZTI0MTA1NGU1NDdhOTFmNjlmM2NkMTNiMTZiYmZmMTYzY2U1N2UyYzRhNTUzZGQ2OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmFmMjdjNGEzNGQwODE3YWM3ODY5YWQ0MjBlOGI4MjkxYjJmMGY4ZTAxODYwZDg5YzcyNjliMGNjODAzOTgxOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTNjZWQzNmYxODE2ZDFlN2Y3MmY2NTEzMTE1NGIwNDUzNzEyNWRmYjNiYjliMTM0M2FjZGRlNzkzZTdmYzBlZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://specs/platform/session-store-port/spec.md#L7-L9",
+          "version": "repo-lines-v1:sha256:c6482f5631d817eda4fde2d438c1c5d367a7f0984bdcc5af626273dd74773355:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODA4NTAxY2I5MDc0YjdkYTg5NDgwMGM1NDY5ZDYxM2MyMmFhYTFiMDIzZTZhNDg3YzM0NDM3ZjM2N2E4YmJiZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlNWY1ZWQ5ZjE4NmI5MDg5MTIzYTJkOTVhZTMyZjFkNGMwMTczMWIwYWU2NmNlY2M1YTI5NDg3ZTY1YjQxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDBhMjA2MTJiNzFlZmI0MzlhNWQ2ODdmODE5ZTJmM2IzZDM5OGU0ZWEwOGYyZGQ4MWNkMWYxOTU2YmIwNmMxZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjAwNzgyNDc2MGExZWMzMjU5MGE1YjNkNDkwYzliYTgwMDljZDkyYTI0NjRiMjY2NzUxYzk3YmU3MmJlOTFkYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_973ed4ec27e34396ae0822acc74f49e4",
+      "statement": "The absence-versus-corruption contract of load is pinned by a second core test double, guardedSessionStore, whose backing map holds an unreadable marker under one identifier.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/ports/ports.test.ts#L180-L190",
+          "version": "repo-lines-v1:sha256:1488d90b08d8a3d9d2d55ffd036d35eabddcad2ddccf483979b313650e3ac2e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2Nzk1M2JiY2VmYWVlMjRmODNlMWU0NjBhMDcwOWJjM2NlYTI1ZmUzMjZlOWZlNjk4YTM4NjBlMDk4NjIwMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyMzQ1Yzg2ODM3NmZjNmMxOWRmYTdkMGEwZGFhNTc0NzNiMDYxNGJiNGJiM2E5MDU3MmY3Y2E1MzVlN2U4MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0ODJkOWMxZDEyZTJkMmE4ODUwZmJjMmVlNTExMjk0YzI4ZDU0NDEzZTQ4OTQzYzhhZGVjN2JiOGY3NDJkZDQifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/ports/ports.test.ts#L62-L90",
+          "version": "repo-lines-v1:sha256:fccb20f312debe1c5eaacaeb1e7e2e137fc2dc62d6a674ad01dc2751875a1f08:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiZDlhODQ0ZGZkMmI0M2I5MzdmMzUxNDcxMDNhZjJhYTI0MWY5YjIyM2U3YzAzNzQxODE1Yzk2ZDQ0ZTczZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ZDVhMGJiNzhiNjAyZTQzNTRiYTZhYzUzYjUxNDM4YTc0MWVkZDNjNjM2ZmM4NzcxNmQwYjRiM2Y3ODdlNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjYmJkNjg4MDgxYmRjZjNhOTAzZTliOGJmZTZlOGU5YzEyYWIxMDM4OTAxMGFiZjkxZTBmMGE0YjUwZGFhZjYifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-07T20:27:51.484Z"
+    "at": "2026-09-09T13:28:50.488Z"
   }
 }

@@ -5,7 +5,7 @@ description: Der Build- und Qualitäts-Werkzeugkasten von chrysalyst — pnpm-Wo
 tags: [toolchain, pnpm, vitest, eslint, prettier, testing, ci]
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-07T20:27:51.484Z
+    at: 2026-09-09T13:28:50.488Z
 sources:
   - id: openwiki-source-276795f6d5ad19adb078c64e
     resource: repo://eslint.config.js
@@ -19,6 +19,10 @@ sources:
     resource: repo://packages/server/package.json
   - id: openwiki-source-72d5a971bbca538ee461f19f
     resource: repo://packages/server/src/adapters/llm/openai-compatible-llm.live.test.ts
+  - id: openwiki-source-650a35ca473d92cacbf3263b
+    resource: repo://packages/server/src/adapters/llm/openai-compatible-llm.test.ts
+  - id: openwiki-source-836b1821935d4a9e043f8655
+    resource: repo://packages/server/src/adapters/session-store/filesystem-session-store.test.ts
   - id: openwiki-source-3c9ecfb44083e5e32998eace
     resource: repo://packages/server/vitest.config.ts
   - id: openwiki-source-a1be692c9fc24885e83e7d07
@@ -33,7 +37,7 @@ sources:
     resource: repo://tsconfig.base.json
   - id: openwiki-source-fbadcd8591b65031efaaedce
     resource: repo://vitest.config.ts
-generated: { by: "claude-code", at: "2026-09-07T20:27:51.484Z" }
+generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
 ---
 
 # Toolchain und Teststrategie
@@ -113,8 +117,13 @@ Root-Skripte: `pnpm lint`, `pnpm format` (schreibt), `pnpm format:check`
 Tests laufen in zwei Stufen:
 
 1. **Hermetisch (Standard)** — kein Netz, kein Daemon, CI-tauglich. Adapter
-   werden über injizierte Stubs getrieben (der [LLM-Adapter](../architecture/llm-adapter.md)
-   über ein `config.fetch`).
+   werden über injizierte Stubs oder Mocks getrieben. Der
+   [LLM-Adapter](../architecture/llm-adapter.md) bekommt ein `config.fetch`; der
+   [Dateisystem-Session-Store](../architecture/session-store-adapter.md) läuft
+   gegen eine `mkdtemp`-Sandbox (echtes Dateisystem, nie das Home des Nutzers)
+   plus einen `vi.mock('node:fs/promises')`, dessen Injektions-Modi die
+   `sync`/`rename`-Reihenfolge beobachten und ein Handle bei `write`, `sync`
+   oder `close` — oder das Aufräumen einer `.tmp`-Datei — scheitern lassen.
 2. **Live** — Dateien mit dem Namensmuster `*.live.test.ts`. Sie sprechen mit
    echter Infrastruktur und laufen nur, wenn `CHRYSALYST_LIVE_LLM` einen
    nicht-leeren Wert hat.
@@ -144,5 +153,7 @@ fehlgeschlagen.
 - [Architekturüberblick](../architecture/overview.md)
 - [LLM-Adapter](../architecture/llm-adapter.md) — die einzige `*.live.test.ts`
   bislang
+- [Dateisystem-Session-Store-Adapter](../architecture/session-store-adapter.md) —
+  hermetisch über `mkdtemp` plus `node:fs/promises`-Mock
 - [Spec-getriebene Entwicklung (speq)](../workflow/spec-driven-development.md) —
   die Verifikations-Checkliste jedes Plans läuft gegen diese Skripte

@@ -26,8 +26,10 @@ export interface SessionStorePort<TState> {
   list(): Promise<readonly SessionId[]>;
 
   /**
-   * Answers the stored session, or nothing when the identifier was never
-   * saved — a stale link is an ordinary outcome, not a failure.
+   * Answers the stored session, or `undefined` when the identifier was never
+   * saved — a stale link is an ordinary outcome, not a failure. Rejects when
+   * the record is present but the implementation cannot read it back, so
+   * `undefined` reports absence alone and never a record that failed to load.
    */
   load(id: SessionId): Promise<StoredSession<TState> | undefined>;
 

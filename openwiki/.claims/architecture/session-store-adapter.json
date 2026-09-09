@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9d5e63ba779ba5d6cd267e1ced1e9647ce6bd214d02945afe666eaa5b95d5f6d",
+  "claims": [
+    {
+      "id": "claim_329dcc7f952e42a89207fed41ae03721",
+      "statement": "The filesystem session store is the only place in the workspace that knows a session is a folder on disk: it writes <root>/<id>/session.json and <root>/<id>/transcript.md, and @chrysalyst/core imports nothing from it.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L38-L120",
+          "version": "repo-lines-v1:sha256:9bb241b4245dd650e0e9df007bbb8b3f9a0c23b57ba9f04bf4cb8c4f7ae60b87:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkMDViZjNiZDVhMGY2NzM3ZDA4Yjg1MTA3YjllMjFmMzIwYWZlM2VmMTA0MzE3ZmMzYmZlYThjMDA5OTI4ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMDA1NTY5MDdlNjQxMWZhZDg0YTU1YjRiNTZmYTJjZjA1YjAwOTRjNDcwOTZiNjJiYjAxYmI4Yjc0OTdmZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2MGZmMWM4OWVkMzMxNWY0MWI1ZDljMDdkZjg4YzgzOTJmZmE0NzhkOTEyN2U1NjMyNTliMWMyOGYzMDUyODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwZWRhODU4N2U0Mjk1NzI4NDJjMTczNDgyZGU2N2M5YzdkZDJlMWFkMjg5YzY5ZTljYjcwZjljMzQ5MzQ2YWMifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L7-L9",
+          "version": "repo-lines-v1:sha256:7667b8b0e6156a442cd5ff385dc868a487e6e9bcda20dacd7f2fadd2edb186b0:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjExNGMyY2NkNTI4NmE3MWJjYTJiZGQzODg0OWZhYTY0ODZkZWE5YTQxNzEwYmZkZGQ5NGJmNjUyYzA2YjAxMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQ3YWQxZjI2ZTViZTY5NGE0M2U4YmU4NDcxMjY1NmQ3M2NiM2IyNmNmMWFhNzY3YjdiNjEwOTQ2NmY3YTJhOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDBhMjA2MTJiNzFlZmI0MzlhNWQ2ODdmODE5ZTJmM2IzZDM5OGU0ZWEwOGYyZGQ4MWNkMWYxOTU2YmIwNmMxZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2ViMGMzZjEwNDBlODllNGQ4YmEzODMyOWQxZDdlZDU3NjE0NmNiMTJlMDc2MmRmYjFlMGNhMTQzMWE4ZTRlNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a789bf2938244f07b856491f98393d1d",
+      "statement": "session.json is an envelope { schemaVersion, id, createdAt, updatedAt, state } whose schemaVersion is the integer module constant 1 and versions the on-disk envelope, not the domain session; StoredSession in @chrysalyst/core gains no such field and the store passes state through by one documented `as` assertion.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L14-L35",
+          "version": "repo-lines-v1:sha256:d596b91cc507baa33d2e4f0bf45d315e9f3e0b6aea2372e9f05176bb3a06ebb3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMzIwYjNkZDM0NDRiYjdhZWFmM2RiYWJkMDBjZWEwNzk5MDhiMTZiY2VlMGMyZWVlNTI0MDdkZDEwZmJlODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkNjQ2YWZmMDczZjU5MmYyMzA1ODc5NGI0ZDUxNGQ3MWI2OGJjMDg2Y2ZkN2UzNzIyMTU2ZGMyZDM4NzAwZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzZTdhYzJmNzc2NjlkMzRiNzRjZTI0MDk4Y2RkZjQ5NjZjYjc1MWRlZGQwNTQ3NWQyYjljYjUyNDYyY2Q3YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhNWNjZDQ5MGY3ZWMyZjQwODQ3MGFkNzU3YTFhN2U1NDNjNDllYzE1ZjNhMGRhZTQzMjA5Mjk1OTJjMDY3OWUifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L321-L342",
+          "version": "repo-lines-v1:sha256:3d527b81a5cbcb3a82e438631f5bfa24ad4aef0e63126afd39c42d3308e6cd44:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlOGU2NWEyNWU5M2Y5M2NmZDVjMTZjOTI1ZDNmNDI5NzkzZWRmMmViNDU3YzcwYWUzZjM3OGQ0MzVlNjJjZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5NGZjMGMxNzNkMWVjM2ZjNTAxZDdkZmE5Mjg1NTAxYzUyN2NmYjQ3MTI1ODNkYTNjYzM2MTgwNTY2YjRiZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzMzVjNGY1OGQ0ZDk4OTRmMmEzNzhhNDgwZTM0NDgwOTc5OTRmZDBkNjRmNmM2MDllMzEwMmNkYjFmNTE0YmEifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L30-L55",
+          "version": "repo-lines-v1:sha256:cf2dfb14c32611bbb3fac547cf78088002c3b15c728702e5d77cffd89f13f207:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlMjgzYTQwOTA3YjBiZmQxNmVlNDIzZDY1NTVhNTgyMDliYjljNWQ1MDJkOWIzYzg4YWVhNDNhZWZiMjVjMjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhOWZhMzVkYzQ5ZTVjM2VjYWE3MGFkZmFjZWNhZTkwN2UwYWM5MmVhMDBiNzFhZTYxZmRjNDg4MWZiMGUyN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNWU1MDIzOWRkNGY4MWNjNzkxZGRlNWU2N2ZkOGM5MzVjNTRiNTYzN2Q5MmJkY2MyOTFlODAwMGI5NzU4Y2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM1ZjA0ZmM5NDhlMmUwNjRiNTA2NGRlYWY3OWE0ZDc3ZDdiN2Q3YzdkNDdhYWVjMTUwN2QzZDNlNDQ0NWI0YTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b77f00b4444e46d8bb28527112bc359a",
+      "statement": "Because the store never interprets TState, a value inside the domain state must survive a JSON round trip: a nested Date returns as a string, and only the two envelope timestamps are revived to Date.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L331-L342",
+          "version": "repo-lines-v1:sha256:e5d09bf89ce9f1a4c022f27c31250f887ec268bff480b3f3300e875a596d1f77:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5ZmJmZjg1ODBkYzExZmQ4NzgxODhmMDQzZjEyYjRiYjEyYTIyMDcwZmI2YWNlYzNiNGI1ZGUwNzM2MzBkMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzMzVjNGY1OGQ0ZDk4OTRmMmEzNzhhNDgwZTM0NDgwOTc5OTRmZDBkNjRmNmM2MDllMzEwMmNkYjFmNTE0YmEifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L45-L54",
+          "version": "repo-lines-v1:sha256:2ba0f3527c5b3c10e46f66e818ad372de74b29f696ae67ecd80b628ac47c305e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlOTZlYjI0OTRiZWI0NjliMTQ3Y2EyMGNiNGEzZjNjMWE3NWQ5MmNmMTEzMWRjMjBlOGYzMDkzZTNkOWNiMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1NTQ1YWYwMmEzOGJjYWE3OGY2Mzk3MmU5MjQ1NTM4NTA1MTE5NjE0OTUwYmUxNzY1ZjdmYzViYmE0ZDU1YzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d17101388d14ecbbafa5c5b19eacf6b",
+      "statement": "transcript.md is a metadata stub in this milestone — a header naming the identifier and both timestamps and nothing more — and a later save of the same identifier rewrites it so no completed save leaves a transcript describing an earlier revision.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L343-L352",
+          "version": "repo-lines-v1:sha256:ae18236ec8fd31be0b1e26edc5ce0fc641dfbc1fe418140c4e4a5ec08d97cdbf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MjM4NGVjMzE2NjYxZjQ2YTM1YTNhMTBlOTI2MWI3Y2RiNzZhZjllN2Q2ZGQ0OWFjYzk5Mjg2MmEwZGQyNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzY2ZmMTBiYzQxODQ5NmQ5YTdiYjcyN2NkM2E0M2NkNzQ1ZjJjOWExOTM3NGZlNWE3YzY1ZTRjNWQ0NTk1OTQifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L37-L44",
+          "version": "repo-lines-v1:sha256:11d50936bff71decd579b3f82c1b50be3c59ab043e32690aabf32445958335cd:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODQ1NDZkNGFiYmNjZDY0ZDdjZDI5NjAxN2I1MDQwMGI0NDM2NGQyNTg4MTViZDgyZmU5YTNkMTFiMTBiYTgwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGE0NTMwMmM5ZWUyM2FkMzIwNThkMDU0MjY1OGQ5NDAyYzdlNTY0YmQwYzljYzk2ZGYzMDRlZWE2OWNkYzU2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQxNTgzZDc2ZWFhODE0ZjVjNTkwNjg5MjVhMTc3YTY5YzJiYTlkZWZmZjVmMjVkZTlkNTIyMTY4MGJlMTA2MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTY1YTc2NWVlMzFiMzUwOTEwZDhiNjg1ZGNhMTRmYTFhM2QyYzQ3YTQwZDUzZjk1MDNmYzY0ODVlMjcyYjIzMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_681273e81b6442fdb5fd53175ac3580c",
+      "statement": "One private reader classifies a session folder as absent (ENOENT only), unreadable (invalid JSON, envelope-schema failure, unrecognised schemaVersion, id-versus-directory mismatch, or any filesystem refusal), or read; load resolves undefined for absent and rejects for unreadable, while list drops both non-read classes.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L172-L223",
+          "version": "repo-lines-v1:sha256:fded3ea06a588404d47efa500be99db66abe86f3e6b3bb8e7ddb5579dacc48f2:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxM2IyYTY2ODFhODA5NTQ1MzJiZWJmZTBmZjQzZWQ3YWEwYTgzY2U5ODkyNTFkMzc3ZWZmY2VkODM4MWNlN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ZWU2OTFhNmE1ZmU5YWZhZjg3YjU1ZjJkZjllMmQyODc4ZTlmYjYxNDQwOGVjNmJhMWRhNTU4ODlhMDEwYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2MDQzNTI1Y2M2MDVkNDU3ZGJlY2ExNWY0MWI3ZjY5NWIxMjNhOWJiNjM5MTE1NzM2ZmVkNDdkMDcxZjU4OWIifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L66-L113",
+          "version": "repo-lines-v1:sha256:25beea1a9cb7a32ee3ca4f50068a08526a84352ad613bd369959950eab6d66bc:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczZWFkMzIzN2YwYmNhMDIwOWE4NTQwMTZlMDFjYTQwMzdhOTQwZjRhMWY0ZWYyNmZmODEzYjE2NWE1ODc0ZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjOTNiZWE0MzkyMzM4ZjE2NmYyNjZiYWFkYWE1ODAwMDhkMGUxZDE1NWE3M2Y3YTc2MTVhNDcyOGEyNWM1ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyZjkxMDg3ZDcxYzIzMTlkMmVkN2ZhNGMyZGRmMzc0YjFlZGMxOGUwNDFlZjc1MjE5OWI1YmFlZGEzNWYxYWMifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L5-L28",
+          "version": "repo-lines-v1:sha256:2e7b8b9d95098e277e1b4ec4bd4738051c598d419252adf828bdfcdea1c0bf4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5ODkyMTgzNTg4NWEwNmExZmQ2ZWEyNzc1NmY1NjNmNzY0N2I0YWM0ZDM1ZmI2ZjkzMjhlYzRkY2E5NGRkOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNzIzMjgwNTZmYTQzYzFmNzEyNDEwNDYzMGY5OWY0Y2JhZDIyODhkMGFjMmUxOWZiMDkyYzBhNzYzYjgyYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0MTVkMzAxZDU0NTI2OGYxYTJjNjdjYjI2NTlhMDczNDFmYmViYjFlMmJkMjIwMmY3ZTE3NTgwMGQ1YzIzODIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2ZjJiNzhiOTA0NjA0NGZkNTcwNzRiZmU0Mzg4MzlkMDdmMDZkOTM2MGE4OTkwMzliMTgxNDBjNWQ1ZWY5ZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7d385f89c434973bd7f581f0919f09e",
+      "statement": "list returns the readable identifiers in ascending lexicographic order and performs a full envelope read per entry, so it reports only identifiers that load will answer and does not vary with the filesystem's own ordering.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L66-L91",
+          "version": "repo-lines-v1:sha256:475ac8d13683389c2e5655d7a606c855c1f56c979ffdd9ee74ddf74d8fca73fe:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczZWFkMzIzN2YwYmNhMDIwOWE4NTQwMTZlMDFjYTQwMzdhOTQwZjRhMWY0ZWYyNmZmODEzYjE2NWE1ODc0ZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGNkYjk3MmE3YmZiN2VkMjQ2ZjlmZjY3MjM4NWU1NWY0OTY4ZmMxMTA0M2RjNWI2ODRkNTFkZmEzMWRiY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjOTNiZWE0MzkyMzM4ZjE2NmYyNjZiYWFkYWE1ODAwMDhkMGUxZDE1NWE3M2Y3YTc2MTVhNDcyOGEyNWM1ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJmMTQxYTJmZDQ4NjkwNWMxOTExMDc1NGE4MTNlODcyMzRkNjJiMWM2ZTM1Mzc1NjQ1NzA3ZjczZDJkODAzN2YifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L99-L107",
+          "version": "repo-lines-v1:sha256:03c87e67a462e6d3d093a26c84a7a7c3681ef7d55db0b1bc690e4384b62f3e78:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmI2ZjIyOTllN2Q0OTI0NDJhMjAzYTA3NzZkNTZiMzY0NTA1NzA2ZGMzZDc5MGNmMTJlODNjOTI1OTBlMjZkNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjQwNDEwYzkxZTVkYjFjNWQ2MjFiMDI1MGVlZDY0NmY4MTU2OWJkZmU3NjJiNWE5ZWZkZGZkNGY3M2U0OWE1MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjZiZWJiZjIxZGQ4MWM5YzQ0YzIxNzJlMDhmMDMzNWIzNWYxNmIwOGRiYzU2ZDE2Y2U0OWU3OGJhZTI3MzlmZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8ae7a38a2eec47c59e6860bacc6be537",
+      "statement": "Every rejection the store raises is its own Error naming the session or the root and carrying the underlying failure as cause, except a wrong-schemaVersion or wrong-identifier rejection which carries no cause and names both the found and the expected value; the temporary .tmp names never appear in a message.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L235-L266",
+          "version": "repo-lines-v1:sha256:4531cb9887e97e04316a99fdd48d3589d87fd6a3525f180bc3ce1aad39379945:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1N2Y5YzQxMGZmZDMyZThiNjQxMjNlZWY5NWYxMGQ1NWM2ZTQ5MzhiOTkxZDdkOWJmMGZlZjRmMTdiYTJkMjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2Yjg1ZGI4ZTI4YjI4ODZlMzExMmRjZDJhZjgzNzA5NjYzNjEwOWFkNjdkNzQyZDhlZDY5ZDg1MDVmM2JhYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAxMGQ2NDk0NGY0NGZiNmRmOWM0Y2EzMzE2OGRkMTA0OGUxMWEzNDczNGJlNTkxOTA0NDBmM2I0ZDQxN2ZlOWQifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L301-L320",
+          "version": "repo-lines-v1:sha256:20cac1374805db4664c50f4934abe55d1bcdf4dd0ecae2ddf658b135785bc68c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyZWU1YTZkODk3MDMzZTUxN2VmNTBkYzhiN2MxNzU2YzZkNDc0Njg5MjY0N2M3ZTQ2YTkyZWZkZmY0NzI1ZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5NGZjMGMxNzNkMWVjM2ZjNTAxZDdkZmE5Mjg1NTAxYzUyN2NmYjQ3MTI1ODNkYTNjYzM2MTgwNTY2YjRiZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAyNDFlY2I3ZmY3NWY0NTVlMTA0NTgxZmM5YjE2NzNiNjdjZjg1N2ZmMWRmNGI3ZmRkOTViYjJmMmE0ODFkZTYifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L83-L90",
+          "version": "repo-lines-v1:sha256:47bd75afccabc92170b8252768ef0291d03683df384f8b5b01e40835faba7406:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2Y1ZGNiY2Y5Mzg2ZjExZWE4YTQxM2QzMmFmODE1ZmQ1MjAzY2Y0NDhlYWMwZGEyZTgzMzNhZjY3YjY2YjdkOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmE1YTU3ZDVlZTM2YmY0ZTY5YTVmNjcwZGM4YTg3NmM5NTBmNDU5MzYyZTA1NWZiNmRhNGYyNjZmY2I1NmRkOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2VlNTRiY2JlZTJmZTQ1NThmY2VlNTlkZDEyZjBjN2MwYTJkNmNkNTE5OWExMjhlZDNhNjA5NTJiNGU4OWNlOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWE4NDBkNDRiZjQxY2FiZTMzZmIxY2YwNzUxZmVkMDA2Njc3NWIzMDljYzA4MGNkMTA1YmVhZmQwOTgzNmExYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6b2bf7a18a9143e6bff826b0186e8fba",
+      "statement": "isStorableIdentifier requires a single path segment (non-empty, not . or .., no /, \\, or NUL byte) and is checked by save, load, and list alike; save of a rejected identifier throws naming it and writes nothing, load resolves undefined, and list omits a directory so named.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L282-L306",
+          "version": "repo-lines-v1:sha256:6163d23a399d81029445a39e324635f71bfa3a64783ccd8a05547714231b3a6f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2Yjg1ZGI4ZTI4YjI4ODZlMzExMmRjZDJhZjgzNzA5NjYzNjEwOWFkNjdkNzQyZDhlZDY5ZDg1MDVmM2JhYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE5YmYxMTJiMmI0ZTliN2E5NDZkMzRhYTk5MmFiYjA3ZDVhZmFjOWUwYTAwNDMzZjczMjllZTMwZTIyYmEzMmEifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L79-L90",
+          "version": "repo-lines-v1:sha256:b25a7f336204691426a85fa357ead09d37e2a1e5df272a61ec19a51f622f006f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YTZkNTJlNWQ2YTU0ZDBmNmJiZjc5ZDJiMDJlNDVjZTViN2IzNmRkMzIzN2QwNzI1ZjY4MGNlMjVlMDJlMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhNWE1N2Q1ZWUzNmJmNGU2OWE1ZjY3MGRjOGE4NzZjOTUwZjQ1OTM2MmUwNTVmYjZkYTRmMjY2ZmNiNTZkZDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjOTZmNDA5ZGFjZTExNWU5NmMzMTNkNDEyODI1M2ZhZWI0ZDgxMzI0OTc4MGZkMzMwODc2Y2ZhN2JiNDA3NTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhODQwZDQ0YmY0MWNhYmUzM2ZiMWNmMDc1MWZlZDAwNjY3NzViMzA5Y2MwODBjZDEwNWJlYWZkMDk4MzZhMWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_af86c4a034f94c918164e2e159c07900",
+      "statement": "save stages each file under <target>.<randomUUID()>.tmp in the target directory, calls handle.sync() as a durability barrier before any rename, then renames both onto their targets with session.json first; a failure before the renames discards every staged file and leaves the previous revision exactly as the last successful save left it.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L361-L444",
+          "version": "repo-lines-v1:sha256:de9f3d1bb72d7ec84b41e9070669305c53386355791f20a9df609bfb5068025b:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MmE0MjkzODJiMmUxNDcxOGUwZTM3YjA1NzBhOGExNzAyOTkxZmNkODQ5OGNkODQwNjBhOGJmNGYwNTAxN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlZWE0MzI2MmI1MzZmOWQ0YWM5MzMzMjNjMTIwNDBlY2VkYTc0YWI3YmYyNjkyMjhjYzkwNGMyOWYxZTVmNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2M2Y2N2VkNGYxZTBjY2U0ZjA5OWI2NGFhNGJlNjlhMTMzOTBjNzQ2NjY5Njk3MzBhMjg4NWFjNmI3MDUxZTYifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L57-L82",
+          "version": "repo-lines-v1:sha256:5d581c32a2f775b660fcc626aaf632bbd9b73c073f0d784d3b09ecb9fa278e38:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyNWZkYTM4NTRjNjY4Y2Y4MDUyODJjNzVmMDdkMjdjZmQ5NDA0NzY0NDRlNTMwM2M1OGQxOWJkYzVhNmViZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MmFiNTZlMTkzZmJkMzMyZmZjMDcwOWE4NzllYjAxZGQzOWZmOTI1NTkyMDM3M2NlM2MyNjc4N2Y0NDdkMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJiZWJhYzIxYTY4YjA0M2I1ZGI1ZGZjNzA1YzU3ZWM1NjNkZmNhYmVlNGViMGJhNDhmYWQ2YmU2NjJiNTNlMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlOWJhZGE0YTIxOTAyYTk0MWUyZGI1ZDViNzllYjBjZDNjM2RiY2Y3YWU0MDQyNDcyZGVkNjU1YTYwYTEwYTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e570a6e84a494a2b93d9b833c2a62706",
+      "statement": "The store deliberately does not fsync the session directory or root after the renames: a lost rename leaves the previous revision whole, the same outcome as a save that never ran, and the only residue a failure between the two renames can leave is a transcript lagging its state.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L361-L375",
+          "version": "repo-lines-v1:sha256:bfee9f4465cafa19e67a75fea692ca3481e1b31134e5a3c3fa1925c4b53843f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MmE0MjkzODJiMmUxNDcxOGUwZTM3YjA1NzBhOGExNzAyOTkxZmNkODQ5OGNkODQwNjBhOGJmNGYwNTAxN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlZWE0MzI2MmI1MzZmOWQ0YWM5MzMzMjNjMTIwNDBlY2VkYTc0YWI3YmYyNjkyMjhjYzkwNGMyOWYxZTVmNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllZmVkMGYxYmYxYzU0NjBhMGU2MzQxMzBiYWRhMGViMDQ4OTMwN2M1MWQ1NWFmMjBkYWIzZDIyYzdkMmJiYTMifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L71-L82",
+          "version": "repo-lines-v1:sha256:e2d1b5489aaf7549fa13b4feada3a49df569e6b420b17764a7a71cb899f4bab0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwODE1YzNlMmJmYWE4MTM1NzlhZjE0NjdkMGU3MmQzYzQ3MjAyMzI4NDA5NTU0MmMzZDQxODQyNGNhNTFjNmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MmFiNTZlMTkzZmJkMzMyZmZjMDcwOWE4NzllYjAxZGQzOWZmOTI1NTkyMDM3M2NlM2MyNjc4N2Y0NDdkMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhOGVmNjIwNzAyZGYyOWRhNGEwYjJkYjZmMTM1ZTEyNTRjYjVhYjc1N2MzYWQwODcyZWUzOGQ1ZjY3MTIzOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlOWJhZGE0YTIxOTAyYTk0MWUyZGI1ZDViNzllYjBjZDNjM2RiY2Y3YWU0MDQyNDcyZGVkNjU1YTYwYTEwYTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_47daa32415d04d4a91029bb4e58eac2a",
+      "statement": "Every directory the store creates is mode 0o700 and every file 0o600, set at creation via mkdir mode and open mode and carried onto targets by rename, because a session holds unpublished product ideas and the default umask would expose them to every account on the machine.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L17-L18",
+          "version": "repo-lines-v1:sha256:ac923115243dc2663e9e6e82be91706de0e824c3b300d041f02abc03505307f6:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzUwY2ZhYTNhOTRiYjczNDM2MTY1OTI3MDE5MjRlZTNhNjFkNzQyODU3OTNiNzk3OTVkMWY1ZTk3YjU3NjM2NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGIwYmFmNDdiYmI4YTk0MzcyNDA5MTQ5NDQ4MmE4ZTVkZjNmYjQxMWRkMjdlYzI4ZjcyYzRmNjVlNDZkN2Q5OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDJhN2NmZTZhODlkMTdhODg5NmFhYjdkNzZiZjU1ODNhZjQ0MTIxZGZhYTc3MTNiZWViMzg3YzNlYTE4MTg2MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzBkOTUzNWU4ZjRlYjNkNmJjOWY5ODRkMGRjMDgxZjIxOWFhMmM5ZjQ2MmUwY2MxZGZlM2M5MWYzNzhiZjQ1YyJ9"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L95-L113",
+          "version": "repo-lines-v1:sha256:1aef440093e2a367ddef333f00c4c7cf8c4807ecac267a85f5c934feb3a043f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZjNlZjZhZDQ0MDM4NzUwNjBjNjQyNGMxMjI0ZWU4ZTU2MDZiNDQxNDIyNTcxMjg0ODM2YTJiOTA0YjYwZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmMTQxYTJmZDQ4NjkwNWMxOTExMDc1NGE4MTNlODcyMzRkNjJiMWM2ZTM1Mzc1NjQ1NzA3ZjczZDJkODAzN2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyZjkxMDg3ZDcxYzIzMTlkMmVkN2ZhNGMyZGRmMzc0YjFlZGMxOGUwNDFlZjc1MjE5OWI1YmFlZGEzNWYxYWMifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L84-L109",
+          "version": "repo-lines-v1:sha256:090f9c9d428afb0173d55618b8b538f17fed804fd7551a9a505e2e6dc5fb20ce:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3ZjE0MDE2MGJjZmI5M2E3M2NkMjQ3ZDZkN2Q0MTVkNWI0NGE3NzFmNjQ4MzA2NGZjZjdmZjJiMzliNjUyNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2YzVkYzVlODM5MzM3ODkwMjcxZGQyOTYyYTRiZWYxZmE4YzZkZDMwNmM3YmU1MzIwNTI2YWVhZTQ4YmNkNzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YzIxOGVhYzNmZjlhMTQyZjViYzNhYWU5NDgzOGZkNjNkZTMzZTg3NjhlOGQyYmQzODIxZDNmNDdiNjkxMTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3ODY5NzBjN2ZiMjY5NThiYTIwM2E5NDYyMTJlNmE2YTY3ZTUxNTYwZjQ5YzA5N2ExOWFmZjkwNjUxODY1ZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f50382eeb40c4ca1bcb7bf5e699ac973",
+      "statement": "sessionStoreConfigFromEnv is a pure function of a passed environment record that resolves CHRYSALYST_SESSION_DIR to an absolute path and defaults to join(homedir(), '.chrysalyst', 'sessions'), touching no file so no dotenv loader enters the dependency set; it mirrors llmConfigFromEnv.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L128-L152",
+          "version": "repo-lines-v1:sha256:abdf17c481956216c56ad42f4ee6d62db48a142bf4285cec5232ac154555000e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmMDFhMWFlODc1ZjNjM2I5ZjI5ODNlOGYxM2Y0MTBiMjg4MWIzMGEyN2NjNTE4MDUzMjRlMzMzOTZlMmNmN2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjMWVjY2I3MjVmMGJlNjA5NzM4ZTYzMjU4ODkwMWIyYzg1Zjc5YmM4NGIyMDE2M2NiZjVkMzI1NGUyMTE0MDUifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L108-L115",
+          "version": "repo-lines-v1:sha256:90669525a446837cfa90c87f57afd5c6f07d3cd865fef746bab8fb91a26ae267:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmI2NjgwZWI3MmYwY2VhN2ZjNzE0NDhmZDgwNzlmN2FlMTdkOGRmYzJjNDRkNThhNDhiMTQ2MTA1OGI1YTRhNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWZjZDJlMmM3MDUxNGNmZjM0NWRmZDU4ZmE5MjJkN2MwOWZhM2E1ZTU2MDZlODI3YzFiNmJjNDJlMjIzYjM3NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTExMWMzY2JhYzE3YzFjMGVhODAyMzQxOGYzMmFlY2ViMDEyODA1MmQzYzc2ODIyMTU0MTI3NjZmMTJlNWNlNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c8dac154e0b043a19b85a7ee307bd422",
+      "statement": "The adapter's test suite runs fully hermetically on two seams: a per-test mkdtemp sandbox with storeRoot one level below it that the store creates itself, and a vi.mock of node:fs/promises whose injection modes observe sync/rename order and fail a handle's write, sync, close, or a staged file's removal; there is no *.live.test.ts for this adapter.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.test.ts#L20-L122",
+          "version": "repo-lines-v1:sha256:853e3c9ddd744d8c2158838acc10e644c914ad3ef440ca2d28733ec928e20a8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkOTk1YTE4Yjk3Yzc3M2U5MTJiYWNlZmVkYzIwMDQzNWFhNzI3NTY3NDcxNWI1MWRkNzNjNDc3MWFmN2M3YThjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwZTMyZWJhMDE0NGRkZTFiYmRlMWJhNWI4YTUzZWUyMDM4MTg4ZmFjNmZlM2Q5OGNhNTY1NDBhNTc3ZTI2ZWQ5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5MjA2YmE2MGY3NTQ5Njc2Y2IwZjI0ZDA1YWJkZTg3NjIwNzYxYTUzOTE3MzQzYjgzYTYxYWNkZWU2MGM0YWI1In0"
+        },
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L80-L82",
+          "version": "repo-lines-v1:sha256:bd4a03c162ff8b9ee68f5f53272a39d58e6725f5130ce7455cb706decf04a00f:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmFkYTA0MjdiNzljYWExYTQ1NDRhMDIzNWU2ODBmOGJkYzNjNDE1NTUyYzcyNDA1MGQ1NTRiMWY5Zjk4Y2FiMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQyYWI1NmUxOTNmYmQzMzJmZmMwNzA5YTg3OWViMDFkZDM5ZmY5MjU1OTIwMzczY2UzYzI2Nzg3ZjQ0N2QxZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTU2MjY5MmQ3MDI5ZmZmMzljZjU1ZTdhMzQxZjVmY2Y5MTc5MDI2NTk4MjZiNTczMTQ4ZmZkMGViNWQwYTJmYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGU5YmFkYTRhMjE5MDJhOTQxZTJkYjVkNWI3OWViMGNkM2MzZGJjZjdhZTQwNDI0NzJkZWQ2NTVhNjBhMTBhMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1ef48d7415ee46139d2910b0b541199f",
+      "statement": "The filesystem session store is the first real SessionStorePort implementation and fulfils roadmap milestone M2, recorded as 003-add-filesystem-session-store.",
+      "evidence": [
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L1-L5",
+          "version": "repo-lines-v1:sha256:08c1f877999d6eba3e525e30363910a6c09f9bc7c86c22108fbe230bf10f8094:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzNmNmEwOTdkMDFiYzgxNjkyYWM2ODQxN2Y2ODYyNDBmZTA5NGU0NzNlZTEwMmNmYTZjM2YzOWRkOWI2ZDhhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmI0YzkwZmJjOGIzYmM0OTIxZjRlOTM2ZDA3MmFmNmM0NDY2ZWFiM2RmMGFhYmY5MGY2ZjYxZDk1MjA2MDY5NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmQ0YjM3NDhkOTU2N2M1MGY5NTdkNGZhOWU0OGY4NjZjNzgxOGVkNzU0YzI2ZGFmNjMyMTg4MDVjMjUzMjgyNyJ9"
+        },
+        {
+          "resource": "repo://specs/roadmap.md#L130-L148",
+          "version": "repo-lines-v1:sha256:06e05c68d55314c819875510ef05983cd1a59eaae566dbd7921d8f5e16009364:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMTY0YzFjMmU3OWIyYWY1YzgwYmZlZWNhMTJjNzQwNzQxNDBjZmRmMGQ2YjE2NzUwZmUzYmJlN2M4NTc4ZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNGRjZmVkZWIzOTEyNGMzOWViMzgxN2I3Nzc5MmVlYTgzZTZlZTcyODA0MTVjZDM5NzhkMDI3YjU5MDY4N2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MmFiYzM0YzQxYWJhNTUwMjhkYzc2M2Y2NzQ4NGQ1NGQxN2VmNWMzNzQ1YTQ2YjUyMjI2YjIxY2FhODBhMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZDk4ZGM4Y2ViYTk3NmU2YjUxNjQwZWEwMTAzZjhiZmM3MjM5NjgzNmUzNjAyOTZmYzc3MTk5MGZhNTg1OTQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-09T13:28:50.488Z"
+  }
+}

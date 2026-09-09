@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:1aad0e1dd93220c1d4eb8622d0d6ee89026dc80285cdcb62bd8ae8164e268d67",
+  "pageVersion": "sha256:c56d3d56620e44e85273e03f00c193ed0a198ec7ca63b14745cdbbe9aa6751d0",
   "claims": [
     {
       "id": "claim_a9fcab16515c4bbdba128c5c12021b03",
@@ -80,11 +80,11 @@
     },
     {
       "id": "claim_fcaa83c6fdde41d8b63282a8d1f42a82",
-      "statement": "specs/roadmap.md orders work as milestones M0..M18 plus one post-v1 milestone P1 and two chores (C1 openwiki --init, C2 minimal CI); M0 and M1 are done and everything else is open, with M2 (filesystem session store) next.",
+      "statement": "specs/roadmap.md orders work as milestones M0..M18 plus one post-v1 milestone P1 and two chores (C1 openwiki --init, C2 minimal CI); M0, M1 and M2 are done and everything else is open, with M3 (walking skeleton + engine spike) next.",
       "evidence": [
         {
           "resource": "repo://specs/roadmap.md#L52-L76",
-          "version": "repo-lines-v1:sha256:7727dd161a64ac8d67d08461879e05033289f9a3fc7887f54f55243dcb87df6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwODhlYTJlMDY0YWU2NWJkMWZiNjY4NTNmNTFjZmNjYzdjOGQ2NWMzNzQxZWI0YTM5MjVhY2UyMmJkZWZkZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyNGZhZWNiMTQ1OTQ0MjM2ZjA1ZjA5YzBhZjJlZWZhZjkyMDYwYTNmYTRjMzAxZWVmYjVjNDBlODVmOTczNTAifQ"
+          "version": "repo-lines-v1:sha256:1eeb2572ab266dd324281d0a5fdb4e5985a65b49fb3f053536dec3ae77823fdb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwODhlYTJlMDY0YWU2NWJkMWZiNjY4NTNmNTFjZmNjYzdjOGQ2NWMzNzQxZWI0YTM5MjVhY2UyMmJkZWZkZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyNGZhZWNiMTQ1OTQ0MjM2ZjA1ZjA5YzBhZjJlZWZhZjkyMDYwYTNmYTRjMzAxZWVmYjVjNDBlODVmOTczNTAifQ"
         }
       ]
     },
@@ -111,10 +111,38 @@
           "version": "repo-lines-v1:sha256:ad70ecf3f468c1e5b8b1399958e43598b922612bc9bdafaff793a0abe6f771ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNzViMWM5OTEwMjZmYmEzZmEyNDM3ZGFmZjc4NWIyOGYzYWRiMmRkZTFlNjgwZjBhZTgzMWZhMzk5YWI3YjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MmUwZDY4MzNjYjI1ZjY4YzM3ZTI0ODY1Yzk3ZDFhNzYzMzAyMzIwMzA3NTE0ZTMxNjg3ZjQwNmZiZGMwNjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4YzE4ZWYzZDUwMzQwOTRjZDQ5MzRiMmU1YTJhYWIxNmE0NzJmZjdmYzI2OTM5MmUwOGYyNWViNWExNjUwMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxNThiOTdlMzdiN2Y5YzhhMjAyNWQ4ZjU4ODRiOWUxMzYxZThlODk0NjUwZTdjZjBhMWQ2ZjQ4NDkzZmI4ZTcifQ"
         }
       ]
+    },
+    {
+      "id": "claim_e831ab5538fd467386d8b2b23d72659c",
+      "statement": "specs/adapters holds two features, ollama-llm-adapter and filesystem-session-store, and three plans are recorded: 001-add-monorepo-scaffold, 002-add-ollama-llm-adapter, and 003-add-filesystem-session-store.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_recorded/003-add-filesystem-session-store/plan.md#L1-L12",
+          "version": "repo-lines-v1:sha256:f89a1710a1ce8578e99de18debdac2c823e4842460b4cdbd6f5044a3c6cb21a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4N2I3NTM4MzBiODVhMDI0NWMxNGMxNWU3MTk0OWQxMWNmMWJlMTc4Y2JiM2JjMmJjYWM1NjYwNDU3NzU5MzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1YmViYTJlNzc1MmJkYThlN2U1NmEyZjViOGMyMWUzYmM3Mjc2NjIzMDVkMDRkNTgzNWNiNGQzYmI1MmZmNmMifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L1-L5",
+          "version": "repo-lines-v1:sha256:08c1f877999d6eba3e525e30363910a6c09f9bc7c86c22108fbe230bf10f8094:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzNmNmEwOTdkMDFiYzgxNjkyYWM2ODQxN2Y2ODYyNDBmZTA5NGU0NzNlZTEwMmNmYTZjM2YzOWRkOWI2ZDhhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmI0YzkwZmJjOGIzYmM0OTIxZjRlOTM2ZDA3MmFmNmM0NDY2ZWFiM2RmMGFhYmY5MGY2ZjYxZDk1MjA2MDY5NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmQ0YjM3NDhkOTU2N2M1MGY5NTdkNGZhOWU0OGY4NjZjNzgxOGVkNzU0YzI2ZGFmNjMyMTg4MDVjMjUzMjgyNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3d2dc4ad2f54497c94a09447a38f5392",
+      "statement": "003-add-filesystem-session-store.md promotes five ADRs: the absence-versus-corruption read policy, schemaVersion on the envelope, fsync-before-rename durability, owner-only file modes, and the SessionStorePort contract change that load may reject over a present-but-unreadable record.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L1-L28",
+          "version": "repo-lines-v1:sha256:cc15239f2d914d00e1f6ff1d8a4e150212230e3d747aa887f505882aa17218e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwYmIyMzE4MTQ1YzhkMDU1ZWZhNTQyN2Y1NDY1OTcyOTIwZDEwYjc3MzkyN2ZlZTg3YTA4ODNiNzdkM2Q5MTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNzIzMjgwNTZmYTQzYzFmNzEyNDEwNDYzMGY5OWY0Y2JhZDIyODhkMGFjMmUxOWZiMDkyYzBhNzYzYjgyYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2ZjJiNzhiOTA0NjA0NGZkNTcwNzRiZmU0Mzg4MzlkMDdmMDZkOTM2MGE4OTkwMzliMTgxNDBjNWQ1ZWY5ZmEifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/003-add-filesystem-session-store.md#L111-L136",
+          "version": "repo-lines-v1:sha256:0c867c6395884e7226eac80cd5a812fdda60de56d3132bf826d8fdcd52b60b9f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3OTRmNzRhOThmNGM1MTljODczNTY2MGMwN2E3MmZmNWExZmM0MzliOTFhODY2YjQ0MWJlYTY3MzA3NzBjNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4MTM5ZDMzYTAxM2M5YTRlYTkxNDNlMjMwYzllZmY5YmE3NWJhZDBiODBlOGE5MTUxYzUyNDQ4Yjg3NTU4MTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEzNzAxNjUxMDM4NDQ1ZmJiNjU3MGE5MWIwYzdlZmU3MjRhM2UxNGMxYzNiYWE2ZTk2Nzc1NTE4YmUwODk1MTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-07T20:27:51.484Z"
+    "at": "2026-09-09T13:28:50.488Z"
   }
 }

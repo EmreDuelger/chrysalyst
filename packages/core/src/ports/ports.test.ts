@@ -59,6 +59,32 @@ function memorySessionStore<TState>(): SessionStorePort<TState> {
   };
 }
 
+const UNREADABLE_RECORD = Symbol('a record present but unreadable');
+
+function guardedSessionStore<TState>(
+  unreadable: readonly SessionId[],
+): SessionStorePort<TState> {
+  const stored = new Map<
+    SessionId,
+    StoredSession<TState> | typeof UNREADABLE_RECORD
+  >(unreadable.map((id) => [id, UNREADABLE_RECORD]));
+  return {
+    async list() {
+      return [...stored.keys()];
+    },
+    async load(id) {
+      const record = stored.get(id);
+      if (record === UNREADABLE_RECORD) {
+        throw new Error(`session ${id} is present but cannot be read back`);
+      }
+      return record;
+    },
+    async save(session) {
+      stored.set(session.id, session);
+    },
+  };
+}
+
 function stubSearch(hits: readonly SearchHit[]): SearchPort {
   return {
     async search() {
@@ -149,6 +175,18 @@ describe('SessionStorePort', () => {
     await sessions.save(draftSession('session-2'));
 
     await expect(sessions.list()).resolves.toEqual(['session-1', 'session-2']);
+  });
+
+  it('rejects a load over an unreadable record, reserves undefined for one never saved, and lists without rejecting', async () => {
+    const sessions = guardedSessionStore<DraftSpec>(['session-2']);
+    const saved = draftSession('session-1');
+
+    await sessions.save(saved);
+
+    await expect(sessions.load('session-2')).rejects.toThrow();
+    await expect(sessions.load('never-saved')).resolves.toBeUndefined();
+    await expect(sessions.load('session-1')).resolves.toEqual(saved);
+    await expect(sessions.list()).resolves.toEqual(['session-2', 'session-1']);
   });
 });
 

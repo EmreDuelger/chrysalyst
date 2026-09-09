@@ -6,3 +6,5 @@ pnpm-lock.yaml
 specs/
 .serena/
 .claude/
+openwiki/
+.github/workflows/openwiki-update.yml

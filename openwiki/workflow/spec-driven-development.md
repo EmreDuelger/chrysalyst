@@ -3,9 +3,6 @@ type: workflow
 title: Spec-getriebene Entwicklung (speq)
 description: Wie chrysalyst sich entwickelt — der speq-Lebenszyklus mission → plan → implement → record, das specs/-Verzeichnislayout, die Meilenstein-Roadmap mit ihren Leitplanken und die ADR-Beförderung im decision-log.
 tags: [workflow, speq, spec-driven-development, roadmap, adr, process]
-verified:
-  - by: openwiki/0.5.0
-    at: 2026-09-07T20:27:51.484Z
 sources:
   - id: openwiki-source-8037e2358a2c4f9b2c722a11
     resource: repo://AGENTS.md
@@ -13,17 +10,26 @@ sources:
     resource: repo://CLAUDE.md
   - id: openwiki-source-0c0f824f90b5cb267847f935
     resource: repo://specs/_decision/002-add-ollama-llm-adapter.md
+  - id: openwiki-source-0e06dd8dca1a5b09ef9998b2
+    resource: repo://specs/_decision/003-add-filesystem-session-store.md
   - id: openwiki-source-036a781dce1c104f30b0e058
     resource: repo://specs/_recorded/001-add-monorepo-scaffold/plan.md
   - id: openwiki-source-61eb124c04322f3f00e4805b
     resource: repo://specs/_recorded/002-add-ollama-llm-adapter/plan.md
   - id: openwiki-source-38dee3393ae874bc2be2a36f
     resource: repo://specs/_recorded/002-add-ollama-llm-adapter/verification-report.md
+  - id: openwiki-source-f456d7350e9ff3cd973128ab
+    resource: repo://specs/_recorded/003-add-filesystem-session-store/plan.md
+  - id: openwiki-source-8f43520ecd17db2dd2f46900
+    resource: repo://specs/adapters/filesystem-session-store/spec.md
   - id: openwiki-source-27db56ec5f5b550679beca36
     resource: repo://specs/platform/monorepo-workspace/spec.md
   - id: openwiki-source-a0a8fcea3fc317de88a8e08c
     resource: repo://specs/roadmap.md
-generated: { by: "claude-code", at: "2026-09-07T20:27:51.484Z" }
+generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
+verified:
+  - by: openwiki/0.5.0
+    at: 2026-09-09T13:28:50.488Z
 ---
 
 # Spec-getriebene Entwicklung (speq)
@@ -70,9 +76,10 @@ Fix Spec-Verhalten, zurück in `/speq:plan`); reine UI-Politur direkt über
 | `specs/_decision/NNN-<name>.md` | Zu ADRs beförderte Entscheidungen |
 
 Aktuell hält `specs/platform/` acht Features (u. a. `monorepo-workspace`,
-`llm-port`, `http-server`, die vier Port-Verträge), und `specs/adapters/` das
-eine Feature `ollama-llm-adapter`. Zwei Pläne sind bisher aufgezeichnet:
-`001-add-monorepo-scaffold` und `002-add-ollama-llm-adapter`.
+`llm-port`, `session-store-port`, `http-server`, die Port-Verträge), und
+`specs/adapters/` zwei: `ollama-llm-adapter` und `filesystem-session-store`.
+Drei Pläne sind bisher aufgezeichnet: `001-add-monorepo-scaffold`,
+`002-add-ollama-llm-adapter` und `003-add-filesystem-session-store`.
 
 ### Feature-Specs abfragen
 
@@ -86,14 +93,17 @@ Beim `/speq:record` werden die dauerhaft relevanten davon zu **ADRs** in
 `specs/_decision/NNN-<name>.md` befördert (mit `ID`, `Status`, Context,
 Decision, Options Considered, Consequences). `002-add-ollama-llm-adapter.md`
 enthält z. B. vier ADRs zur SDK-Wahl, zur Versions-Pinnung, zur Live-Test-Stufe
-und zur Parametrisierung des Backends.
+und zur Parametrisierung des Backends. `003-add-filesystem-session-store.md`
+hält fünf: Abwesenheit vs. Beschädigung beim Lesen, `schemaVersion` am Envelope,
+die `fsync`-vor-`rename`-Barriere, die Owner-only-Modi und die
+Port-Vertragsänderung, dass `load` bei Beschädigung ablehnen darf.
 
 ## Die Roadmap
 
 `specs/roadmap.md` ordnet die Arbeit in Meilensteine **M0…M18** plus einen
 Post-v1-Meilenstein **P1**, dazu zwei Chores (C1 `openwiki --init`, C2 minimale
-CI). Stand: M0 und M1 erledigt, alles Übrige offen; M2
-(Dateisystem-Session-Store) ist der nächste.
+CI). Stand: M0, M1 und M2 erledigt, alles Übrige offen; M3
+(Walking Skeleton + Engine-Spike) ist der nächste.
 
 ### Sequenzierung: Walking Skeleton
 
@@ -112,7 +122,7 @@ Interviewführung) nur an einem echten Modell falsifizierbar ist. Details:
 | `LlmPort`-Adapter | Vercel AI SDK (`ai` v6) in `packages/server`, hinter dem Port; `packages/core` importiert es nie | fest |
 | Strukturierter LLM-Output | `Output.object()` + zod-Schema im Adapter; der `LlmPort`-Vertrag bekommt in M10 eine Antwortform | fest — Delta in M10 |
 | Kein Cloud-LLM-SDK | Weder Anthropic- noch OpenAI-SDK irgendwo im Produktcode | fest |
-| On-Disk-Session-Schema | Jede persistierte Session trägt ab dem ersten Schreiben ein `schemaVersion`-Feld | fest — ab M2 |
+| On-Disk-Session-Schema | Jede persistierte Session trägt ab dem ersten Schreiben ein `schemaVersion`-Feld | umgesetzt — `schemaVersion 1` am Envelope seit M2 |
 
 ## Unterstützende Werkzeuge
 
@@ -126,4 +136,5 @@ lebende Wiki (Agent-Kontext #1, siehe `AGENTS.md`).
 
 - [Architekturüberblick](../architecture/overview.md) — die Meilenstein-Reihenfolge im Bild
 - [Domänen-Ports (@chrysalyst/core)](../architecture/domain-ports.md) — die Feature-Specs `core-ports-contract` und `llm-port`
+- [Dateisystem-Session-Store-Adapter](../architecture/session-store-adapter.md) — die fünf ADRs aus `003`
 - [Quickstart](../quickstart.md)

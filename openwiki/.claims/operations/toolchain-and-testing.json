@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:a0b50d2a50f1298d7529daa43c42710fc99e6cda1e16409f960c527bda1dedc6",
+  "pageVersion": "sha256:df08f17cd887c96e56b475da92a901ae195b2f36d585237bccd8e2c8fb9880a5",
   "claims": [
     {
       "id": "claim_46564d5605e941d38fb088ba19b801bd",
@@ -125,10 +125,24 @@
           "version": "repo-lines-v1:sha256:6e1fbd9d70b92c84e603084231230e1e44748ad0def246e7ab6911ea03bbeac4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiN2FjNzI0NmIxZWE3NmI0M2ZmOWUyNmM2NDJjMWM4NzA1NTQ3ZjlkM2I3N2U2YmIyYjQ5ZDA5NzMwOTIwMmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1YmE4NTNhMzMzMTVjMDE2NzZhMzE4NjFlM2YzZDkyM2Y0NTliNDNjZWRkMzhlODlmNDNkMDRiMjU1ZTBiMzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIifQ"
         }
       ]
+    },
+    {
+      "id": "claim_3f759006185e49df9fb592c1687d239a",
+      "statement": "The hermetic test tier drives adapters through injected seams of two shapes: the LLM adapter through a config.fetch stub, and the filesystem session store through a mkdtemp sandbox plus a vi.mock of node:fs/promises whose injection modes observe sync/rename order and fail a handle at write, sync, or close, or fail a staged .tmp file's removal.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.test.ts#L1-L40",
+          "version": "repo-lines-v1:sha256:31943c95722e700e010b9d8ea889809b0e1071123631e3d0d6037ffc803e95ed:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YWRjNmU5Y2ExNjhjYTVkMmFhMGVjM2IwMjdiNTk3ZGY1NGI1ZDEzN2Y5Zjc4ODU0MzkwMGI4NTZiNmUyODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5NzhlMjUwM2I4Y2YzN2EwNmY3ZDZmMGEzYTZiNmZlMzU2OTFmYmNhYjUwYjg3NzVjYWI2ZmFiYzcxYzU5MmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyY2YyYzJhODliZWYzYzY2ZjJkNTRhZThiMDk5MDY5ZjZiOWUxMWVhOTc4N2I4OTUzZGNmY2RjMDdkMzdlMzQifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.test.ts#L20-L122",
+          "version": "repo-lines-v1:sha256:853e3c9ddd744d8c2158838acc10e644c914ad3ef440ca2d28733ec928e20a8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkOTk1YTE4Yjk3Yzc3M2U5MTJiYWNlZmVkYzIwMDQzNWFhNzI3NTY3NDcxNWI1MWRkNzNjNDc3MWFmN2M3YThjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwZTMyZWJhMDE0NGRkZTFiYmRlMWJhNWI4YTUzZWUyMDM4MTg4ZmFjNmZlM2Q5OGNhNTY1NDBhNTc3ZTI2ZWQ5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5MjA2YmE2MGY3NTQ5Njc2Y2IwZjI0ZDA1YWJkZTg3NjIwNzYxYTUzOTE3MzQzYjgzYTYxYWNkZWU2MGM0YWI1In0"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-07T20:27:51.484Z"
+    "at": "2026-09-09T13:28:50.488Z"
   }
 }

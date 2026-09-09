@@ -3,9 +3,6 @@ type: architecture
 title: Architekturüberblick
 description: Die hexagonale Struktur von chrysalyst — die drei Pakete core/server/web, die Abhängigkeitsrichtung, die Auflösung über TypeScript-Quellcode und die meilensteingetriebene Walking-Skeleton-Baureihenfolge.
 tags: [architecture, hexagonal, monorepo, ports-and-adapters, roadmap]
-verified:
-  - by: openwiki/0.5.0
-    at: 2026-09-07T20:27:51.484Z
 sources:
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
@@ -13,6 +10,10 @@ sources:
     resource: repo://packages/core/package.json
   - id: openwiki-source-d265cc7c06dcbefb6f92a01b
     resource: repo://packages/core/src/index.ts
+  - id: openwiki-source-aabd04ae8e74d1778fabc2fb
+    resource: repo://packages/server/src/adapters/llm/openai-compatible-llm.ts
+  - id: openwiki-source-71e3a7de53c44488096fed02
+    resource: repo://packages/server/src/adapters/session-store/filesystem-session-store.ts
   - id: openwiki-source-d952717f7ba616148cf6047b
     resource: repo://packages/web/src/App.tsx
   - id: openwiki-source-40275cb92c3610938f16ade3
@@ -25,7 +26,10 @@ sources:
     resource: repo://specs/roadmap.md
   - id: openwiki-source-1eddfe2a3e905b4c50618167
     resource: repo://tests/workspace.test.ts
-generated: { by: "claude-code", at: "2026-09-07T20:27:51.484Z" }
+generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
+verified:
+  - by: openwiki/0.5.0
+    at: 2026-09-09T13:28:50.488Z
 ---
 
 # Architekturüberblick
@@ -43,7 +47,7 @@ Der pnpm-Workspace enthält genau drei private Pakete unter `packages/`:
 | Paket | Rolle | Abhängigkeiten |
 |-------|-------|----------------|
 | `@chrysalyst/core` | Die Domänengrenze: [Ports als Typen](domain-ports.md), keine Implementierung | keine Laufzeit-Abhängigkeit |
-| `@chrysalyst/server` | Adapter + [HTTP-Prozess](http-server.md); enthält den [LLM-Adapter](llm-adapter.md) | `@chrysalyst/core` (workspace) + `hono`, `@hono/node-server`, `ai`, `@ai-sdk/openai-compatible`, `zod` |
+| `@chrysalyst/server` | Adapter + [HTTP-Prozess](http-server.md); enthält den [LLM-Adapter](llm-adapter.md) und den [Dateisystem-Session-Store](session-store-adapter.md) | `@chrysalyst/core` (workspace) + `hono`, `@hono/node-server`, `ai`, `@ai-sdk/openai-compatible`, `zod` |
 | `@chrysalyst/web` | Browser-Shell (Vite + React) | keine interne Abhängigkeit |
 
 ### Abhängigkeitsrichtung
@@ -80,15 +84,17 @@ Das Projekt ist früh. Vorhanden und getestet:
 
 - die vier Domänen-Ports als Typen (`LlmPort`, `SessionStorePort`, `SearchPort`,
   `ClockPort`) plus `CoreDependencies`
-- der erste echte Adapter: der [OpenAI-kompatible LLM-Adapter](llm-adapter.md)
-  für Ollama
+- zwei echte Adapter: der [OpenAI-kompatible LLM-Adapter](llm-adapter.md) für
+  Ollama und der [Dateisystem-Session-Store](session-store-adapter.md) über
+  `~/.chrysalyst/sessions/<id>/` (JSON-Envelope mit `schemaVersion` plus
+  Markdown-Transkript)
 - der [HTTP-Server](http-server.md) mit einer einzigen `GET /health`-Route
 - die Web-Shell — derzeit ein einziger `<h1>chrysalyst</h1>`-Platzhalter; das
   visuelle Design kommt mit dem ersten UI-Feature
 
 Es gibt **noch keine** Interview-Engine, keinen Fragebaum, keine Destillation,
-keine SSE-Route und keinen CI-Workflow. Der LLM-Adapter ist noch nicht an die
-Hono-App montiert.
+keine SSE-Route und keinen CI-Workflow. Weder der LLM-Adapter noch der
+Session-Store ist an die Hono-App montiert.
 
 ## Baureihenfolge: Walking Skeleton, dann vertiefen
 
@@ -104,8 +110,8 @@ das ist nur an einem echten Modell falsifizierbar.
 |-------------|-------|
 | M0 Monorepo-Scaffold | ✅ erledigt (`001-add-monorepo-scaffold`) |
 | M1 Ollama-LLM-Adapter | ✅ erledigt (`002-add-ollama-llm-adapter`) |
-| M2 Dateisystem-Session-Store | ⬜ offen — der nächste |
-| M3 Walking Skeleton + Engine-Spike | ⬜ offen |
+| M2 Dateisystem-Session-Store | ✅ erledigt (`003-add-filesystem-session-store`) |
+| M3 Walking Skeleton + Engine-Spike | ⬜ offen — der nächste |
 | M4…M18, P1 | ⬜ offen |
 
 Zwei Chores stehen daneben: C1 (`openwiki --init` — dieses Wiki) und C2
@@ -121,7 +127,8 @@ Entscheidungen, die für die ganze Roadmap gelten:
 - **`LlmPort`-Adapter = Vercel AI SDK (`ai` v6)** in `packages/server`, hinter
   dem Port; `packages/core` importiert es nie.
 - **Kein Cloud-LLM-SDK** irgendwo im Produktcode.
-- **`schemaVersion`** auf jeder persistierten Session ab M2.
+- **`schemaVersion`** auf jeder persistierten Session ab M2 — vom
+  [Session-Store](session-store-adapter.md) mit `schemaVersion 1` umgesetzt.
 - **Engine-Struktur** (hand-gerollter Zustandsautomat vs. LangGraph.js) —
   offen, Wegwerf-Spike in M3.
 
@@ -129,6 +136,7 @@ Entscheidungen, die für die ganze Roadmap gelten:
 
 - [Domänen-Ports (@chrysalyst/core)](domain-ports.md)
 - [LLM-Adapter (OpenAI-kompatibel / Ollama)](llm-adapter.md)
+- [Dateisystem-Session-Store-Adapter](session-store-adapter.md)
 - [HTTP-Server (@chrysalyst/server)](http-server.md)
 - [Spec-getriebene Entwicklung (speq)](../workflow/spec-driven-development.md) —
   wie Meilensteine zu Code werden

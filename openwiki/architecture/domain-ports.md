@@ -5,7 +5,7 @@ description: Die typ-only Domänengrenze von chrysalyst — CoreDependencies und
 tags: [hexagonal-architecture, ports, domain-core, typescript, dependency-injection]
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-07T20:27:51.484Z
+    at: 2026-09-09T13:28:50.488Z
 sources:
   - id: openwiki-source-b6d4dbadc290acfd0ace4931
     resource: repo://packages/core/package.json
@@ -27,9 +27,11 @@ sources:
     resource: repo://packages/core/src/ports/session-store.ts
   - id: openwiki-source-1c53a59d367e22813b6fb932
     resource: repo://packages/core/vitest.config.ts
+  - id: openwiki-source-3e167c00b37218b53fb81835
+    resource: repo://specs/platform/session-store-port/spec.md
   - id: openwiki-source-1eddfe2a3e905b4c50618167
     resource: repo://tests/workspace.test.ts
-generated: { by: "claude-code", at: "2026-09-07T20:27:51.484Z" }
+generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
 ---
 
 # Domänen-Ports (@chrysalyst/core)
@@ -45,9 +47,9 @@ keinen Adapter und keine Laufzeit-Abhängigkeit.
 Das Paket besitzt das **Vokabular der Domäne**. Jeder Port ist in den Begriffen
 formuliert, die das Interview braucht (`LlmRequest`, `StoredSession`,
 `SearchHit`), nie in denen eines Anbieters (kein `baseURL`, kein HTTP-Status,
-kein Dateipfad). Adapter, die diese Ports erfüllen, liegen außerhalb —
-`packages/server` für den [LLM-Adapter](llm-adapter.md), später ebenso für den
-Session-Store und die Suche.
+kein Dateipfad). Adapter, die diese Ports erfüllen, liegen außerhalb, in
+`packages/server` — der [LLM-Adapter](llm-adapter.md) und der
+[Dateisystem-Session-Store](session-store-adapter.md); die Suche folgt später.
 
 Der öffentliche Einstiegspunkt ist eine einzige Datei, die nur Typen
 weiterreicht: `packages/core/src/index.ts` re-exportiert mit `export type *` aus
@@ -122,8 +124,8 @@ Die erste echte Implementierung dieses Ports ist der
 
 ### SessionStorePort
 
-Die Grenze, durch die Interview-Sessions einen Prozess überdauern. Zwei
-Entwurfsentscheidungen prägen sie:
+Die Grenze, durch die Interview-Sessions einen Prozess überdauern. Drei
+Methoden — `list`, `load`, `save` — und zwei Entwurfsentscheidungen prägen sie:
 
 - **Generisch über `TState`.** Der Store interessiert sich nicht dafür, was
   eine Session enthält. Das erste Interview-Feature liefert diesen Typ, ohne den
@@ -131,10 +133,19 @@ Entwurfsentscheidungen prägen sie:
 - **Kein `delete`.** Kein Use-Case verlangt, eine Session zu entfernen, und eine
   unerbetene Methode müsste jeder künftige Adapter ungetestet implementieren.
 
-`load` einer unbekannten `SessionId` liefert `undefined` — ein toter Link ist
-ein gewöhnlicher Ausgang, kein Fehler. `save` ersetzt jede frühere Revision
-derselben Kennung. Die Implementierung folgt in Roadmap-Meilenstein M2
-(Dateisystem-Session-Store).
+`load` trennt **Abwesenheit von Beschädigung**: Eine `SessionId`, die nie
+gespeichert wurde, liefert `undefined` — ein toter Link ist ein gewöhnlicher
+Ausgang, kein Fehler. Ist der Datensatz dagegen vorhanden, aber die
+Implementierung kann ihn nicht zurücklesen, **wirft** `load` (der Vertrag lässt
+das Ablehnen ausdrücklich zu). So meldet `undefined` immer nur Abwesenheit und
+nie einen Datensatz, dessen Laden fehlgeschlagen ist — sonst begänne ein
+Aufrufer stumm eine neue Session über einer, deren Zustand er bloß nicht laden
+konnte. `list` lehnt über einem einzelnen beschädigten Datensatz **nicht** ab;
+ob es eine Kennung meldet, deren Datensatz es nicht lesen kann, entscheidet die
+Implementierung. `save` ersetzt jede frühere Revision derselben Kennung.
+
+Die erste echte Implementierung ist der
+[Dateisystem-Session-Store](session-store-adapter.md) in `packages/server`.
 
 ### SearchPort
 
@@ -158,7 +169,12 @@ Der Port-Vertrag wird auf zwei Ebenen geprüft, beide in `packages/core` selbst:
   Testdoubles (`stubLlm`, `memorySessionStore`, `stubSearch`, `fixedClock`) und
   prüft die beobachtbaren Zusagen: Chunks kommen in Reihenfolge, `complete`
   liefert einen String ohne Iterator, `load` einer nie gespeicherten ID ist
-  `undefined`, ein abgebrochenes Signal stoppt den Stream.
+  `undefined`, ein abgebrochenes Signal stoppt den Stream. Ein zweites
+  Session-Double (`guardedSessionStore`) hält unter einer Kennung einen Marker,
+  den es nicht als Session zurücklesen kann, und fixiert damit die
+  Abwesenheit-vs.-Beschädigung-Regel: `load` über dem beschädigten Datensatz
+  wirft, `load` einer nie gespeicherten ID bleibt `undefined`, und `list` läuft
+  ohne Ablehnung durch.
 - **Typ-Ebene** — `packages/core/src/ports/ports.test-d.ts` läuft unter Vitists
   `typecheck`-Modus und stellt sicher, dass der Einstiegspunkt jeden Port-Typ
   und die von den Signaturen genannten Hilfstypen exportiert, dass
@@ -175,6 +191,9 @@ ein Fehler in `ports.test-d.ts` erscheint damit als Testfehler, nicht nur als
 
 - [Architekturüberblick](overview.md) — wie core, server und web zusammenspielen
 - [LLM-Adapter](llm-adapter.md) — die erste echte Port-Implementierung
+- [Dateisystem-Session-Store](session-store-adapter.md) — die Implementierung von
+  `SessionStorePort`
 - [Spec-getriebene Entwicklung (speq)](../workflow/spec-driven-development.md) —
-  die permanenten Feature-Specs `platform/core-ports-contract` und
-  `platform/llm-port`, die diesen Vertrag festhalten
+  die permanenten Feature-Specs `platform/core-ports-contract`,
+  `platform/llm-port` und `platform/session-store-port`, die diesen Vertrag
+  festhalten

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:3da9a3012cec2e2796fce06533de74536e76a64f086cc380d28547def45e2623",
+  "pageVersion": "sha256:399126aae99010fec350a5eeb1d1589ecaf006c053c5eb828addcc46dfab2fb8",
   "claims": [
     {
       "id": "claim_97742f8d2604481990ae3151eeb95d84",
@@ -82,11 +82,11 @@
     },
     {
       "id": "claim_8f96543f75db429d866896883d3f48d6",
-      "statement": "The roadmap orders work as milestones M0..M18 plus one post-v1 milestone, with a walking-skeleton strategy: M1-M3 build a thin vertical slice through every layer before the question tree, distillation or contradiction checking exist. M0 and M1 are done; M2 (filesystem session store) is next.",
+      "statement": "The roadmap orders work as milestones M0..M18 plus one post-v1 milestone, with a walking-skeleton strategy: M1-M3 build a thin vertical slice through every layer before the question tree, distillation or contradiction checking exist. M0, M1 and M2 are done; M3 (walking skeleton + engine spike) is the next open milestone.",
       "evidence": [
         {
           "resource": "repo://specs/roadmap.md#L52-L75",
-          "version": "repo-lines-v1:sha256:bb308f076403bfb08044578c51b4a4514742243586270032be2af59c05181497:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwODhlYTJlMDY0YWU2NWJkMWZiNjY4NTNmNTFjZmNjYzdjOGQ2NWMzNzQxZWI0YTM5MjVhY2UyMmJkZWZkZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4OTE1Y2I1OGMwNjNiYzM3ZjE2Y2M0OWMzNjUyZDg0MjBhZWFmMjI1OTgyZGI5NmY1Zjc4OWU0YzI1ZDU4NjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNGY1YmU5ZGQxYTVhNjRhNTkxM2M3NGFiYjllMGRiNzFkODZmNmQzMjI1MDRmZDE3YzUzNDkxNTFkZGI1NmMifQ"
+          "version": "repo-lines-v1:sha256:8834f6a94db118c2a4e8bc70d59851619cc40ec4a0c76dacb6ee850f28774416:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwODhlYTJlMDY0YWU2NWJkMWZiNjY4NTNmNTFjZmNjYzdjOGQ2NWMzNzQxZWI0YTM5MjVhY2UyMmJkZWZkZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4OTE1Y2I1OGMwNjNiYzM3ZjE2Y2M0OWMzNjUyZDg0MjBhZWFmMjI1OTgyZGI5NmY1Zjc4OWU0YzI1ZDU4NjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNGY1YmU5ZGQxYTVhNjRhNTkxM2M3NGFiYjllMGRiNzFkODZmNmQzMjI1MDRmZDE3YzUzNDkxNTFkZGI1NmMifQ"
         },
         {
           "resource": "repo://specs/roadmap.md#L9-L33",
@@ -113,10 +113,24 @@
           "version": "repo-lines-v1:sha256:8c9d61c63eb9e06e7cb1df79423e79d8206567b489ab5eb6446fd91c67a11cac:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM5ZDYxYzYzZWI5ZTA2ZTdjYjFkZjc5NDIzZTc5ZDgyMDY1NjdiNDg5YWI1ZWI2NDQ2ZmQ5MWM2N2ExMWNhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM5ZDYxYzYzZWI5ZTA2ZTdjYjFkZjc5NDIzZTc5ZDgyMDY1NjdiNDg5YWI1ZWI2NDQ2ZmQ5MWM2N2ExMWNhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjUxNTZmNWI0ODA4ZmQ4NmJmOWNlZjBhMTE3MzRjNDllNzA4OGNlYmM2ZTljNWFiMmZkNGI1ZjY2OTQzYTM0YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDBiNTUwNThmYzc3MzA1YzMyNmU2ZDRjMGMyZjA2OGZlZjVhZjQyMmE1MDg2MWU5MmNjMTVhNDUxMDY0MWQxYSJ9"
         }
       ]
+    },
+    {
+      "id": "claim_f215954183204125bdacef37d4179c5f",
+      "statement": "packages/server now holds two real port implementations, the LLM adapter and the filesystem session store, and neither is yet mounted on the Hono app.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L1-L40",
+          "version": "repo-lines-v1:sha256:a6f662528427dd4c85327779da85bb81a0caca0d549d1e3e5ef30eb8903e3d1b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNTk2MzJmN2FmMGNiYzQ5MzUzOWEzZDgwM2I3OGUzNmJiNzNjOTJiZmY2YTFkZTQ1M2RjN2ZmOWVhYzA1Y2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMTRlNDM0OGNkYTVjMjBkMWJjMjlkNWZjOGNkZDU2NzllMzE0NTY4ZGMyY2E0NjQ5NDhjNDg0ZGNmMjQyZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0MDNjNDA5NGUxN2EzYTc0ODNjODNmYmUwZTA0NDkyNzc0ZjVhNWU2YTY1YmE0ZDY0Yjg4M2ZiMzk0MGUwOTAifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L1-L60",
+          "version": "repo-lines-v1:sha256:4e92ac97be0c829e927b30ae1527cacac27c510e27ca1257f790fc4bf8ee4d8e:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmODdlZGY2ZDkyMzNjODI4YTc5ZGRhZjM5NWY5YWUyMzI3NTIwOWU0YmZkM2M4YWRlZjFkY2UyNGY2NzlkNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZmRhYWM3ZDg1MGU2YTY2ODY4NGM1MTJkMjc5M2M4YWY5ZDgwM2U3ZDYzYTE1NTkxYzNkNTFjNjNmYTViOTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2OTZiZjMwZThmYmMxZDM0NDA5Yzg1N2YyOThjZjgzZDhiNGM2Njk1OTM3NGE1ZjNiYjY0NjYzMTc1M2YxZGIifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-07T20:27:51.484Z"
+    "at": "2026-09-09T13:28:50.488Z"
   }
 }

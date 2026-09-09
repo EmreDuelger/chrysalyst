@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:cf1f9f5d5f4093f154df85793c2b667e6d42ae53a6e95b86ca78e5d5ffa24f9f",
+  "pageVersion": "sha256:ac8385eb8ca9b4d10a40fb4c373a5339f0fe699fb15924feeadb6852ae1dcbf4",
   "claims": [
     {
       "id": "claim_ce4b675f4aac4897b11178f33adcea79",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://README.md",
-          "version": "repo-file-v1:sha256:5e73bd09213bb64fe650d561381f52bbc5464bb6f6722c5e70a2ffbfd496a17d"
+          "version": "repo-file-v1:sha256:668e7b02f7e046b0b4d5000f977d152176898bc2254908e44d5c6e3e7c710999"
         },
         {
           "resource": "repo://specs/mission.md#L1-L11",
@@ -57,10 +57,24 @@
           "version": "repo-file-v1:sha256:fce3deb6d283d9479b8383df3ae8d407861a5b974751f324562ead84fd090367"
         }
       ]
+    },
+    {
+      "id": "claim_067627eef8b64a0391c319685473aa51",
+      "statement": "packages/server now ships two real adapters, the LLM adapter and the filesystem session store; there is still no interview engine, question tree, distillation, or CI workflow.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L64-L120",
+          "version": "repo-lines-v1:sha256:dc26531dcc479838407d7dcd5e25513025d3ce626822357feb29fe07039532f2:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwODhmNmVmNGIzMGI1MjlmODI3YTAwNzRlZTFkMjY4NjU1ZjJjYjBlZjdjYWIzMDBkYTE5Njk0MTJmYjM5MDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMDA1NTY5MDdlNjQxMWZhZDg0YTU1YjRiNTZmYTJjZjA1YjAwOTRjNDcwOTZiNjJiYjAxYmI4Yjc0OTdmZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2OTZiZjMwZThmYmMxZDM0NDA5Yzg1N2YyOThjZjgzZDhiNGM2Njk1OTM3NGE1ZjNiYjY0NjYzMTc1M2YxZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwZWRhODU4N2U0Mjk1NzI4NDJjMTczNDgyZGU2N2M5YzdkZDJlMWFkMjg5YzY5ZTljYjcwZjljMzQ5MzQ2YWMifQ"
+        },
+        {
+          "resource": "repo://specs/roadmap.md#L52-L60",
+          "version": "repo-lines-v1:sha256:bf8eba584b593eb7683830e3a2fbf5752cfe1c23e621b47c9374a00b9c447db1:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTA4OGVhMmUwNjRhZTY1YmQxZmI2Njg1M2Y1MWNmY2NjN2M4ZDY1YzM3NDFlYjRhMzkyNWFjZTIyYmRlZmRlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTY0NDgyMzQ5YzI3MmQwZDY4NDgzYTJmNDM0ZGYwYjI2OTc1M2NmOWExYmI1YjdlMWRjYTQxNzdhMjI4YWQxNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjQyNzg4MDA1NTYxYWUyYjFlOGJlMjMyODJiZjAxN2E0Njg2NWY0ZmM0ODYwMmVhZGIwN2VhOTM3YWIyZGNiYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTBmZDhhOWYzZTMzMDEyMGU5MGFjYzgzZDMxMjc5NWU4OTdkNWY0NDM4M2E4NzU3ZDI1MzgxOGJlMjcxYTVhMSJ9"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-07T20:27:51.484Z"
+    "at": "2026-09-09T13:28:50.488Z"
   }
 }

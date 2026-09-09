@@ -19,3 +19,7 @@ dist/
 coverage/
 .vite/
 target/
+
+# impeccable — transient decision-server state and generated mocks
+.impeccable/questions/
+.impeccable/mocks/

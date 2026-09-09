@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>chrysalyst — interview view · direction comp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ground: #F4F1EA;
+    --ink: #1A1A1A;
+    --ink-soft: #55524B;
+    --accent: #C8402B;
+    --rule: #D8D2C4;
+    --serif: "Source Serif 4", Georgia, serif;
+    --grotesque: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+    --measure: 40rem;
+    --step: 1.5rem;
+  }
+  * { box-sizing: border-box; }
+  html { background: #cbc7bd; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--grotesque);
+    -webkit-font-smoothing: antialiased;
+  }
+  .doc-note {
+    max-width: var(--measure);
+    margin: 3rem auto 0;
+    padding: 0 2rem;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .doc-note code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.75rem; }
+
+  /* ---- shared chrome ---- */
+  .frame {
+    border-top: 1px solid var(--rule);
+    margin-top: 3.5rem;
+  }
+  .frame:first-of-type { margin-top: 2.5rem; }
+  .state-tag {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0.5rem 2rem 0;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .screen {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 1.25rem 2rem 3.5rem;
+  }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .wordmark svg { display: block; width: 15px; height: 15px; }
+  .meta {
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .kicker {
+    margin: 2.5rem 0 1rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .question {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    line-height: 1.32;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.003em;
+  }
+  .cursor-rule {
+    display: inline-block;
+    width: 0.62em;
+    height: 2px;
+    background: var(--ink);
+    vertical-align: 0.14em;
+    margin-left: 0.12em;
+    animation: blink 1.05s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor-rule { animation: none; } }
+  .streaming-note {
+    margin-top: 0.85rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .answer-block { margin-top: 2.5rem; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+  .answer-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 0.65rem;
+  }
+  .answer-field {
+    width: 100%;
+    min-height: 5.25rem;
+    border: 0;
+    border-bottom: 1px solid var(--ink);
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent calc(1.75rem - 1px),
+        var(--rule) calc(1.75rem - 1px),
+        var(--rule) 1.75rem
+      );
+    background-position: 0 0.35rem;
+    font-family: var(--grotesque);
+    font-size: 1rem;
+    line-height: 1.75rem;
+    color: var(--ink);
+    padding: 0.35rem 0 0.5rem;
+    resize: none;
+    outline: none;
+  }
+  .answer-field::placeholder { color: #9b978d; }
+  .answer-field:focus { border-bottom-color: var(--accent); }
+  .answer-field:disabled { opacity: 0.55; }
+
+  .actions { display: flex; justify-content: flex-end; align-items: center; gap: 1.5rem; margin-top: 1rem; }
+  .hint { font-size: 0.75rem; color: var(--ink-soft); margin-right: auto; }
+  .submit {
+    font-family: var(--grotesque);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    text-transform: none;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    padding: 0.35rem 0;
+    cursor: pointer;
+  }
+  .submit[disabled] { color: #a7a299; cursor: default; }
+  .submit .arrow { font-family: var(--grotesque); }
+
+  .confirm {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--accent);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .saved-answer {
+    font-family: var(--grotesque);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0.85rem 0 0;
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--rule);
+  }
+
+  .error {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+  }
+  .error-body {
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--accent);
+  }
+  .error-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .error-msg { font-size: 0.9375rem; line-height: 1.55; margin: 0; }
+
+  .dim { opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<div class="doc-note">
+  <strong>Direction comp — chrysalyst interview view (roadmap M3).</strong>
+  Static mockup for approval, not shipping code. Approved against the direction contract in
+  <code>packages/web/.impeccable/surfaces/packages-web-src-interview-interviewview-tsx.md</code>.
+  World: editorial minimalism (Monocle / Apartamento / Études register), user-pinned.
+  Type: Source Serif 4 (question) + Libre Franklin (UI). Ground <code>#F4F1EA</code>,
+  ink <code>#1A1A1A</code>, accent vermilion <code>#C8402B</code>, hairline <code>#D8D2C4</code>.
+  Six states shown below.
+</div>
+
+<!-- STATE 1 -->
+<div class="frame">
+  <div class="state-tag">State — connecting</div>
+  <div class="screen">
+    <div class="topbar">
+      <span class="wordmark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M1.5 12 L12 22.5 L22.5 12 Z" fill="#1A1A1A"/></svg>
+        chrysalyst
+      </span>
+      <span class="meta">Interview · 01</span>
+    </div>
+    <div class="kicker">The question</div>
+    <p class="question dim">Preparing the first question<span class="cursor-rule"></span></p>
+    <p class="streaming-note">Reaching the model</p>
+  </div>
+</div>
+
+<!-- STATE 2 -->
+<div class="frame">
+  <div class="state-tag">State — streaming</div>
+  <div class="screen">
+    <div class="topbar">
+      <span class="wordmark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M1.5 12 L12 22.5 L22.5 12 Z" fill="#1A1A1A"/></svg>
+        chrysalyst
+      </span>
+      <span class="meta">Interview · 01</span>
+    </div>
+    <div class="kicker">The question</div>
+    <p class="question" aria-live="polite">What problem does your product solve, and for the person who has that problem today, what do they do instead<span class="cursor-rule"></span></p>
+    <p class="streaming-note">The question is still being written</p>
+
+    <div class="answer-block">
+      <label class="answer-label" for="a2">Your answer</label>
+      <textarea class="answer-field" id="a2" disabled placeholder="The answer field opens once the question is complete."></textarea>
+      <div class="actions">
+        <button class="submit" disabled>Record answer <span class="arrow">&rarr;</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATE 3 -->
+<div class="frame">
+  <div class="state-tag">State — complete · ready for the answer</div>
+  <div class="screen">
+    <div class="topbar">
+      <span class="wordmark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M1.5 12 L12 22.5 L22.5 12 Z" fill="#1A1A1A"/></svg>
+        chrysalyst
+      </span>
+      <span class="meta">Interview · 01</span>
+    </div>
+    <div class="kicker">The question</div>
+    <p class="question">What problem does your product solve, and for the person who has that problem today, what do they do instead?</p>
+
+    <div class="answer-block">
+      <label class="answer-label" for="a3">Your answer</label>
+      <textarea class="answer-field" id="a3" placeholder="Answer in your own words — detail helps.">People track recipe ideas across screenshots, notes, and bookmarks, and lose them. Today they </textarea>
+      <div class="actions">
+        <span class="hint">One question this round.</span>
+        <button class="submit">Record answer <span class="arrow">&rarr;</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATE 4 -->
+<div class="frame">
+  <div class="state-tag">State — submitting</div>
+  <div class="screen">
+    <div class="topbar">
+      <span class="wordmark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M1.5 12 L12 22.5 L22.5 12 Z" fill="#1A1A1A"/></svg>
+        chrysalyst
+      </span>
+      <span class="meta">Interview · 01</span>
+    </div>
+    <div class="kicker">The question</div>
+    <p class="question">What problem does your product solve, and for the person who has that problem today, what do they do instead?</p>
+
+    <div class="answer-block">
+      <label class="answer-label" for="a4">Your answer</label>
+      <textarea class="answer-field" id="a4" disabled>People track recipe ideas across screenshots, notes, and bookmarks, and lose them. Today they re-search for the same recipe every week.</textarea>
+      <div class="actions">
+        <span class="hint">Recording&hellip;</span>
+        <button class="submit" disabled>Record answer <span class="arrow">&rarr;</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATE 5 -->
+<div class="frame">
+  <div class="state-tag">State — recorded</div>
+  <div class="screen">
+    <div class="topbar">
+      <span class="wordmark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M1.5 12 L12 22.5 L22.5 12 Z" fill="#1A1A1A"/></svg>
+        chrysalyst
+      </span>
+      <span class="meta">Interview · 01</span>
+    </div>
+    <div class="kicker">The question</div>
+    <p class="question">What problem does your product solve, and for the person who has that problem today, what do they do instead?</p>
+
+    <div class="answer-block">
+      <span class="answer-label">Your answer</span>
+      <p class="saved-answer">People track recipe ideas across screenshots, notes, and bookmarks, and lose them. Today they re-search for the same recipe every week.</p>
+      <p class="confirm">Recorded · 14:22 · saved to this session</p>
+    </div>
+  </div>
+</div>
+
+<!-- STATE 6 -->
+<div class="frame">
+  <div class="state-tag">State — failed</div>
+  <div class="screen">
+    <div class="topbar">
+      <span class="wordmark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M1.5 12 L12 22.5 L22.5 12 Z" fill="#1A1A1A"/></svg>
+        chrysalyst
+      </span>
+      <span class="meta">Interview · 01</span>
+    </div>
+    <div class="kicker">The question</div>
+    <p class="question dim">What problem does your product solve, and for<span class="cursor-rule" style="animation:none"></span></p>
+
+    <div class="error">
+      <div class="error-body">
+        <span class="error-label">The question stopped</span>
+        <p class="error-msg">Cannot reach the language model at http://127.0.0.1:11434/v1. Check that Ollama is running, then reload.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-note" style="margin-bottom:4rem">
+  Notes for the build (task&nbsp;17): the streaming indicator is a blinking 2px rule, not dots; it carries the
+  text alternative &ldquo;the question is still being written&rdquo;. The answer field is ruled underlines only, no box;
+  focus turns the baseline rule vermilion. No shadows, no card, radius&nbsp;&le;&nbsp;2px. Fonts self-hosted, not
+  from a CDN. Reduced-motion removes the blink. Contrast: ink on ground &asymp; 12:1, vermilion on ground &asymp; 4.9:1.
+</div>
+
+</body>
+</html>

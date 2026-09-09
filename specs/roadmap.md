@@ -55,7 +55,7 @@ erste Meilenstein sie berührt.
 | C1 | `openwiki --init` *(Chore)* | ✅ erledigt | M0 | — |
 | C2 | Minimale CI *(Chore)* | ⬜ offen | M0 | — |
 | M1 | Ollama-LLM-Adapter | ✅ erledigt (`002-add-ollama-llm-adapter`) | C1, C2 | 1 |
-| M2 | Dateisystem-Session-Store | ⬜ offen | M0 | — |
+| M2 | Dateisystem-Session-Store | ✅ erledigt (`003-add-filesystem-session-store`) | M0 | — |
 | M3 | Walking Skeleton: eine echte Frage E2E + Engine-Spike | ⬜ offen | M1, M2 | 1 (dünn) |
 | M4 | CI-Test-Stufen + `core`-Coverage-Gate | ⬜ offen | M3 | — (Leitplanke) |
 | M5 | DE/EN-Fundament | ⬜ offen | M3 | 1 (Constraint) |
@@ -136,11 +136,13 @@ Markdown-Transkript pro Session. Jede geschriebene Session trägt `schemaVersion
 `list`/`load`/`save` erfüllt; `load` einer unbekannten ID liefert `undefined`, wirft
 nicht.
 
-**Pläne:** `filesystem-session-store`
+**Pläne:** `add-filesystem-session-store`
 
 **Fertig, wenn:** Ein Save/Load-Roundtrip über echte temporäre Verzeichnisse
 erhält die Session identisch; `list` findet genau die geschriebenen IDs; die
-persistierte `session.json` enthält `schemaVersion`. Adapter-Tests gegen das echte
+persistierte `session.json` enthält `schemaVersion`; jeder Session-Ordner trägt
+zusätzlich eine `transcript.md`, die die Session und ihre Zeitstempel benennt —
+der Interview-Inhalt selbst kommt mit M3. Adapter-Tests gegen das echte
 Dateisystem (`mkdtemp`).
 
 **Core Capability:** — (Infrastruktur)

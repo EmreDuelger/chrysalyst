@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:399126aae99010fec350a5eeb1d1589ecaf006c053c5eb828addcc46dfab2fb8",
+  "pageVersion": "sha256:109c65dcaf716af6858e1dd0dd9f2b84429b04919a562ba8b6b7e834a79a6a90",
   "claims": [
     {
       "id": "claim_97742f8d2604481990ae3151eeb95d84",
@@ -22,19 +22,19 @@
     },
     {
       "id": "claim_f7adda8e780d4a1986c5184eca1dc783",
-      "statement": "The dependency direction runs strictly outside-in: @chrysalyst/server depends on @chrysalyst/core via workspace:*, @chrysalyst/core depends on nothing internal and imports no Node built-in or third-party module in non-test source, and @chrysalyst/web depends on neither core nor server.",
+      "statement": "The dependency direction runs strictly outside-in: @chrysalyst/server depends on @chrysalyst/core via workspace:*, @chrysalyst/core depends on nothing internal and imports no Node built-in or third-party module in non-test source (the interview logic reaches model, store, and clock only through injected CoreDependencies), and @chrysalyst/web imports no @chrysalyst specifier.",
       "evidence": [
         {
           "resource": "repo://packages/core/src/index.ts",
-          "version": "repo-file-v1:sha256:28e1225323b71499257aeae99cd7151bebd017bc3d29d0ba323a934c34d801e1"
+          "version": "repo-file-v1:sha256:79d1f731fd5f3d5b62b28922dcdbc3fcf3282bf705ccefd9b73d6cd4d61fe7ed"
         },
         {
-          "resource": "repo://tests/workspace.test.ts#L189-L196",
-          "version": "repo-lines-v1:sha256:5a24417e7737f43d7a2416cfd0b0c5e3cae22f22e715770268aaa24b5a05e1d5:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGNhMGE4ODI1ODVjNmU2Nzk1MWU2ZTJmNGNhNmRlYTlmOGEyNjI1ZTZhMWIzYzFmYzhjNWQ1MWQzOGU1NmJmMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2M2NmZlZWJlYWJlYTQwYmUzMWQ1N2VjM2U1NmVjNGNjOGQzNWQ5OWY2M2JlYTg5OGViOTYwMjY5YjNjMGEwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTdkNTA4MjVkNTU3NmZmZDZlZTU2MjQ4MTU2OWM1YTQ3ZGUzZjIyYzgwMjI0OTU0ZDMyMDhlODgyZGRmODUzZSJ9"
+          "resource": "repo://tests/workspace.test.ts#L248-L260",
+          "version": "repo-lines-v1:sha256:48a13f40e026f354f8da02bf094c484b4bd2d84741ffb0ba3fca0f1239295b4e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3M2MzZGE4NDJiOTE4YzI1YTYwZTU3YmYzNTk4MzM2Y2U1MWU4ZmRjZjI4NWJkZDgwZDYzMDY1NGIxN2IwMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmZWQ3MzIyNzAzMDBhYjBjZDFhNzk3ZTgwMWU2YjI4YzczZmI3Zjc5NzIyYmU4MmRlMDAwYTllZmY4NTFjNTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMxYTljNmVkNjFkMmNhN2UxMDNmYWY3NjFiYmY1Y2RkODM2NWU1MTJkMDk3ZjgzODNiZDhlMDc2ZTVlNTE1YTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkMGVkNzJiNTJhM2MzMDM2NzUzMWI2YmFlNjExZDAzOTkzODM5NGU1MTYxODM1MGFhNDJjMTQ5OWQ2NTdmYTYifQ"
         },
         {
-          "resource": "repo://tests/workspace.test.ts#L256-L278",
-          "version": "repo-lines-v1:sha256:870286c8d01f6a03bab0bda8d1333329637b110bc9ea84cd9100aeab9d3a1a5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjODZhNGJkZTI1ZDEyYzAzNjk5NzI3NjNhMDE1NDg4MWZiZDM3YzkzMDgwOTdlMjIzMWEzMDg2MzA5M2Q0NTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2NGZlMjUyMDBiNTYwNGZjZWQ4M2M5ZGJkOWQ2NTdkNDA0ZTUyZTMyZjE5YTM0ZGE5OTZhMWE3MTI1YmMyNjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiN2FlZDEwZmYyYTI2ZmY0OTE5MDQzMzhlY2MxY2FlZDFlNjVmNzJiYjQ5YjQ2ZWMwZGMzNGExZGQ4MmU3YjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4ZmE0MGQyNDQ4NTBlZjA0ZGE1Mjc0YmZhMTE5ZDk2MzljOGIyYjRkNWU0MzcxZTBiNGRlZmNlZjk2MWUzZjkifQ"
+          "resource": "repo://tests/workspace.test.ts#L297-L340",
+          "version": "repo-lines-v1:sha256:6f41030ff1ac5b6a29b3e920b73e09ce361c2c70fa7d90c6046e83c7b51aae94:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2OGM4OTFmMTE2N2E4YjY2NDBlYjU0NTA0ZmM3ZTgxMDBmY2I4M2JlNDYyMDQwNjM4ZTJjZjJhZWE1MWZkNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwYzE4N2RhY2UyNjFhZjdmOGEzM2FjOTM0MzAwNWMwYjMwNTc3YTQ5MTA4MjEzMDJmYTg3YjQ4ZGViZDM5ZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMyZDc0ZjE5YWM4ZDBlMDRlYjhhODliZjNmMWVkYmFmZmQ1YmUxMGU3NGI2MjEzMDM1YjA1NWYzNTVjOTZmMmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiNDhlMDc4NzJjMWNhNzU1M2I3MTAwM2RhZmRhMGI2NzIzNWFiNjVlZjJhZjI5YjJhZDY0YjcxY2JhMTI0ODYifQ"
         }
       ]
     },
@@ -68,15 +68,15 @@
     },
     {
       "id": "claim_6a5651f9d1aa4899976ae101e4983ec0",
-      "statement": "The web package currently renders only a placeholder: App() returns a single <h1>chrysalyst</h1> and visual design is explicitly out of scope for the web_shell feature until the first UI feature.",
+      "statement": "Since M3 the web package renders a working interview: App() names the product and mounts InterviewView, which owns the whole conversation with the API; the shell itself calls no server route and the API client is a prop so a test drives the view without a network.",
       "evidence": [
         {
           "resource": "repo://packages/web/src/App.tsx",
-          "version": "repo-file-v1:sha256:e287ac224eacc45a1bd79b61b2d9fd4e230a8f3fd4686d17b372765b552eea82"
+          "version": "repo-file-v1:sha256:80e9de2be589bb77753fd75c3e2bf852100182e73ee1387f5a8bfc4c87ebf815"
         },
         {
           "resource": "repo://specs/platform/web-shell/spec.md#L1-L9",
-          "version": "repo-lines-v1:sha256:58edfdf620e19ea45702dc215467374fcf69c181ed775da178174aa64d089471:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNlOGY4YmFmMGFhNzcxMmQxMDQ3MDk4ZTY0MGQxZGNjOWYxNjQ3ZDgyYzMzNzA0YjE3YWVjN2MyMjAzZDM4MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlNWY1ZWQ5ZjE4NmI5MDg5MTIzYTJkOTVhZTMyZjFkNGMwMTczMWIwYWU2NmNlY2M1YTI5NDg3ZTY1YjQxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWYxMDEzZWVhYmVhZWQzMjI3ZjFlOWFlNDJmZGMwMDYzZmQ0NmViYzk0YmVkYTg4ZTliYzQ2ZGMwY2IyMGVmZiJ9"
+          "version": "repo-lines-v1:sha256:e1cbc178f1869cfdbbd904c13e7957f17b792f3a6024ca305a46aaf21fdbc2e9:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNlOGY4YmFmMGFhNzcxMmQxMDQ3MDk4ZTY0MGQxZGNjOWYxNjQ3ZDgyYzMzNzA0YjE3YWVjN2MyMjAzZDM4MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlNWY1ZWQ5ZjE4NmI5MDg5MTIzYTJkOTVhZTMyZjFkNGMwMTczMWIwYWU2NmNlY2M1YTI5NDg3ZTY1YjQxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWYxMDEzZWVhYmVhZWQzMjI3ZjFlOWFlNDJmZGMwMDYzZmQ0NmViYzk0YmVkYTg4ZTliYzQ2ZGMwY2IyMGVmZiJ9"
         }
       ]
     },
@@ -115,22 +115,22 @@
       ]
     },
     {
-      "id": "claim_f215954183204125bdacef37d4179c5f",
-      "statement": "packages/server now holds two real port implementations, the LLM adapter and the filesystem session store, and neither is yet mounted on the Hono app.",
+      "id": "claim_46275f53e994459e851915fbf8d7c98d",
+      "statement": "Both real adapters are mounted on the Hono app since M3: composition.ts wires the LLM adapter and the transcript-rendering filesystem session store into a CoreDependencies set, and createApp(deps) chains the interview routes onto the app beside GET /health.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/adapters/llm/openai-compatible-llm.ts#L1-L40",
-          "version": "repo-lines-v1:sha256:a6f662528427dd4c85327779da85bb81a0caca0d549d1e3e5ef30eb8903e3d1b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNTk2MzJmN2FmMGNiYzQ5MzUzOWEzZDgwM2I3OGUzNmJiNzNjOTJiZmY2YTFkZTQ1M2RjN2ZmOWVhYzA1Y2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMTRlNDM0OGNkYTVjMjBkMWJjMjlkNWZjOGNkZDU2NzllMzE0NTY4ZGMyY2E0NjQ5NDhjNDg0ZGNmMjQyZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0MDNjNDA5NGUxN2EzYTc0ODNjODNmYmUwZTA0NDkyNzc0ZjVhNWU2YTY1YmE0ZDY0Yjg4M2ZiMzk0MGUwOTAifQ"
+          "resource": "repo://packages/server/src/app.ts",
+          "version": "repo-file-v1:sha256:81e500359cd63e34ac40f513bd49c07067043d6302f9451be8ef80e34ef01707"
         },
         {
-          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L1-L60",
-          "version": "repo-lines-v1:sha256:4e92ac97be0c829e927b30ae1527cacac27c510e27ca1257f790fc4bf8ee4d8e:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmODdlZGY2ZDkyMzNjODI4YTc5ZGRhZjM5NWY5YWUyMzI3NTIwOWU0YmZkM2M4YWRlZjFkY2UyNGY2NzlkNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZmRhYWM3ZDg1MGU2YTY2ODY4NGM1MTJkMjc5M2M4YWY5ZDgwM2U3ZDYzYTE1NTkxYzNkNTFjNjNmYTViOTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2OTZiZjMwZThmYmMxZDM0NDA5Yzg1N2YyOThjZjgzZDhiNGM2Njk1OTM3NGE1ZjNiYjY0NjYzMTc1M2YxZGIifQ"
+          "resource": "repo://packages/server/src/composition.ts",
+          "version": "repo-file-v1:sha256:4f8e227fe8fd14323905c6de8623c428a64ad49d48a187e5f35bffe7a3f6937a"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-09T13:28:50.488Z"
+    "at": "2026-09-10T15:50:21.943Z"
   }
 }

@@ -3,21 +3,25 @@ type: architecture
 title: Dateisystem-Session-Store-Adapter
 description: Die erste echte SessionStorePort-Implementierung — createFilesystemSessionStore und sessionStoreConfigFromEnv über node:fs/promises, mit dem session.json-Envelope (schemaVersion 1) und transcript.md pro Session, der Absent/Unreadable/Read-Dreiteilung beim Lesen, der Identifier-Sicherheit, der fsync-vor-rename-Durability-Barriere, der Fehlerübersetzung an der Grenze und der hermetischen Teststufe.
 tags: [session-store, adapter, filesystem, persistence, durability, schema-version, testing]
-verified:
-  - by: openwiki/0.5.0
-    at: 2026-09-09T13:28:50.488Z
 sources:
+  - id: openwiki-source-abd0a1ef3f59dbd18dcf5018
+    resource: repo://packages/core/src/interview/transcript.ts
   - id: openwiki-source-836b1821935d4a9e043f8655
     resource: repo://packages/server/src/adapters/session-store/filesystem-session-store.test.ts
   - id: openwiki-source-71e3a7de53c44488096fed02
     resource: repo://packages/server/src/adapters/session-store/filesystem-session-store.ts
+  - id: openwiki-source-d3fb78d820eb72194e376138
+    resource: repo://packages/server/src/composition.ts
   - id: openwiki-source-0e06dd8dca1a5b09ef9998b2
     resource: repo://specs/_decision/003-add-filesystem-session-store.md
   - id: openwiki-source-8f43520ecd17db2dd2f46900
     resource: repo://specs/adapters/filesystem-session-store/spec.md
   - id: openwiki-source-a0a8fcea3fc317de88a8e08c
     resource: repo://specs/roadmap.md
-generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
+generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+verified:
+  - by: openwiki/0.5.0
+    at: 2026-09-10T15:50:21.943Z
 ---
 
 # Dateisystem-Session-Store-Adapter
@@ -34,8 +38,9 @@ in `003-add-filesystem-session-store` aufgezeichnet.
 Dieses Modul ist der **einzige Ort im Workspace, der weiß, dass eine Session
 ein Verzeichnis auf der Platte ist**. Es schreibt `<root>/<id>/session.json` und
 `<root>/<id>/transcript.md`; `@chrysalyst/core` importiert nichts davon und sieht
-nur `SessionStorePort`. Das Verzeichnislayout, der Envelope, `schemaVersion` und
-das Transkript sind Privatsache des Adapters und enden an seiner Grenze.
+nur `SessionStorePort`. Das Verzeichnislayout, der Envelope und `schemaVersion`
+sind Privatsache des Adapters und enden an seiner Grenze — den *Inhalt* des
+Transkripts komponiert der Store dagegen nicht selbst (siehe unten).
 
 Auch ein Fehler wird im Vokabular der Domäne gemeldet: Jede Ablehnung ist eine
 **eigene `Error`**, benennt die Session oder die Wurzel, die nicht erreichbar
@@ -98,14 +103,32 @@ Der Preis trägt der Aufrufer: **`TState` muss einen JSON-Roundtrip
 zurück; nur die beiden Envelope-Zeitstempel werden zu `Date` wiederbelebt. M3
 wählt den konkreten `TState` und erbt diese Einschränkung.
 
-### `transcript.md`
+### `transcript.md` — der Store komponiert es nicht
 
-In diesem Meilenstein ein **Metadaten-Stub**: eine Kopfzeile, die die Kennung
-und beide Zeitstempel nennt, und nichts darüber hinaus — es gibt noch keinen
-Interview-Inhalt und keinen Renderer. Ein zweiter Save derselben Kennung
-schreibt das Transkript neu auf den `updatedAt` der neuen Revision, sodass ein
-abgeschlossener Save nie ein Transkript hinterlässt, das eine ältere Revision
-beschreibt. Der Walking Skeleton (M3) ersetzt den Rumpf.
+`transcript.md` trägt das Interview, aber **der Store setzt es nicht zusammen**.
+Die Config nimmt seit M3 einen optionalen Renderer:
+
+```ts
+readonly renderTranscript?: (session: StoredSession<TState>) => string;
+```
+
+— eine reine Funktion vom gespeicherten Session-Objekt zu Markdown, die
+dasselbe `StoredSession<TState>` bekommt, das `save` erhält. Der Store ruft
+sie, wenn eine konfiguriert ist; sonst schreibt er den **Metadaten-Header**, den
+er vorher schrieb (Kennung + beide Zeitstempel). Der Renderer gehört dem
+Eigentümer des Zustands: `@chrysalyst/core` liefert den des Interviews
+([`renderTranscript`](interview-round.md)), die
+[Kompositionswurzel](interview-http-and-composition.md) reicht ihn durch. Ein
+Aufrufer, der ein anderes `TState` speichert, braucht keinen Renderer, und der
+Store interpretiert weiterhin nie, was er hält.
+
+Das Transkript ist **nicht versioniert** — `schemaVersion` versioniert weiter
+allein das Envelope. Ein zweiter Save derselben Kennung schreibt das Transkript
+neu, sodass ein abgeschlossener Save nie eines hinterlässt, das eine
+ältere Revision beschreibt. Zwei neue Szenarien fixieren das: der
+Header-Fallback ohne Renderer (die drei unveränderten `003`-Szenarien
+bleiben grün — der Beleg, dass es keine neue Pflicht ist) und ein Renderer,
+der wirft (der Save lehnt ab, die vorherige Revision bleibt ladbar).
 
 ## Lesen: eine Lesung, zwei Politiken
 
@@ -239,6 +262,8 @@ Details: [Toolchain und Teststrategie](../operations/toolchain-and-testing.md).
 ## Verwandte Seiten
 
 - [Domänen-Ports (@chrysalyst/core)](domain-ports.md) — der `SessionStorePort`-Vertrag
+- [Interview-Runde (@chrysalyst/core)](interview-round.md) — liefert `renderTranscript`
+- [Interview-Route und Kompositionswurzel](interview-http-and-composition.md) — reicht den Renderer in die Config
 - [LLM-Adapter (OpenAI-kompatibel / Ollama)](llm-adapter.md) — der andere echte Adapter, gleiche Machart
 - [Architekturüberblick](overview.md) — Adapter hinter Ports
 - [Toolchain und Teststrategie](../operations/toolchain-and-testing.md) — die Test-Stufen im Detail

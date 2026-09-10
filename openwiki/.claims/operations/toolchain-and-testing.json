@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:df08f17cd887c96e56b475da92a901ae195b2f36d585237bccd8e2c8fb9880a5",
+  "pageVersion": "sha256:bcb3dfade11e6c142ff1f670ae80b59f5ca038844b8c70a8d37b9c9d786115d2",
   "claims": [
     {
       "id": "claim_46564d5605e941d38fb088ba19b801bd",
@@ -139,10 +139,74 @@
           "version": "repo-lines-v1:sha256:853e3c9ddd744d8c2158838acc10e644c914ad3ef440ca2d28733ec928e20a8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkOTk1YTE4Yjk3Yzc3M2U5MTJiYWNlZmVkYzIwMDQzNWFhNzI3NTY3NDcxNWI1MWRkNzNjNDc3MWFmN2M3YThjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwZTMyZWJhMDE0NGRkZTFiYmRlMWJhNWI4YTUzZWUyMDM4MTg4ZmFjNmZlM2Q5OGNhNTY1NDBhNTc3ZTI2ZWQ5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5MjA2YmE2MGY3NTQ5Njc2Y2IwZjI0ZDA1YWJkZTg3NjIwNzYxYTUzOTE3MzQzYjgzYTYxYWNkZWU2MGM0YWI1In0"
         }
       ]
+    },
+    {
+      "id": "claim_81a2bf2d7dcf49088b6b968591cd278d",
+      "statement": "tests/fixtures/interview-sse-frames.txt holds the raw bytes of the three SSE frame types and is the executable half of the wire contract both sides check against: the server route test asserts the server emits exactly those bytes and the packages/web parser test asserts they decode back to the three payload shapes, so a rename or format change on either side fails a run.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/sse-frames.test.ts",
+          "version": "repo-file-v1:sha256:72a6742c3f7f72728eb186bad937df022270b4952ca51e9c7d1ea7c730bccb69"
+        },
+        {
+          "resource": "repo://tests/fixtures/README.md",
+          "version": "repo-file-v1:sha256:0d00bad5cb017105196514e98a384ba1d49ca411d1b792db215f4e11e71a2f3e"
+        },
+        {
+          "resource": "repo://tests/fixtures/interview-sse-frames.txt",
+          "version": "repo-file-v1:sha256:056eb4f86f03f520b9e52a422539677c1ceb7eabc465f2c81611f7ed97c889ca"
+        }
+      ]
+    },
+    {
+      "id": "claim_639a577b23e84c8a9a61c3b9c610da68",
+      "statement": "Since M3 there are two *.live.test.ts files, both gated on CHRYSALYST_LIVE_LLM: the LLM adapter's and interview-routes.live.test.ts, which runs the whole session-to-SSE-to-persistence path against a real model, measures time to first token (last measured qwen3:8b ~2.1s warm, ceiling 30s) and asserts the stored question carries no <think> marker — those figures are the M3 feasibility note.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.live.test.ts",
+          "version": "repo-file-v1:sha256:7284279d3885709c89f1c46c57f0ef5e65e0eb87008adfa857bfff7addfe6cc4"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts#L155-L191",
+          "version": "repo-lines-v1:sha256:ef4dce7e258dffd19d2fbd4a361a3796a09119cac81e952897e2a50478d4c322:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1MGVkZDNhOWYyYzFlMzc1M2NiYmRmZDk2ZDYwNzFmMzQ2ZjhjMzZlYzgyYjMwOTQ5NTkxOTIwMDMzYTAwMGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmMDZjZjdmZGY4M2U3NjBmYWE3OWE1Y2EyNTUwNDFkYWRkYTU1NTM2MjkxM2Q4YmFlNGIyNGVjZDRmNWNlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzNzcwMjg0M2JiMTVmZTY0NDU5NGJhZmZlMDA0ZmUxM2EzYzY2ZGEyYjM0ZmI1MDkzZDkxMmEzYWNmYjRhYTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3177ebf5e1ac425db91ec6c831f28323",
+      "statement": "The packages/web jsdom suite is the densest since M3: nine InterviewView scenarios driven through an injected InterviewApi fake, plus the SSE frame parser checked against every split position of the shared fixture.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/InterviewView.test.tsx",
+          "version": "repo-file-v1:sha256:2325a40ed04d83b52e45cf4fe148dc15c6c6ed4e6486dfe1e3751a5a99b81f1b"
+        },
+        {
+          "resource": "repo://packages/web/src/interview/sse-frames.test.ts",
+          "version": "repo-file-v1:sha256:72a6742c3f7f72728eb186bad937df022270b4952ca51e9c7d1ea7c730bccb69"
+        }
+      ]
+    },
+    {
+      "id": "claim_a3d61cab875445a791c782dc729db276",
+      "statement": "The project-wide styling stack, settled by M3's impeccable subphase, is plain CSS with a :root custom-property token layer plus one CSS Module per component — no CSS-in-JS, utility framework, or preprocessor — with self-hosted woff2 faces under packages/web/public/fonts/ and no Google Fonts URL; .prettierignore also excludes openwiki/, .impeccable/, .serena/ and .claude/.",
+      "evidence": [
+        {
+          "resource": "repo://.prettierignore",
+          "version": "repo-file-v1:sha256:93846a229f3f82108ed45906492ea6639c3b57dbc68264effb1b4ad1ee0cce77"
+        },
+        {
+          "resource": "repo://packages/web/DESIGN.md",
+          "version": "repo-file-v1:sha256:ea022a7ad35d5abe38170dcdb04c136b8b125c26a4036b98ae6a7f3b2ee3dbe8"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L165-L190",
+          "version": "repo-lines-v1:sha256:77dc803a254066d36a4ae19ef67cb42b580bb92bea8ae08e0086f681e31f5399:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4ZjczNzkxYzM4ODVkMGExN2U4NDJhOTcxNGExZDM1YzYwN2U3ZmE4NDNjNDUyYzE1MmVlMWU4NzIzNDAxM2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyY2Q2MWY0NDRkYzU2Yjc4ZjhmMWRiNTkzNDJjNmY4Y2VhNGVmZDAxNGRhMGJlZTFhOTFmNDM2YzY3NmU0NzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZjZjUyY2M5M2NhNjkyODIyOTg2OTI0MTQxNDRiYzU0Yzk5NWRiM2RjZGM3YTU2YzBlODFmMTExNzYwMWM1NDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-09T13:28:50.488Z"
+    "at": "2026-09-10T15:50:21.943Z"
   }
 }

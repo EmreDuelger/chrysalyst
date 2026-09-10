@@ -1,18 +1,22 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:289045a4bc36b4ff07885516fee642a43bac61028f860441eb89f3d3f6a16b6e",
+  "pageVersion": "sha256:15b74ff6c72458b888c080294d7b4ef9eab597b2b7a8a4325b3693539d67769c",
   "claims": [
     {
       "id": "claim_25b956f5858e42dcbe559ea6955ab44b",
-      "statement": "@chrysalyst/core is a type-only package: its entry point packages/core/src/index.ts re-exports port declarations with `export type *`, so importing the package emits no runtime binding and pulls in no adapter.",
+      "statement": "packages/core/src/index.ts re-exports the port declarations with `export type *` and, since M3, also `export * from './interview/index.ts'` — so importing @chrysalyst/core now emits the interview logic's runtime bindings while still opening no socket, reading no file, and touching no clock.",
       "evidence": [
         {
-          "resource": "repo://packages/core/src/index.ts",
-          "version": "repo-file-v1:sha256:28e1225323b71499257aeae99cd7151bebd017bc3d29d0ba323a934c34d801e1"
+          "resource": "repo://packages/core/src/index.test.ts",
+          "version": "repo-file-v1:sha256:1e920542cd8823c6cb2a4d341768d39087a37cc1f5c116cc31a26c135887d8ed"
         },
         {
-          "resource": "repo://packages/core/src/ports/index.ts",
-          "version": "repo-file-v1:sha256:b1c98cba10f3d5ee18a5f204ae9e8a838a3f4fe4feac0a917818ff3476f0038c"
+          "resource": "repo://packages/core/src/index.ts",
+          "version": "repo-file-v1:sha256:79d1f731fd5f3d5b62b28922dcdbc3fcf3282bf705ccefd9b73d6cd4d61fe7ed"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/index.ts",
+          "version": "repo-file-v1:sha256:43c74958f2f74d9e6e890abc2fc64606c45902487aa5539dda75bbc5be3db2ab"
         }
       ]
     },
@@ -141,10 +145,28 @@
           "version": "repo-lines-v1:sha256:fccb20f312debe1c5eaacaeb1e7e2e137fc2dc62d6a674ad01dc2751875a1f08:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiZDlhODQ0ZGZkMmI0M2I5MzdmMzUxNDcxMDNhZjJhYTI0MWY5YjIyM2U3YzAzNzQxODE1Yzk2ZDQ0ZTczZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ZDVhMGJiNzhiNjAyZTQzNTRiYTZhYzUzYjUxNDM4YTc0MWVkZDNjNjM2ZmM4NzcxNmQwYjRiM2Y3ODdlNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjYmJkNjg4MDgxYmRjZjNhOTAzZTliOGJmZTZlOGU5YzEyYWIxMDM4OTAxMGFiZjkxZTBmMGE0YjUwZGFhZjYifQ"
         }
       ]
+    },
+    {
+      "id": "claim_84b3af4595f848cbbb012cda4febfc89",
+      "statement": "The core purity rule forbids a runtime dependency and any non-relative import in non-test source — not domain code that executes; the interview logic obeys it by reaching the model, store, and clock only through the injected CoreDependencies.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L1-L40",
+          "version": "repo-lines-v1:sha256:498965820cfe86ef7d2db6a4d4e9cf28cdc1f2360a0e15b12676da2e324ba725:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiNjBjMzc2MWE0YjI1MmQyZmNhMzU4ZjZiMjc2MjJjNTJjMmVjNDE4ZjhiMGQzZjg4ZDFmZTdiYzE2Y2RmNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmMmEyZjk5NmYwOGU2ODBiZDI5MjEzNWE2ZmE0OTc4YmRhMjZlNjAyZDg0ZjMzY2IxZDU5NDc3NWQ0MzA0YjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4YzcxMzZmYzMwYzZjOWE5YmIwMzJlOWFkMDg5OTBhNjQ4NTFkMDc4MmQ1ZjVmMDg5OGViY2I5MmJmN2Q1MzAifQ"
+        },
+        {
+          "resource": "repo://specs/platform/core-ports-contract/spec.md",
+          "version": "repo-file-v1:sha256:3e417dadaba924010b9ac93dbad5d44015569a25606caf96bd00d931af78abc0"
+        },
+        {
+          "resource": "repo://tests/workspace.test.ts",
+          "version": "repo-file-v1:sha256:9044762430622a7cd69f4408f855feeae427eb85ec9570410efe8870a1934644"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-09T13:28:50.488Z"
+    "at": "2026-09-10T15:50:21.943Z"
   }
 }

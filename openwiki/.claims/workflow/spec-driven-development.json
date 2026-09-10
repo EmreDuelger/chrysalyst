@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:c56d3d56620e44e85273e03f00c193ed0a198ec7ca63b14745cdbbe9aa6751d0",
+  "pageVersion": "sha256:4eca35d661f1996c8e21e2395caa55cc9184554eadb0a5022baa399026d02316",
   "claims": [
     {
       "id": "claim_a9fcab16515c4bbdba128c5c12021b03",
@@ -56,15 +56,15 @@
     },
     {
       "id": "claim_f99cc3e1e7734fe39aea60b4fd5061ec",
-      "statement": "Two plans have been recorded so far: 001-add-monorepo-scaffold and 002-add-ollama-llm-adapter, each archived under specs/_recorded/ with its plan.md, decision-log.md, spec deltas, reviews and verification-report.md.",
+      "statement": "Four plans have been recorded so far — 001-add-monorepo-scaffold, 002-add-ollama-llm-adapter, 003-add-filesystem-session-store, 004-single-question-walking-skeleton — each archived under specs/_recorded/ with its plan.md, decision-log.md, spec deltas, reviews and verification-report.md.",
       "evidence": [
         {
           "resource": "repo://specs/_recorded/001-add-monorepo-scaffold/plan.md#L1-L5",
           "version": "repo-lines-v1:sha256:1fa0c234be27ae3d3d2d25d5f1c3b0cb73956708e3f43241d604c513ef67ff64:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODczZjkxNDFmMTk1MmI0MzQ3MmJjMjI5NzY3Y2M2NjAwY2ZmZmFlNTIwZmI5MDFkYmYzNjUyNjU4MTk3ZWY5NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDFlOTczOTZmMzg5YWQ0MjM2ZjlhMzhmOTUxOWY1NjliMDM0YzAyZWE1NTY2Mjg4ZWY5NGI0MGZmNjAwZjUyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjE2MTQ4MzJjMzhkMTQ5NjdmYzY5NDhhZjVjZDI5OGZmMTBhOWI4NDA2M2Q2ZmFhOTA4MjYxNTM3YTdiM2FjZiJ9"
         },
         {
-          "resource": "repo://specs/_recorded/002-add-ollama-llm-adapter/verification-report.md#L1-L10",
-          "version": "repo-lines-v1:sha256:74a0fee2ec619e9391b80ca1daee5b0639ec31fc281799f680a3730ea1ccfe7b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YmQ3OWYxZTk1NTA2YTE2MzBiNDFhNjFhZDFmOGRmYjk3M2U2YWY5NDkzZjUyZGYxMTZjM2NhZWRiZWU2ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NjE2MzRmODY1MDhkM2FmYzdlMzJlNGI4NTViZTYwNWYxYzVjZTdjYTIwYWMxOTE5MjBkNmU3N2I2NWFmNjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlNzBiZjkyZTY5OGU4OTFhOTVjOTQ4NzVkYmFiYWI3NDk2NTlhZWIxODYwMTI4Yjc2MWJkZDljMzdlZDYzZDMifQ"
+          "resource": "repo://specs/_recorded/004-single-question-walking-skeleton/verification-report.md#L1-L12",
+          "version": "repo-lines-v1:sha256:662822b448e1a9e67c655bae79c11e4a684613c4e77ece61f9faa44ed56325d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4ODg5NTEzMjNlZjU1YzgwYzAzNGJjM2E3M2IzN2M5M2JkOWJhMjc2YTYzOTk1MGQzYjc2Yzk1ZDIxMDM1OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiOGIyM2YxMzU4MWZjOWJiMTY3ZGNkNjllN2I0MWFhYzdmNGZjMGNmNWQ4NDYxMjkxMzM4ZTJhZjRmYzE0OGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2ODU1Y2M1Yjk0Mjk0NzA5OWQzNjFhMWI1NDdjYmY3OTg4MzAzZjYyZjBkMTVlYzYyODU0ZmJjZDI2YjA4OWEifQ"
         }
       ]
     },
@@ -80,7 +80,7 @@
     },
     {
       "id": "claim_fcaa83c6fdde41d8b63282a8d1f42a82",
-      "statement": "specs/roadmap.md orders work as milestones M0..M18 plus one post-v1 milestone P1 and two chores (C1 openwiki --init, C2 minimal CI); M0, M1 and M2 are done and everything else is open, with M3 (walking skeleton + engine spike) next.",
+      "statement": "specs/roadmap.md orders work as milestones M0..M18 plus one post-v1 milestone P1 and two chores (C1 openwiki --init done, C2 minimal CI open); M0, M1 and M2 are done, M3 (walking skeleton + engine spike) is partly done — its first plan is recorded, the engine-structure-spike plan is still open — and M4 onward is open.",
       "evidence": [
         {
           "resource": "repo://specs/roadmap.md#L52-L76",
@@ -114,15 +114,15 @@
     },
     {
       "id": "claim_e831ab5538fd467386d8b2b23d72659c",
-      "statement": "specs/adapters holds two features, ollama-llm-adapter and filesystem-session-store, and three plans are recorded: 001-add-monorepo-scaffold, 002-add-ollama-llm-adapter, and 003-add-filesystem-session-store.",
+      "statement": "specs/ now holds three domains: platform (8 features), adapters (ollama-llm-adapter, filesystem-session-store), and interview (single-question-interview, interview-http-api, interview-view) — the interview domain added by plan 004 and cut into three features by reason to change (M8 the wire contract, M5/impeccable the view, M7 the domain rules).",
       "evidence": [
         {
-          "resource": "repo://specs/_recorded/003-add-filesystem-session-store/plan.md#L1-L12",
-          "version": "repo-lines-v1:sha256:f89a1710a1ce8578e99de18debdac2c823e4842460b4cdbd6f5044a3c6cb21a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4N2I3NTM4MzBiODVhMDI0NWMxNGMxNWU3MTk0OWQxMWNmMWJlMTc4Y2JiM2JjMmJjYWM1NjYwNDU3NzU5MzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1YmViYTJlNzc1MmJkYThlN2U1NmEyZjViOGMyMWUzYmM3Mjc2NjIzMDVkMDRkNTgzNWNiNGQzYmI1MmZmNmMifQ"
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L113-L138",
+          "version": "repo-lines-v1:sha256:b5dcc722cff4fb0565a57579fdaee067f7d12067768745bfe34a0b203810ede8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYjdmM2JmMWQ5MWNiNjAzZDk2ZWMwYzdjYmIxNDI4ZGMwNGNiMmE4YzM0NTQyZWNmZWQxOGEwMzRhNDgyMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYxNWIxNGVlM2I2ZWRkNDZiYmIxMzhjZDFmOWYwNTI4ZjAzNmYxYjI2MDk5OGU3NTZlNGFlM2UyOWY3ODA0N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNmEzOGFkMmMyZDU5ZTQyOWE2MGNmZTgyYzUwNThmMjM4YWNlNmRiNjg4MGJkYmNmYmIyN2MwMzczZmQzNGUifQ"
         },
         {
-          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L1-L5",
-          "version": "repo-lines-v1:sha256:08c1f877999d6eba3e525e30363910a6c09f9bc7c86c22108fbe230bf10f8094:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzNmNmEwOTdkMDFiYzgxNjkyYWM2ODQxN2Y2ODYyNDBmZTA5NGU0NzNlZTEwMmNmYTZjM2YzOWRkOWI2ZDhhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmI0YzkwZmJjOGIzYmM0OTIxZjRlOTM2ZDA3MmFmNmM0NDY2ZWFiM2RmMGFhYmY5MGY2ZjYxZDk1MjA2MDY5NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmQ0YjM3NDhkOTU2N2M1MGY5NTdkNGZhOWU0OGY4NjZjNzgxOGVkNzU0YzI2ZGFmNjMyMTg4MDVjMjUzMjgyNyJ9"
+          "resource": "repo://specs/interview/single-question-interview/spec.md#L1-L5",
+          "version": "repo-lines-v1:sha256:b0eeba2c2329b877a26dfedddb7e167a2002ea99c2a996e282d63a1ce8677372:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWU2Nzk4MDFlYmU1ZTMyNDU0M2VlYmY0ZjlhYWFmN2Q5MTA5M2Q2YWQ1NDE2NGEzZTliNjViZDAyMDk5MTRkNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmI0YzkwZmJjOGIzYmM0OTIxZjRlOTM2ZDA3MmFmNmM0NDY2ZWFiM2RmMGFhYmY5MGY2ZjYxZDk1MjA2MDY5NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGE3MGJiODZhNzVjOGI2ZmQ4NWU5MzVhNjYxZTYzZDZkNTRkYmJkZmEwYjkyNzQ3MWNmMTc5Yzk1OTJkMWM5MiJ9"
         }
       ]
     },
@@ -139,10 +139,38 @@
           "version": "repo-lines-v1:sha256:0c867c6395884e7226eac80cd5a812fdda60de56d3132bf826d8fdcd52b60b9f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3OTRmNzRhOThmNGM1MTljODczNTY2MGMwN2E3MmZmNWExZmM0MzliOTFhODY2YjQ0MWJlYTY3MzA3NzBjNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4MTM5ZDMzYTAxM2M5YTRlYTkxNDNlMjMwYzllZmY5YmE3NWJhZDBiODBlOGE5MTUxYzUyNDQ4Yjg3NTU4MTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEzNzAxNjUxMDM4NDQ1ZmJiNjU3MGE5MWIwYzdlZmU3MjRhM2UxNGMxYzNiYWE2ZTk2Nzc1NTE4YmUwODk1MTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         }
       ]
+    },
+    {
+      "id": "claim_f6c950fcf7724d46a32f7faa224012a3",
+      "statement": "004-single-question-walking-skeleton.md promotes seven ADRs: InterviewState v1 as a tagged turn list, core renders the transcript (store takes the renderer optionally), the SSE token/done/error contract, the interview factory over CoreDependencies, packages/web with no server dependency, the app factory, and the plain-CSS-tokens-plus-CSS-Modules styling stack.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L1-L2",
+          "version": "repo-lines-v1:sha256:716ffb514838a2c7f8a87c4bea586ba92cd286038c4473fb942827a029b4f3ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRhMTkxMTA5MDQ3M2QzOWY3OGViMzM5NjlhYjc0OGUwZWU2ODhjNjFlYTZjOTAyNzMyYWMyZTk5NDUxMTBmNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTIwMzM5NmYyYjdmOGEwNmNlOWM5OWM4NTE3ODcyYjJkZjQ4NTY0YmQzN2ZjMGZhMGM4NWQ3N2YwOTQ2NmE4YyJ9"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L139-L190",
+          "version": "repo-lines-v1:sha256:a7b5d36e4f622619531d1ec6ad1e922a5020b717ac8add3c7e30896bb03491c8:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyZTdjZDhmMTk4NTE3NmVmMWIzZDFhYjQ0ZmFhODRiNTgzYmQzNjVlZDVhZDU5NDE2NmFkOTlmMjI1YWU4MzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyY2Q2MWY0NDRkYzU2Yjc4ZjhmMWRiNTkzNDJjNmY4Y2VhNGVmZDAxNGRhMGJlZTFhOTFmNDM2YzY3NmU0NzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkYTIwZThlYzM4M2EyODZmNzRjZWVlMGRlN2MzMDlkYjIxZmQ4ZWVmZDU3ZDEwN2NhYzZmYjFmZjBmZjBjNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_20684559307547a9a4514972dc7a9eb8",
+      "statement": "The M3 impeccable subphase settled the project-wide styling stack as a standing guardrail: plain CSS with a :root token layer plus one CSS Module per component, no CSS-in-JS or utility framework or preprocessor; M18 unifies, does not reinvent.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L165-L190",
+          "version": "repo-lines-v1:sha256:77dc803a254066d36a4ae19ef67cb42b580bb92bea8ae08e0086f681e31f5399:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4ZjczNzkxYzM4ODVkMGExN2U4NDJhOTcxNGExZDM1YzYwN2U3ZmE4NDNjNDUyYzE1MmVlMWU4NzIzNDAxM2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyY2Q2MWY0NDRkYzU2Yjc4ZjhmMWRiNTkzNDJjNmY4Y2VhNGVmZDAxNGRhMGJlZTFhOTFmNDM2YzY3NmU0NzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZjZjUyY2M5M2NhNjkyODIyOTg2OTI0MTQxNDRiYzU0Yzk5NWRiM2RjZGM3YTU2YzBlODFmMTExNzYwMWM1NDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://specs/roadmap.md#L35-L48",
+          "version": "repo-lines-v1:sha256:d8f76b43f55397c8278952c72ed353225185fc9957e07aa9107d9aa6e07f9416:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4MzkyNGU1MzQ2MzA3ZmIxNmM4Mzg3NmJjZTdiODcwYTZmNzUyODcyOTkxNWE1Mjk4Nzk4YzA0YjQ3ZGVmMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwN2VkY2E0NWRjNzljNzViNjliMGMyYjk1MWYzM2M5MTg4ODUzMTAwZTFjYzA1OTIxYTYxOTA2NDJhYTkwOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-09T13:28:50.488Z"
+    "at": "2026-09-10T15:50:21.943Z"
   }
 }

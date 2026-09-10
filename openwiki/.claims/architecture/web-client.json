@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c8d67ff364692820bf4d7e3435797fdb5447db312ec30576f03040f64ac88bf7",
+  "claims": [
+    {
+      "id": "claim_91d3e9dd5a7d4bbe842a1c81d24b6864",
+      "statement": "@chrysalyst/web is the driving adapter: it speaks only to the HTTP API on loopback, declares no workspace package, imports no domain module, and the App shell mounts InterviewView with the API client as a prop so tests drive the view without a network.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/App.tsx",
+          "version": "repo-file-v1:sha256:80e9de2be589bb77753fd75c3e2bf852100182e73ee1387f5a8bfc4c87ebf815"
+        },
+        {
+          "resource": "repo://packages/web/src/interview/InterviewView.tsx#L1-L40",
+          "version": "repo-lines-v1:sha256:6562e96ca7e640b59fdce4f59437cc37aa692df074ba7ef03e01c899d47fd554:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlZjE3NDNkNDQ2MzM0NTZjMTVkNWRiZTkyYTExOTE5MWE4NDE5ZmJmMDEzNzNmZTc3ZjViMjdkZTdiMjUzNzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2NWRlNjA0YjhmNTUxZjQ1ODAxMmY4OTAwNjA2NzE5ZjM4YTJhZGQ3ZWQ5OGQ1OGRhNDM0ZDk3MGI4NWVkZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NGUxZTI1NGM5MzJjYTNkMTI4OTExNTM0NTdiZDYzNjVlZTFjZTIwMWEwNGMwNTA4ZjhkOWVjZWVkZWEwNTUifQ"
+        },
+        {
+          "resource": "repo://specs/interview/interview-view/spec.md#L1-L12",
+          "version": "repo-lines-v1:sha256:6a909b4c57d70ed2f0a1ab5bf3d80250b7e4ab287ef52f248fe430a6f26bc482:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0NTU4ZTE4OGY5ZDZmZjU0ZWQ4ZDkzZWFjMGI2ZmYzODhlODNiYTgzNGVkN2YyNmMxOTc0YzVjNTdiNzkwNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRhNDhhNjQ0NjFiNTJkODMxNDIwMmMyOWIyZGRhZTVmMDgyNzc1YTAzMmZkZmE1MmMwNjIxY2I3M2MwM2E0NmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_248dc73786274696a0d66c2dd42252d8",
+      "statement": "InterviewView is a six-phase state machine (connecting, streaming, complete, submitting, recorded, failed): a mount-time useEffect creates a session then opens the question stream and appends chunks; an AbortController in cleanup aborts on unmount; a failure shows in place and the answer control never opens.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/InterviewView.tsx#L18-L118",
+          "version": "repo-lines-v1:sha256:099d9f18b654acf8e8b978d9acef6c47a3ecfa939bdf6e42eb44694a62fa24e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2Nzk0N2UxOGFmZTg1OGY5NDE0Njk3NmQxY2RkZjU5YWVmZWM3M2NkZGJiNjVhMGExMTE0ZWE3ZjQ4NzgzMTk5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3NGVhOTRjODJiMWM0MjI4NTMwODliMDIxOTdjYjhkY2ZkZWM1ZWNjMzhkYTNiYzc5YWE5MGQ3ODMwYTYwNjRmIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c0e849ee6d814d018ddeffc3c54f6055",
+      "statement": "The view reads the event stream with fetch and a ReadableStream rather than EventSource, so the transport is a function tests replace and the parser is exercised on the chunk boundaries a real network produces; interface copy is English until M5.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/interview-api.ts#L60-L110",
+          "version": "repo-lines-v1:sha256:66116e121d0bd66f2053bcf3367335b879af49f4a2f1c39f277c0cc0b16226ff:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1YzJjZTg4ODk0ZWQ3MGNkNzdkYjZjMTQzYzJlM2YxZTU0YzM2YWZkODhhN2FhYjI3ZDBkNTdkOGRkMGYyYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNjUwMWEzNTgwMTA4YmViMTJkZTJiMzE5NGE1MzdlMjA1MjA0ODRkZGIxYjc3NWQzYzdlNmNiMmFkOGUzYmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4M2I3NjBjNTE4NzBmMDE5NWM3Njk4YThmYTY5OTFkZmIwZTAzZmJiM2VkMjE3MjQ1NzhmYjFmOWYyNjkwNWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4MWJjZTQyNTAwOGRmOWVjYjBhOTU1YzlhMmFmZTM1Zjc0MDgzOTcwM2M1MDRlMDljYzY4NDg5ZWI2OTUyZjgifQ"
+        },
+        {
+          "resource": "repo://specs/interview/interview-view/spec.md#L5-L10",
+          "version": "repo-lines-v1:sha256:74d56a25f711e498151dae1520f524cc259314f8d48a08b4a22c20f0880e6ccd:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmI0YzkwZmJjOGIzYmM0OTIxZjRlOTM2ZDA3MmFmNmM0NDY2ZWFiM2RmMGFhYmY5MGY2ZjYxZDk1MjA2MDY5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDJkOGViZGY3Mzg0NjljNjAyNDI4NTcxOTM5NThjY2IyZDc5MjZiNzQ5MWVhZjkzZWYwY2RmOTc0ZDRhMDc2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzc3NWI0NzY4OTM5Njc2NDAyMTQ0Njk0MWY5ZDJhYzRkNjRhYjZhODU0YzY5YjQxMGRmYWJhMWZjZWE5YmViYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7673e94e88d47b6a5c8a0a50d86fe5f",
+      "statement": "parseSseFrames reassembles arbitrarily split stream text structurally: it splits accumulated text on the \\n\\n frame separator, holds the final part back for the next chunk, and skips any block missing an event or data field — so a frame is yielded only once its terminating blank line arrives, a trailing partial frame is dropped, and one odd block cannot tear down a live stream.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/sse-frames.ts",
+          "version": "repo-file-v1:sha256:44617ca227191b2c9ef15e988bf16f4f64de1536dcf8e736ea3eee4e67bb98d5"
+        }
+      ]
+    },
+    {
+      "id": "claim_607ef9729ad9421d860e84a3af867efc",
+      "statement": "The parser keeps data byte-for-byte and never throws; decoding it into one of the three payload shapes and rejecting an unknown event name or a malformed data payload is interview-api.ts's job, and the parser is checked at every byte boundary of tests/fixtures/interview-sse-frames.txt against pure string identity.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/interview-api.ts#L1-L25",
+          "version": "repo-lines-v1:sha256:55e98a8c173b26577876e4dbe5bc68842d6ce28ca78c975c6522d593e1c68072:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxYWZjOWViNDhlYjk0OWQ1N2RhZGNlOTMzYzA0N2Y3NDZlM2QxNmE0N2Y1MDRjMjc3MjFmNTQ0YmQ1ZTU5MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRkNzhmMzI0ZDk3YzNmMGU3ZDYzMDczZjY3ZTYxNGFlNjg0ZjE5N2JiZDJmNWZmOTExODVmMjQyNTA3ZTU3MWIifQ"
+        },
+        {
+          "resource": "repo://packages/web/src/interview/sse-frames.ts#L28-L50",
+          "version": "repo-lines-v1:sha256:ff2e32ba4ce0b187bafa0b1766e0e5e64cdaf507fcae926a2a010584c7bfd298:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjYjZjZDIxNTVlN2ZlNjM0NzBmMzE4NDcyNmM3YWE4YWVlZTBiNGFiOTYzYzg4ZDJjODQ4YTQ2NTYyOWNlMTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkM2M1N2I2MTgwMDExMDlhYTg3ZDM0Y2EwMTVhYTJhYTQ5YmJmOGVjNTZhNjM3NmY1YjNhNTE0MDFiNWUxZWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6cc443b26b49490ba96da88929cec914",
+      "statement": "@chrysalyst/web keeps no dependency on @chrysalyst/server and restates the wire contract itself — the three SSE payload shapes and the two JSON bodies — because hc<AppType> cannot type an SSE event name or payload; tests/fixtures/interview-sse-frames.txt is the executable half both sides' tests are written from, so a rename on either side fails a run.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/interview-api.ts#L1-L44",
+          "version": "repo-lines-v1:sha256:e0292414b69798f655519f9031060aa817824019ee92b864ddf7fc5438879f56:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxYWZjOWViNDhlYjk0OWQ1N2RhZGNlOTMzYzA0N2Y3NDZlM2QxNmE0N2Y1MDRjMjc3MjFmNTQ0YmQ1ZTU5MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmMzlhYmUyMGVmMGRkNjViN2JkMThhZWMwYWU1MTgyZDJlZWMzMGE5ZmQyOTk5MjQyMzQ0NjBhODRlNjhmYjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2MjVmNzE0MDk5NDRkNjY5ZjRjYTU4MTk0NTc4MDcxZWI4NDY0MWE0NzEwZjBkNTIwN2EwOTlhODBiZWVmN2YifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L113-L138",
+          "version": "repo-lines-v1:sha256:b5dcc722cff4fb0565a57579fdaee067f7d12067768745bfe34a0b203810ede8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYjdmM2JmMWQ5MWNiNjAzZDk2ZWMwYzdjYmIxNDI4ZGMwNGNiMmE4YzM0NTQyZWNmZWQxOGEwMzRhNDgyMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYxNWIxNGVlM2I2ZWRkNDZiYmIxMzhjZDFmOWYwNTI4ZjAzNmYxYjI2MDk5OGU3NTZlNGFlM2UyOWY3ODA0N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNmEzOGFkMmMyZDU5ZTQyOWE2MGNmZTgyYzUwNThmMjM4YWNlNmRiNjg4MGJkYmNmYmIyN2MwMzczZmQzNGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df2974c1149b4b0c97232931ac397ee1",
+      "statement": "The Vite dev server proxies /interview to http://127.0.0.1:3000 so the browser sees one origin under pnpm dev; the production build carries none of this because a proxy is dev-server configuration.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/vite-config.test.ts",
+          "version": "repo-file-v1:sha256:4fa6fa60c939591cb39ff1faee33adba4d6dfa41d491e58911c957059d82b74b"
+        },
+        {
+          "resource": "repo://packages/web/vite.config.ts",
+          "version": "repo-file-v1:sha256:27d569467fe0328643801d32e5a8b6f5e595361993093ea52bf1064d1f5df6fb"
+        }
+      ]
+    },
+    {
+      "id": "claim_c82407b0593b43c39f034bdf3162f1e1",
+      "statement": "The impeccable subphase of plan 004 settled the project-wide styling stack (ADR styling-stack-plain-css-tokens-plus-css-modules): plain CSS with a :root custom-property token layer plus one CSS Module per component — no CSS-in-JS, utility framework, or preprocessor — and DESIGN.md describes the system as shipped, derived from the finish review.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/DESIGN.md",
+          "version": "repo-file-v1:sha256:ea022a7ad35d5abe38170dcdb04c136b8b125c26a4036b98ae6a7f3b2ee3dbe8"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L165-L190",
+          "version": "repo-lines-v1:sha256:77dc803a254066d36a4ae19ef67cb42b580bb92bea8ae08e0086f681e31f5399:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4ZjczNzkxYzM4ODVkMGExN2U4NDJhOTcxNGExZDM1YzYwN2U3ZmE4NDNjNDUyYzE1MmVlMWU4NzIzNDAxM2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyY2Q2MWY0NDRkYzU2Yjc4ZjhmMWRiNTkzNDJjNmY4Y2VhNGVmZDAxNGRhMGJlZTFhOTFmNDM2YzY3NmU0NzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZjZjUyY2M5M2NhNjkyODIyOTg2OTI0MTQxNDRiYzU0Yzk5NWRiM2RjZGM3YTU2YzBlODFmMTExNzYwMWM1NDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_30dc98bf8dbd458a9ea1a55edabea653",
+      "statement": "The design world is editorial minimalism: warm paper #f4f1ea ground with no boxes or shadow, near-black and soft ink, a single editorial vermilion #c8402b used only as a state signal (submit, confirmation, error mark, focused field), 1px hairline rules, Source Serif 4 for the question and wordmark, Libre Franklin for everything operable, square corners, one centred ~40rem column with no breakpoints.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/DESIGN.md#L77-L130",
+          "version": "repo-lines-v1:sha256:39ebc104e0fb9d7a0b14a055a74d0b16417ee4405c58f5f5d0920e7c4c596857:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyZGMxYzU4ZDQ3NDAwODNkY2UzZjIwZDQwMjczNGE0YTY1YTk2ZWFkNGY5M2M4MGNkNGNlMWIzYWMzYWNkNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4MDZhNjU4NWU0YzJjYmQ1ZjFjYzcxNjlkMzM0Njg1MTAzZDdiZTQ5MjFhYzFkM2RjODU2MzkwM2ZhZjBlYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3MzE2Y2VjZGFkZGVjMWViNGM0YTRmMzZiNTI5YjZlNjdlMTExZDFmOTBmMzIyZTVkMGY2Zjc0ZWYxMGUzYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3NjQ3NTEyMzFjYjAwMmQ1MjY3Mjk0ODE5NDBlNGI4MDcxMjY1MzI2MDEzNmYzOTViZTg4NGM1MWZhODhhNDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_189b07ee7c324269bea3b6857dfeb340",
+      "statement": "The streaming signal is a signature 2px hairline cursor rule that blinks hard on/off with no fade, removed under prefers-reduced-motion and static in the failed state — the deliberate anti-chatbot cue, never bouncing dots.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/DESIGN.md",
+          "version": "repo-file-v1:sha256:ea022a7ad35d5abe38170dcdb04c136b8b125c26a4036b98ae6a7f3b2ee3dbe8"
+        },
+        {
+          "resource": "repo://packages/web/src/interview/InterviewView.module.css",
+          "version": "repo-file-v1:sha256:373d66df8d042e3359c76fef5ba43ecd417ae890a9f167f973eff03fe0234ded"
+        }
+      ]
+    },
+    {
+      "id": "claim_bea04a183bb742fc8fc3f26ab15caef6",
+      "statement": "The two typefaces are self-hosted: packages/web/public/fonts/ carries six woff2 files (Source Serif 4 400/500, Libre Franklin 400/500/600) plus their OFL licence texts, declared via @font-face in index.css, with no Google Fonts URL anywhere in the source.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/DESIGN.md",
+          "version": "repo-file-v1:sha256:ea022a7ad35d5abe38170dcdb04c136b8b125c26a4036b98ae6a7f3b2ee3dbe8"
+        },
+        {
+          "resource": "repo://packages/web/src/index.css",
+          "version": "repo-file-v1:sha256:f65611c337b3871ce9b7a3a9c2b9025c94a1d1b706410eaec932850f4185953e"
+        }
+      ]
+    },
+    {
+      "id": "claim_a800159011f948b781f62de4a64a6987",
+      "statement": "InterviewView.test.tsx drives the view through a fake InterviewApi across all nine interview-view scenarios in jsdom, and StrictMode's dev double-invoke leaves one extra never-questioned session directory per page load, which is expected.",
+      "evidence": [
+        {
+          "resource": "repo://packages/web/src/interview/InterviewView.test.tsx",
+          "version": "repo-file-v1:sha256:2325a40ed04d83b52e45cf4fe148dc15c6c6ed4e6486dfe1e3751a5a99b81f1b"
+        },
+        {
+          "resource": "repo://specs/interview/interview-view/spec.md",
+          "version": "repo-file-v1:sha256:7a0b8f746df2b7e1caf06c745b0a6910ca00c5410764ba375645d23e7e2b381c"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-10T15:50:21.943Z"
+  }
+}

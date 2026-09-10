@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:9d5e63ba779ba5d6cd267e1ced1e9647ce6bd214d02945afe666eaa5b95d5f6d",
+  "pageVersion": "sha256:a929cdc80f46b36632544268dfb567e1a51f7165b9f72d3ad3b1296a72ba1d62",
   "claims": [
     {
       "id": "claim_329dcc7f952e42a89207fed41ae03721",
       "statement": "The filesystem session store is the only place in the workspace that knows a session is a folder on disk: it writes <root>/<id>/session.json and <root>/<id>/transcript.md, and @chrysalyst/core imports nothing from it.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L38-L120",
-          "version": "repo-lines-v1:sha256:9bb241b4245dd650e0e9df007bbb8b3f9a0c23b57ba9f04bf4cb8c4f7ae60b87:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkMDViZjNiZDVhMGY2NzM3ZDA4Yjg1MTA3YjllMjFmMzIwYWZlM2VmMTA0MzE3ZmMzYmZlYThjMDA5OTI4ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMDA1NTY5MDdlNjQxMWZhZDg0YTU1YjRiNTZmYTJjZjA1YjAwOTRjNDcwOTZiNjJiYjAxYmI4Yjc0OTdmZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2MGZmMWM4OWVkMzMxNWY0MWI1ZDljMDdkZjg4YzgzOTJmZmE0NzhkOTEyN2U1NjMyNTliMWMyOGYzMDUyODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwZWRhODU4N2U0Mjk1NzI4NDJjMTczNDgyZGU2N2M5YzdkZDJlMWFkMjg5YzY5ZTljYjcwZjljMzQ5MzQ2YWMifQ"
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L54-L145",
+          "version": "repo-lines-v1:sha256:35cd1c79aea3ac1b8b2c3e39ff895e1072b639aa23b86dda0acd2df52354e8f1:eyJzZWxlY3RlZExpbmVDb3VudCI6OTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhYjY5MzA3YjdiNjM5ODA4ZWJhMWE4ZTJhYzc4OGVmNTM0ODFhZTEzNTRhYjQ1NDlmOTY0YjQyODA0YTY4N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmMDFhMWFlODc1ZjNjM2I5ZjI5ODNlOGYxM2Y0MTBiMjg4MWIzMGEyN2NjNTE4MDUzMjRlMzMzOTZlMmNmN2MifQ"
         },
         {
           "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L7-L9",
@@ -50,15 +50,19 @@
     },
     {
       "id": "claim_5d17101388d14ecbbafa5c5b19eacf6b",
-      "statement": "transcript.md is a metadata stub in this milestone — a header naming the identifier and both timestamps and nothing more — and a later save of the same identifier rewrites it so no completed save leaves a transcript describing an earlier revision.",
+      "statement": "transcript.md carries the interview but the store does not compose it: its config takes an optional renderTranscript (a pure function from the stored session to Markdown, taking the same StoredSession<TState> save receives), calls it when configured, and otherwise writes the metadata header it wrote before; the transcript is unversioned and a second save of the same identifier rewrites it.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L343-L352",
-          "version": "repo-lines-v1:sha256:ae18236ec8fd31be0b1e26edc5ce0fc641dfbc1fe418140c4e4a5ec08d97cdbf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MjM4NGVjMzE2NjYxZjQ2YTM1YTNhMTBlOTI2MWI3Y2RiNzZhZjllN2Q2ZGQ0OWFjYzk5Mjg2MmEwZGQyNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMDQwZTA5NWE5NGUyYWRhNzRlNDIxZjM3MTg3NTFhOTFhODEwYmZkNjZmNDhmNGU5MzljN2I3NDgwZWI2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzY2ZmMTBiYzQxODQ5NmQ5YTdiYjcyN2NkM2E0M2NkNzQ1ZjJjOWExOTM3NGZlNWE3YzY1ZTRjNWQ0NTk1OTQifQ"
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L133-L143",
+          "version": "repo-lines-v1:sha256:3ec89fcbaa3010e7cd37b3f63ba0286137a254c7c45fb17a3b89556096bf37b1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhZmY0NzdkZmZjYzFhZjMwNjlmOWMyZjFlMjhmYzNhYWZkZmVkZWUwYjllZjA2NTA2MWFjZjcxNjdiNWYxZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZGY3ZmI2NTEyZjc4MDc0NTBkYWJiYjFmODNiY2QyNjlkNTVkYzM0NGJkMzkxYTZlMTkwMWI4NTcxYjJkZmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0ODgwYmZhN2NjYzRiN2EzOTU3NzgyYmI0MTRhMGU3MGNjZjhiNjBkYzYxODZmNTRlMmQxZTVjNzBlYzFiN2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI0NjAxZWZkNjdkNWE2MTJmZTZlNzMwMTZjNTlmNDY0NDQ4MTI5MDkzNDBiZmZjYmUzZThhN2I0YzYzMDg5MTEifQ"
         },
         {
-          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L37-L44",
-          "version": "repo-lines-v1:sha256:11d50936bff71decd579b3f82c1b50be3c59ab043e32690aabf32445958335cd:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODQ1NDZkNGFiYmNjZDY0ZDdjZDI5NjAxN2I1MDQwMGI0NDM2NGQyNTg4MTViZDgyZmU5YTNkMTFiMTBiYTgwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGE0NTMwMmM5ZWUyM2FkMzIwNThkMDU0MjY1OGQ5NDAyYzdlNTY0YmQwYzljYzk2ZGYzMDRlZWE2OWNkYzU2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQxNTgzZDc2ZWFhODE0ZjVjNTkwNjg5MjVhMTc3YTY5YzJiYTlkZWZmZjVmMjVkZTlkNTIyMTY4MGJlMTA2MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTY1YTc2NWVlMzFiMzUwOTEwZDhiNjg1ZGNhMTRmYTFhM2QyYzQ3YTQwZDUzZjk1MDNmYzY0ODVlMjcyYjIzMiJ9"
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L37-L52",
+          "version": "repo-lines-v1:sha256:e88a4332f46681f06c214d4419ca0f13a720acb23158d3ad31e88a5ab9e48fc5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwYjcyYjU3Mzg0Zjk5ZDExNGUxNzMyNGFmYzRhNzk3ZGM5MzhlYzI5MGFiYWQ1MmYxZDA4NmMwMTY3MjkyNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjZGViNWRjNmJlMGYzZmRmYzMxMjE1ZGFkZDNjYTA4ODhkYmI3NDgwN2MxYzNiZTYyNDJmZWZmOWY1N2UyOWQifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L13-L15",
+          "version": "repo-lines-v1:sha256:c38f54dd2b7b03e38f2892572f8c0b0327ad378f9f6bf57e69840b85d1159139:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTM3MmU5ZDI0YTc2M2VhZWQ5NjFjOWNhNzZkZjU2ZTdjMGYwOGY3YzI2MWQ5MjFhMWM4Njk1ZmUzMjRmZWNlMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTVhMDRjZGI1ZjU0MTMxNmEzNDJiODA3OTBjMzA3MzRjZjg3MTBlMDlhOWU0Mjg5ZGI1ODNiOWNlMTI0MjA3ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2ViMGMzZjEwNDBlODllNGQ4YmEzODMyOWQxZDdlZDU3NjE0NmNiMTJlMDc2MmRmYjFlMGNhMTQzMWE4ZTRlNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjgyODJhNjVlZGEzZmM4NDk3Y2ZiYWY3MjBkZGUxNDg0MjZmZGYwMjIwYzQyZjc3ZDMzODQ4YjA0MmFjMzkzYiJ9"
         }
       ]
     },
@@ -213,10 +217,28 @@
           "version": "repo-lines-v1:sha256:06e05c68d55314c819875510ef05983cd1a59eaae566dbd7921d8f5e16009364:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMTY0YzFjMmU3OWIyYWY1YzgwYmZlZWNhMTJjNzQwNzQxNDBjZmRmMGQ2YjE2NzUwZmUzYmJlN2M4NTc4ZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNGRjZmVkZWIzOTEyNGMzOWViMzgxN2I3Nzc5MmVlYTgzZTZlZTcyODA0MTVjZDM5NzhkMDI3YjU5MDY4N2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MmFiYzM0YzQxYWJhNTUwMjhkYzc2M2Y2NzQ4NGQ1NGQxN2VmNWMzNzQ1YTQ2YjUyMjI2YjIxY2FhODBhMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZDk4ZGM4Y2ViYTk3NmU2YjUxNjQwZWEwMTAzZjhiZmM3MjM5NjgzNmUzNjAyOTZmYzc3MTk5MGZhNTg1OTQifQ"
         }
       ]
+    },
+    {
+      "id": "claim_1be20e47b203433ca713eed9610f3d41",
+      "statement": "The renderer belongs to whoever owns the state: @chrysalyst/core ships the interview's renderTranscript and the composition root passes it into the store config; a caller storing a different TState needs no renderer and the store still never interprets what it holds, which is why the three unchanged 003 scenarios stay green and two new scenarios (header fallback, renderer-throws) are added.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/transcript.ts",
+          "version": "repo-file-v1:sha256:28887604dc481304c000368c25175a373673cc8b724cf059612281350de64577"
+        },
+        {
+          "resource": "repo://packages/server/src/composition.ts#L33-L43",
+          "version": "repo-lines-v1:sha256:a7f9ee56fd1843e36a335b332fe1787ee5384d36a2b6806f873448b9f4ac68b6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhYzEzMWU5MDgwMWFhZmFmOWVmNzFkNTY2MWYzNDIxOGRlYzdjZjNkMmRjNGNiZjJkZGMwOTk1NTU2YTQyMDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ3NWE1NWRkNzViYjFhZGRiZWYyNjZiMmIzZmIxODliOTMyNzVjMDY0Njc4NmRiNmFiZWNjYjYyMWUyOTE3MmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://specs/adapters/filesystem-session-store/spec.md#L13-L15",
+          "version": "repo-lines-v1:sha256:c38f54dd2b7b03e38f2892572f8c0b0327ad378f9f6bf57e69840b85d1159139:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTM3MmU5ZDI0YTc2M2VhZWQ5NjFjOWNhNzZkZjU2ZTdjMGYwOGY3YzI2MWQ5MjFhMWM4Njk1ZmUzMjRmZWNlMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTVhMDRjZGI1ZjU0MTMxNmEzNDJiODA3OTBjMzA3MzRjZjg3MTBlMDlhOWU0Mjg5ZGI1ODNiOWNlMTI0MjA3ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2ViMGMzZjEwNDBlODllNGQ4YmEzODMyOWQxZDdlZDU3NjE0NmNiMTJlMDc2MmRmYjFlMGNhMTQzMWE4ZTRlNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjgyODJhNjVlZGEzZmM4NDk3Y2ZiYWY3MjBkZGUxNDg0MjZmZGYwMjIwYzQyZjc3ZDMzODQ4YjA0MmFjMzkzYiJ9"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-09T13:28:50.488Z"
+    "at": "2026-09-10T15:50:21.943Z"
   }
 }

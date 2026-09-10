@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:ac8385eb8ca9b4d10a40fb4c373a5339f0fe699fb15924feeadb6852ae1dcbf4",
+  "pageVersion": "sha256:60e788aa78fbf97f9e6504a65aaf3ec1efee8dd18337c0a0e1f2c1b814167b26",
   "claims": [
     {
       "id": "claim_ce4b675f4aac4897b11178f33adcea79",
@@ -60,21 +60,39 @@
     },
     {
       "id": "claim_067627eef8b64a0391c319685473aa51",
-      "statement": "packages/server now ships two real adapters, the LLM adapter and the filesystem session store; there is still no interview engine, question tree, distillation, or CI workflow.",
+      "statement": "Since M3 the first vertical slice runs end to end: the browser creates a session, a local model streams one opening question token by token over SSE, and the typed answer lands in session.json with a Markdown transcript. It is one round only — no turn loop, question tree, distillation, idea input, or CI workflow yet, and the UI is English until M5.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L64-L120",
-          "version": "repo-lines-v1:sha256:dc26531dcc479838407d7dcd5e25513025d3ce626822357feb29fe07039532f2:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwODhmNmVmNGIzMGI1MjlmODI3YTAwNzRlZTFkMjY4NjU1ZjJjYjBlZjdjYWIzMDBkYTE5Njk0MTJmYjM5MDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMDA1NTY5MDdlNjQxMWZhZDg0YTU1YjRiNTZmYTJjZjA1YjAwOTRjNDcwOTZiNjJiYjAxYmI4Yjc0OTdmZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2OTZiZjMwZThmYmMxZDM0NDA5Yzg1N2YyOThjZjgzZDhiNGM2Njk1OTM3NGE1ZjNiYjY0NjYzMTc1M2YxZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwZWRhODU4N2U0Mjk1NzI4NDJjMTczNDgyZGU2N2M5YzdkZDJlMWFkMjg5YzY5ZTljYjcwZjljMzQ5MzQ2YWMifQ"
+          "resource": "repo://packages/server/src/composition.ts",
+          "version": "repo-file-v1:sha256:4f8e227fe8fd14323905c6de8623c428a64ad49d48a187e5f35bffe7a3f6937a"
+        },
+        {
+          "resource": "repo://packages/web/src/App.tsx",
+          "version": "repo-file-v1:sha256:80e9de2be589bb77753fd75c3e2bf852100182e73ee1387f5a8bfc4c87ebf815"
         },
         {
           "resource": "repo://specs/roadmap.md#L52-L60",
           "version": "repo-lines-v1:sha256:bf8eba584b593eb7683830e3a2fbf5752cfe1c23e621b47c9374a00b9c447db1:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTA4OGVhMmUwNjRhZTY1YmQxZmI2Njg1M2Y1MWNmY2NjN2M4ZDY1YzM3NDFlYjRhMzkyNWFjZTIyYmRlZmRlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTY0NDgyMzQ5YzI3MmQwZDY4NDgzYTJmNDM0ZGYwYjI2OTc1M2NmOWExYmI1YjdlMWRjYTQxNzdhMjI4YWQxNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjQyNzg4MDA1NTYxYWUyYjFlOGJlMjMyODJiZjAxN2E0Njg2NWY0ZmM0ODYwMmVhZGIwN2VhOTM3YWIyZGNiYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTBmZDhhOWYzZTMzMDEyMGU5MGFjYzgzZDMxMjc5NWU4OTdkNWY0NDM4M2E4NzU3ZDI1MzgxOGJlMjcxYTVhMSJ9"
         }
       ]
+    },
+    {
+      "id": "claim_cedfc5eeffa84309b5fe8a025e2a574d",
+      "statement": "A session is a folder under ~/.chrysalyst/sessions/<id>/ holding session.json and transcript.md, with CHRYSALYST_SESSION_DIR overriding the root; the live test tier is now two *.live.test.ts suites gated on CHRYSALYST_LIVE_LLM.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/session-store/filesystem-session-store.ts#L120-L160",
+          "version": "repo-lines-v1:sha256:ac1ddac2333bdbf3384a3cde84dc69c09e447e96d74dbf2a4efc656667c6aff7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZjNlZjZhZDQ0MDM4NzUwNjBjNjQyNGMxMjI0ZWU4ZTU2MDZiNDQxNDIyNTcxMjg0ODM2YTJiOTA0YjYwZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1ZjhiOTA5NDViN2JmZjliNTgxOTY5NGZiMmQyOGYzNmJiOWY0ZjVmMTg0NGUzYTFjNTI5NGQ3MmRhMzA1NTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjZTI2OTJlMjNlMTViOWY5ZjI3NDIzOGY1OGMwY2I3N2ZkYmZkZTYxZDY2NTVmMjY5MmU5ZmQ5YzRmYzM2NTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkNWM3M2ExNTM2OGUxNTVhMzM5MDZkYjFhY2Y1MDEzYTQxZGM4NzdhNmMwYWYxNzUwMmZlZTNiMTZkNTJhYWUifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.live.test.ts",
+          "version": "repo-file-v1:sha256:7284279d3885709c89f1c46c57f0ef5e65e0eb87008adfa857bfff7addfe6cc4"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-09T13:28:50.488Z"
+    "at": "2026-09-10T15:50:21.943Z"
   }
 }

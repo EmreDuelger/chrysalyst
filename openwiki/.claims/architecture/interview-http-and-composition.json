@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bcdababcff01707fb4a2450b1ef311d4722008cdce7b09bf3c5184485cb64711",
+  "claims": [
+    {
+      "id": "claim_f7fabcf8cbed47b7af54379fdb5040f8",
+      "statement": "interview-routes.ts is the sole place the interview's vocabulary is mapped to HTTP: undefined-session becomes 404, a no-open-question outcome becomes 409, an unusable body becomes 400, begin becomes 201 with { id }, and a recorded answer becomes 204 — no status code appears in the domain.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L100-L167",
+          "version": "repo-lines-v1:sha256:d3e8125774a659aa931dfacd3ffd7dc979c57e05aceb590cfc57818735a670d1:eyJzZWxlY3RlZExpbmVDb3VudCI6NjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ODJiODkzNTQ3NmIxMzk5OTAyM2IyMTNkMGI3ZWIyNDI1ZDk4NjFlMjM2OGZlZDI4YjQzMGY4MGM1NDRhYjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUzZjgzNDI3Y2JmNGE2ZDhmZWVhNTY0Y2FmZmNkMWMxZTUzZTc4Y2ZkYmZlNzNhZmUzNDBjODAyNTViZjVhNTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://specs/interview/interview-http-api/spec.md#L1-L20",
+          "version": "repo-lines-v1:sha256:52387cb13b52a270e912bfe3c98c1e3828f9f0d139648a6e612267a518f39e5d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3YTRjN2Y1YzhhZDQ4MzE0NGFkZGYxOGU4ODgwYjA3Yjk4OWVjZDFlMjY3YWFjZjA5NDdkMjZhODRmYjY3MDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA5MjFmNGU4YzRkMmViZjRiYzhkYWEzMWI4OWMzMWM5ODNlN2E1Njc2ZGMyZTBiZWI3NmNlMjExNTQ2OTVjOWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_983bd0e75962465f8d8e18e9b4c94445",
+      "statement": "The session identifier is minted in the POST /interview route with randomUUID(), not in the domain, because randomness is ambient nondeterminism like the system clock and save is handed an identifier rather than inventing one.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L101-L108",
+          "version": "repo-lines-v1:sha256:9bc326331c9e1f0bcdb84f8947619489ea7b753c3eb170002752c8692c153972:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTcyYTQyOTM4MmIyZTE0NzE4ZTBlMzdiMDU3MGE4YTE3MDI5OTFmY2Q4NDk4Y2Q4NDA2MGE4YmY0ZjA1MDE3YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQ3NWU5NGE5MDRhYzQ5YjMxNTRkNDY3MmE2NmU4NjI5Yjg2ZGFjNzRlM2UyOTM3YmU2OTI3YWUzZGExMWM1MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmNiNzVhY2NjOGVhNTMwZmU4Zjg2ODJjMDM1OTM0YTZjYjljMGQ5ZGNkNWUyZTY0OWJiNDljZTZjMWM3NDMxYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTU0NDU2MTA3YmI0ZGI1OWQwODlkYTNhYjc4MGI4YmJlNzM4NDFlZDg0MTE1MTJmOTVmNzBjYWY3MGQ4ZTcwMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_10ae8284a6274d2d8dc088646c0eae90",
+      "statement": "The question stream carries exactly three SSE event types — token {text}, done {question}, error {message} — each data field a single line of JSON, because JSON.stringify escapes a newline so no model chunk can split one SSE frame into two; there is no id field and no reconnection protocol.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L20-L36",
+          "version": "repo-lines-v1:sha256:febc514e8780fd2d80f89d72de96e638d7146ff2b4d5d559e4cb34f9227ba1f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MTYxMjgzYjAyOTUxYTYwNmFiOWQ2ODNlNTk1ZWI4YjIyZGE4MWEyNzYzZjQ0YjllOTcwODQ3NzVkMTMyYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5MzlhMTQxZTdjNmJjZGQ4N2U4YWIyOTE1YWJkNzhlNjY0OTUxZDM4OTYyODRmMTU1ZmY3MWU3MTlhYzE1N2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkYTZhYzU5OGE3MWI1ZjI2YWQxZTc2NGNlNDk2NGFjOWNlM2UwZWUwNzdiNDdhOWUzMjIyZWU5OTFiMDZjMjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZjVkZjkxYTM1M2IyNjc3MTFkNmM3OWViNmU5NzVlZWM4MzFkMmYzMzYxNTkwYzc1OGY4NjM5MGNlNGI0ODMifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L57-L82",
+          "version": "repo-lines-v1:sha256:46704640aed38f6d3f10f4ae1cc7b998d435658361cb501d62f172791adebdcd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyNDIzYjVlOWIxYjU4OGM2OTJlZmMxYTAxOGRkOWZlOGUwMTE3YWJkNzYzZGJjOGEwMjcyMTUwOTYxYmJhNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiNjJlODFkMzljNTY1MDZjNmMzNDlmMzVkY2NkZjBmYmM2ZmZhNDcyY2QyMThiZGExM2Q0YmY4N2NmYjU0NWUifQ"
+        },
+        {
+          "resource": "repo://tests/fixtures/interview-sse-frames.txt",
+          "version": "repo-file-v1:sha256:056eb4f86f03f520b9e52a422539677c1ceb7eabc465f2c81611f7ed97c889ca"
+        }
+      ]
+    },
+    {
+      "id": "claim_e78fe152f306474d9e2ed391c5e0dcc8",
+      "statement": "writeQuestion writes the done event only after the question iterable ends of its own accord, so a client that observes done is looking at a question the interview has already stored on disk; an abandoned stream and a failed production both end without done.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L54-L88",
+          "version": "repo-lines-v1:sha256:03c4e8473de6536e3b9b4b4caf656b289d25e770ff076f05091ab7c8d455a470:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1NTAzMjNkY2QyYjMwOWFhNWYxOTZmZWVhY2U3ZDlhMDk1MzBmOTI2Mjc2OGYxYWVhYzdmN2MxYjEwZDdhYmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_80ffc171adb3472a99cdc50a22e08442",
+      "statement": "Client abandonment reaches the app as a cancelled response body, not a cancelled request: Node's adapter closes the writable side on disconnect, which cancels the body reader; writeQuestion checks stream.aborted before every frame and the route's onAbort handler aborts the AbortSignal passed to openingQuestion.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L110-L128",
+          "version": "repo-lines-v1:sha256:e0cbdad48a335a9054256b04d87a9cae8d0acd5b2086e2d8d914d44b3cc36985:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NmZlY2Q2NzI1Yzk2OTgyZmM2NWZlN2M1NzNkMTQ5MzAwZjI2MjM1YTNmY2U1MDBkNTU1OWFlODExZjE0NTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5M2ExYWMwN2E5NmMzOWQ2MjMyNmQ5NzM0NTEwOGZmNzJjMGNlMGIxMDA0MGExNGJhZjU3YWQzOGE5YWNmOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxMjVlNzE0MzdiZjc2OWQ4NjJiYTM3OTZlYjRkZWFhY2M5NGU1ZmY0NzU0YWE0NzFlYTY1Y2M3Y2E3OTU5M2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiN2ZmNGQ1NzBhNWQyMDgxMjlkMGE2ODRlYjVkMTUyZGFjYjg4NjcxNzQzZmIwMmFiNGI4OGY1ZjJlYzQ1OTcifQ"
+        },
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L54-L88",
+          "version": "repo-lines-v1:sha256:03c4e8473de6536e3b9b4b4caf656b289d25e770ff076f05091ab7c8d455a470:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1NTAzMjNkY2QyYjMwOWFhNWYxOTZmZWVhY2U3ZDlhMDk1MzBmOTI2Mjc2OGYxYWVhYzdmN2MxYjEwZDdhYmQifQ"
+        },
+        {
+          "resource": "repo://specs/interview/interview-http-api/spec.md#L13-L15",
+          "version": "repo-lines-v1:sha256:86f16c79c1f361f086ca76dc2ad461a5e0f008e01f7824559831c33bdc980d28:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODNiMjg3ODg3OGFjNThiZDc4ZjM4NmExM2ZkNmE2ZmUxZDA5NDI1MTYxNzE0ODVkYWNkMjBlZTE1MmQxM2IzZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlZjYxNjVhZjFhZjc3OTUzODgxMjk4ZGJjODE5NTYzMDdmZWM5ZTI4NDhhNzU0NmMzNTQ2NzU4YjAzNzBjNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjNjNDNjN2JmMmI0NzhkYjVjODVjNjM3MGQ3ZmE1Zjc2ZjI2OWUxOTg0NTk3ZWE4YjFhODZjZTE4M2Y4ZTc4MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjgyODJhNjVlZGEzZmM4NDk3Y2ZiYWY3MjBkZGUxNDg0MjZmZGYwMjIwYzQyZjc3ZDMzODQ4YjA0MmFjMzkzYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8601b6bebcf4bd89cd3f4ce0cf1ff03",
+      "statement": "composition.ts is the single place in chrysalyst that constructs a concrete adapter: createDependenciesFromEnv takes the environment as a parameter, wires the LLM adapter, the transcript-rendering filesystem session store, and a system clock, omits search rather than stubbing it, and reads nothing — no socket, no file, no session directory until a caller saves.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/composition.ts",
+          "version": "repo-file-v1:sha256:4f8e227fe8fd14323905c6de8623c428a64ad49d48a187e5f35bffe7a3f6937a"
+        }
+      ]
+    },
+    {
+      "id": "claim_002751d15c1b4553bfd93e21d7c5a9a6",
+      "statement": "renderTranscript is passed into the session store config by reference, not wrapped: @chrysalyst/core's renderer and the store config share the StoredSession<InterviewState> signature, so no adapting lambda stands between them, and the store writes a real transcript instead of the metadata stub.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/transcript.ts",
+          "version": "repo-file-v1:sha256:28887604dc481304c000368c25175a373673cc8b724cf059612281350de64577"
+        },
+        {
+          "resource": "repo://packages/server/src/composition.ts#L14-L43",
+          "version": "repo-lines-v1:sha256:b70c8055b0438b0893464d1bd6ff6f4e0d2fb0818603aeace3c51cbd78ef28ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRjOTUyM2VmOWY4MDAxNTBjY2YwYTVkNzFkNjQ3ZGZlNzVmYmQyODgyOWJmNDQ4ZjMxMjc0NDk2YzlmZjkxNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_361ae5a560224d85afe512eef8c8ef17",
+      "statement": "createSystemClock confines the one new Date() call to a single adapter, treating the wall clock as ambient nondeterminism like a socket read; it is wired in once at the composition root.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/adapters/clock/system-clock.ts",
+          "version": "repo-file-v1:sha256:f5e32dbb05a734474857bf95a382d2ec684f566308313350efbca3adf6e911c3"
+        }
+      ]
+    },
+    {
+      "id": "claim_540b64f166084b6c93cc73857a793d58",
+      "statement": "main.ts is the only file that joins createApp(createDependenciesFromEnv()) and starts the server on port 3000, which is where the LLM adapter and the session store are first mounted on the Hono app — before M3 the app carried only /health.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/app.ts",
+          "version": "repo-file-v1:sha256:81e500359cd63e34ac40f513bd49c07067043d6302f9451be8ef80e34ef01707"
+        },
+        {
+          "resource": "repo://packages/server/src/main.ts",
+          "version": "repo-file-v1:sha256:5600bf683f9ed37606de85468cad9d87e260f67679dbbb8cfbbb4ea34edf2a2a"
+        }
+      ]
+    },
+    {
+      "id": "claim_bdb19f7643834413af0925d9fd76b13c",
+      "statement": "interview-routes.test.ts drives the app through app.request(...) over three fake-model factories (chunkedLlm / rejectingLlm / endlessLlm) and a mkdtemp directory, asserting frames byte-for-byte against tests/fixtures/interview-sse-frames.txt with no socket and no daemon; interview-routes.live.test.ts runs the same path against a real qwen3:8b and measures time to first token.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.live.test.ts",
+          "version": "repo-file-v1:sha256:7284279d3885709c89f1c46c57f0ef5e65e0eb87008adfa857bfff7addfe6cc4"
+        },
+        {
+          "resource": "repo://packages/server/src/routes/interview-routes.test.ts#L1-L60",
+          "version": "repo-lines-v1:sha256:2085de215dac527ab29f6685472ecfdf2c3190285e6b717968f7840e4556124e:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YWRjNmU5Y2ExNjhjYTVkMmFhMGVjM2IwMjdiNTk3ZGY1NGI1ZDEzN2Y5Zjc4ODU0MzkwMGI4NTZiNmUyODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5NWZhMGYxMTE3YjVlYTQwNDM0MTQwZGRlMWEzNDBjNzIwZGRiZjMyNjIxMmUxOTE4MzhkNGIxNTZkMzE2YmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1NWJkMWU0OTQ3M2FkZDU2NzFkOGNiODE3ZjhhMGU5NWM0MzEzNjZmNmViODY1MDJlYjRjY2QwNGRmZjlmODYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-10T15:50:21.943Z"
+  }
+}

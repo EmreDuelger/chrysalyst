@@ -848,6 +848,108 @@ describe('createFilesystemSessionStore save that fails', () => {
   });
 });
 
+describe('createFilesystemSessionStore transcript rendering', () => {
+  it('writes exactly the renderer output and rewrites it for a later revision', async () => {
+    const renderTranscript = vi.fn(
+      (session: StoredSession<{ title: string }>) =>
+        `# ${session.id}\n\nrevision ${session.updatedAt.toISOString()}\n`,
+    );
+    const store = createFilesystemSessionStore<{ title: string }>({
+      rootDir: storeRoot,
+      renderTranscript,
+    });
+    const first = storedSession({ id: 'rendered' });
+
+    await store.save(first);
+
+    const transcriptPath = join(storeRoot, 'rendered', 'transcript.md');
+    expect(await readFile(transcriptPath, 'utf8')).toBe(
+      `# rendered\n\nrevision ${first.updatedAt.toISOString()}\n`,
+    );
+    expect(renderTranscript).toHaveBeenCalledTimes(1);
+    expect(renderTranscript.mock.calls[0]?.[0]).toBe(first);
+
+    const later = storedSession({
+      id: 'rendered',
+      updatedAt: new Date('2026-09-01T09:15:00.000Z'),
+    });
+
+    await store.save(later);
+
+    const secondBody = await readFile(transcriptPath, 'utf8');
+    expect(secondBody).toBe(
+      `# rendered\n\nrevision ${later.updatedAt.toISOString()}\n`,
+    );
+    expect(secondBody).not.toContain(first.updatedAt.toISOString());
+  });
+
+  it('falls back to the metadata header and does not reject over uninterpretable state', async () => {
+    interface OpaqueState {
+      readonly note: string;
+    }
+    const store = createFilesystemSessionStore<OpaqueState>({
+      rootDir: storeRoot,
+    });
+    const session: StoredSession<OpaqueState> = {
+      id: 'headed',
+      createdAt: new Date('2026-01-02T03:04:05.000Z'),
+      updatedAt: new Date('2026-03-04T05:06:07.000Z'),
+      state: { note: 'a shape the store never reads' },
+    };
+
+    await expect(store.save(session)).resolves.toBeUndefined();
+
+    const body = await readFile(
+      join(storeRoot, 'headed', 'transcript.md'),
+      'utf8',
+    );
+
+    expect(body).toContain('headed');
+    expect(body).toContain(session.createdAt.toISOString());
+    expect(body).toContain(session.updatedAt.toISOString());
+    expect(body).not.toContain('a shape the store never reads');
+    expect(body).not.toContain('note');
+  });
+
+  it('rejects naming the session directory and leaves the previous revision loadable', async () => {
+    const previous = storedSession({
+      id: 'guarded',
+      state: { title: 'Erste Fassung' },
+    });
+    await createFilesystemSessionStore<{ title: string }>({
+      rootDir: storeRoot,
+    }).save(previous);
+
+    const rendererFailure = new Error('the renderer refused this session');
+    const store = createFilesystemSessionStore<{ title: string }>({
+      rootDir: storeRoot,
+      renderTranscript: () => {
+        throw rendererFailure;
+      },
+    });
+
+    const failure = await rejectionOf(
+      store.save(
+        storedSession({
+          id: 'guarded',
+          updatedAt: new Date('2026-07-07T07:07:07.000Z'),
+          state: { title: 'Zweite Fassung' },
+        }),
+      ),
+    );
+
+    expect(failure).toBeInstanceOf(Error);
+    expect(failure.message).toContain(join(storeRoot, 'guarded'));
+    expect(failure.cause).toBe(rendererFailure);
+
+    await expect(store.load('guarded')).resolves.toEqual(previous);
+    expect((await readdir(join(storeRoot, 'guarded'))).sort()).toEqual([
+      'session.json',
+      'transcript.md',
+    ]);
+  });
+});
+
 describe('sessionStoreConfigFromEnv', () => {
   it('defaults the root under the home directory and lets CHRYSALYST_SESSION_DIR override it', () => {
     const homeDefault = join(homedir(), '.chrysalyst', 'sessions');

@@ -12,24 +12,24 @@ sources:
     resource: repo://specs/_decision/002-add-ollama-llm-adapter.md
   - id: openwiki-source-0e06dd8dca1a5b09ef9998b2
     resource: repo://specs/_decision/003-add-filesystem-session-store.md
+  - id: openwiki-source-9f1672a73d8c3832ee8e57d7
+    resource: repo://specs/_decision/004-single-question-walking-skeleton.md
   - id: openwiki-source-036a781dce1c104f30b0e058
     resource: repo://specs/_recorded/001-add-monorepo-scaffold/plan.md
   - id: openwiki-source-61eb124c04322f3f00e4805b
     resource: repo://specs/_recorded/002-add-ollama-llm-adapter/plan.md
-  - id: openwiki-source-38dee3393ae874bc2be2a36f
-    resource: repo://specs/_recorded/002-add-ollama-llm-adapter/verification-report.md
-  - id: openwiki-source-f456d7350e9ff3cd973128ab
-    resource: repo://specs/_recorded/003-add-filesystem-session-store/plan.md
-  - id: openwiki-source-8f43520ecd17db2dd2f46900
-    resource: repo://specs/adapters/filesystem-session-store/spec.md
+  - id: openwiki-source-d797f824fd5769533479bef3
+    resource: repo://specs/_recorded/004-single-question-walking-skeleton/verification-report.md
+  - id: openwiki-source-f8781635478575fa5f0ade0a
+    resource: repo://specs/interview/single-question-interview/spec.md
   - id: openwiki-source-27db56ec5f5b550679beca36
     resource: repo://specs/platform/monorepo-workspace/spec.md
   - id: openwiki-source-a0a8fcea3fc317de88a8e08c
     resource: repo://specs/roadmap.md
-generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
+generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-09T13:28:50.488Z
+    at: 2026-09-10T15:50:21.943Z
 ---
 
 # Spec-getriebene Entwicklung (speq)
@@ -71,15 +71,20 @@ Fix Spec-Verhalten, zurück in `/speq:plan`); reine UI-Politur direkt über
 | `specs/roadmap.md` | Autoritativ für die **Reihenfolge** — Meilensteine und Leitplanken |
 | `specs/platform/<feature>/spec.md` | Permanente Feature-Specs der Plattform-Schicht, Szenarien im Gherkin-Stil (`GIVEN`/`WHEN`/`THEN`) |
 | `specs/adapters/<feature>/spec.md` | Permanente Feature-Specs der Adapter-Schicht |
+| `specs/interview/<feature>/spec.md` | Permanente Feature-Specs der Interview-Domäne (seit M3) |
 | `specs/_plans/<name>/` | Pläne in Arbeit: `plan.md`, `decision-log.md`, Spec-Deltas, Reviews |
 | `specs/_recorded/NNN-<name>/` | Archivierte Pläne, fortlaufend nummeriert |
 | `specs/_decision/NNN-<name>.md` | Zu ADRs beförderte Entscheidungen |
 
 Aktuell hält `specs/platform/` acht Features (u. a. `monorepo-workspace`,
-`llm-port`, `session-store-port`, `http-server`, die Port-Verträge), und
-`specs/adapters/` zwei: `ollama-llm-adapter` und `filesystem-session-store`.
-Drei Pläne sind bisher aufgezeichnet: `001-add-monorepo-scaffold`,
-`002-add-ollama-llm-adapter` und `003-add-filesystem-session-store`.
+`llm-port`, `session-store-port`, `http-server`, die Port-Verträge),
+`specs/adapters/` zwei (`ollama-llm-adapter`, `filesystem-session-store`) und die
+seit M3 neue Domäne `specs/interview/` drei: `single-question-interview` (die
+Domänenregeln), `interview-http-api` (der HTTP/SSE-Kontrakt) und `interview-view`
+(die Browser-Ansicht) — bewusst nach Änderungsgrund geschnitten, weil M8 den
+Wire-Kontrakt ändert, M5/impeccable die Ansicht und M7 die Domänenregeln. Vier
+Pläne sind aufgezeichnet: `001-add-monorepo-scaffold`, `002-add-ollama-llm-adapter`,
+`003-add-filesystem-session-store` und `004-single-question-walking-skeleton`.
 
 ### Feature-Specs abfragen
 
@@ -97,13 +102,20 @@ und zur Parametrisierung des Backends. `003-add-filesystem-session-store.md`
 hält fünf: Abwesenheit vs. Beschädigung beim Lesen, `schemaVersion` am Envelope,
 die `fsync`-vor-`rename`-Barriere, die Owner-only-Modi und die
 Port-Vertragsänderung, dass `load` bei Beschädigung ablehnen darf.
+`004-single-question-walking-skeleton.md` hält sieben: `InterviewState` v1 als
+getaggte Turn-Liste, core rendert das Transkript (Store nimmt den Renderer
+optional), der SSE-Kontrakt token/done/error, die Interview-Fabrik über
+`CoreDependencies`, `packages/web` ohne Server-Abhängigkeit, die App-Fabrik, und
+der Styling-Stack (plain CSS + Token-Schicht + CSS Modules).
 
 ## Die Roadmap
 
 `specs/roadmap.md` ordnet die Arbeit in Meilensteine **M0…M18** plus einen
 Post-v1-Meilenstein **P1**, dazu zwei Chores (C1 `openwiki --init`, C2 minimale
-CI). Stand: M0, M1 und M2 erledigt, alles Übrige offen; M3
-(Walking Skeleton + Engine-Spike) ist der nächste.
+CI). Stand: M0, M1 und M2 erledigt; **M3 ist teilweise erledigt** — sein erster
+Plan `single-question-walking-skeleton` (004) ist aufgezeichnet, der zweite
+`engine-structure-spike` steht noch aus, der Meilenstein bleibt ⬜ offen. Alles
+Übrige ab M4 offen.
 
 ### Sequenzierung: Walking Skeleton
 
@@ -118,7 +130,8 @@ Interviewführung) nur an einem echten Modell falsifizierbar ist. Details:
 | Leitplanke | Entscheidung | Status |
 |------------|--------------|--------|
 | Kein Agent-Framework in der Domäne | Die Interview-Engine lebt in `packages/core` als eigener, deterministischer Code — kein LangChain/LangGraph/deepagents als Domänen-Abhängigkeit | fest |
-| Engine-Struktur | Hand-gerollter Zustandsautomat **oder** LangGraph.js in `core`; M3 baut beide als Wegwerf-Spike, ADR vor M7 | offen — Spike in M3 |
+| Engine-Struktur | Hand-gerollter Zustandsautomat **oder** LangGraph.js in `core`; beide als Wegwerf-Spike, ADR vor M7 | offen — M3-Plan `engine-structure-spike` (der Walking Skeleton baut bewusst keine Engine) |
+| Styling-Stack | plain CSS + `:root`-Token-Schicht + ein CSS-Modul pro Komponente; kein CSS-in-JS/Utility-Framework/Preprocessor | umgesetzt — seit M3 (`decision-log [10]`, ADR `styling-stack-plain-css-tokens-plus-css-modules`) |
 | `LlmPort`-Adapter | Vercel AI SDK (`ai` v6) in `packages/server`, hinter dem Port; `packages/core` importiert es nie | fest |
 | Strukturierter LLM-Output | `Output.object()` + zod-Schema im Adapter; der `LlmPort`-Vertrag bekommt in M10 eine Antwortform | fest — Delta in M10 |
 | Kein Cloud-LLM-SDK | Weder Anthropic- noch OpenAI-SDK irgendwo im Produktcode | fest |
@@ -137,4 +150,5 @@ lebende Wiki (Agent-Kontext #1, siehe `AGENTS.md`).
 - [Architekturüberblick](../architecture/overview.md) — die Meilenstein-Reihenfolge im Bild
 - [Domänen-Ports (@chrysalyst/core)](../architecture/domain-ports.md) — die Feature-Specs `core-ports-contract` und `llm-port`
 - [Dateisystem-Session-Store-Adapter](../architecture/session-store-adapter.md) — die fünf ADRs aus `003`
+- [Interview-Runde (@chrysalyst/core)](../architecture/interview-round.md) — die Feature-Spec `interview/single-question-interview` und die sieben ADRs aus `004`
 - [Quickstart](../quickstart.md)

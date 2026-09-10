@@ -12,6 +12,12 @@ sources:
     resource: repo://package.json
   - id: openwiki-source-71e3a7de53c44488096fed02
     resource: repo://packages/server/src/adapters/session-store/filesystem-session-store.ts
+  - id: openwiki-source-d3fb78d820eb72194e376138
+    resource: repo://packages/server/src/composition.ts
+  - id: openwiki-source-0443590d078e8b72afcd56c2
+    resource: repo://packages/server/src/routes/interview-routes.live.test.ts
+  - id: openwiki-source-d952717f7ba616148cf6047b
+    resource: repo://packages/web/src/App.tsx
   - id: openwiki-source-40275cb92c3610938f16ade3
     resource: repo://pnpm-workspace.yaml
   - id: openwiki-source-23775c3de52f3ab95a13cb8b
@@ -20,10 +26,10 @@ sources:
     resource: repo://specs/mission.md
   - id: openwiki-source-a0a8fcea3fc317de88a8e08c
     resource: repo://specs/roadmap.md
-generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
+generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-09T13:28:50.488Z
+    at: 2026-09-10T15:50:21.943Z
 ---
 
 # Quickstart
@@ -37,21 +43,29 @@ Fragen. Das *Was* und *Warum* steht in `specs/mission.md`.
 
 ## Stand des Projekts
 
-Früh. Ein Monorepo-Gerüst mit der typ-only Domänenschicht, **zwei** echten
-Adaptern (dem LLM-Adapter und dem Dateisystem-Session-Store), einem dünnen
-HTTP-Server mit einer `/health`-Route und einer Platzhalter-React-Shell
-(`<h1>chrysalyst</h1>`). Es gibt noch keine Interview-Engine, keinen Fragebaum,
-keine Destillation und keinen CI-Workflow.
+Seit M3 läuft die erste senkrechte Scheibe **end-to-end**: Der Browser lädt,
+legt eine Session an, ein lokales Modell (`qwen3:8b` auf der Referenzmaschine)
+schreibt **eine** Rückfrage Token für Token in die Ansicht, die getippte Antwort
+landet in `session.json` samt Transkript. Vorhanden: die typ-only Domänenschicht
+plus die [Interview-Runde](architecture/interview-round.md) als Domänenlogik,
+**zwei** echte Adapter (LLM, Dateisystem-Session-Store), der
+[HTTP-Server mit SSE-Route](architecture/interview-http-and-composition.md), und
+der [Browser-Client](architecture/web-client.md) mit einem editorialen
+Designsystem.
+
+Genau **eine Runde** — kein Turn-Loop, kein Fragebaum, keine Destillation, kein
+CI-Workflow, kein Ideen-Eingang (die Frage entsteht kalt). Die Oberfläche ist
+Englisch bis M5.
 
 ## Das Layout
 
 ```
 packages/
-  core/     @chrysalyst/core   — Domänen-Ports als Typen, keine Laufzeit-Abhängigkeit
-  server/   @chrysalyst/server — Adapter (LLM, Session-Store) + Hono-HTTP-Server
-  web/      @chrysalyst/web    — Vite + React Browser-Shell
-specs/      Mission, Roadmap, Feature-Specs, Pläne, ADRs
-tests/      workspace.test.ts  — der ausführbare Wächter der Workspace-Invarianten
+  core/     @chrysalyst/core   — Domänen-Ports als Typen + die Interview-Runde als Wert-Export
+  server/   @chrysalyst/server — Adapter (LLM, Session-Store) + Hono-HTTP-Server, SSE-Interview-Route, Kompositionswurzel
+  web/      @chrysalyst/web    — Vite + React; die streamende Frage-Ansicht, ein treibender Adapter
+specs/      Mission, Roadmap, Feature-Specs (platform/ adapters/ interview/), Pläne, ADRs
+tests/      workspace.test.ts + fixtures/ (u. a. die geteilte SSE-Frame-Fixture)
 openwiki/   dieses Wiki
 ```
 
@@ -71,8 +85,12 @@ Voraussetzungen: **Node ≥ 22.18** (die konkrete Version steht in `.nvmrc`) und
 | Coverage | `pnpm -r test --coverage` |
 
 `test` und `typecheck` brauchen **keinen** vorherigen Build. Der Live-Test-Tier
-(`*.live.test.ts`) läuft nur mit `CHRYSALYST_LIVE_LLM=1` und einem erreichbaren
-Ollama.
+(`*.live.test.ts`, zwei Suites) läuft nur mit `CHRYSALYST_LIVE_LLM=1` und einem
+erreichbaren Ollama — z. B.
+`CHRYSALYST_LIVE_LLM=1 CHRYSALYST_LLM_MODEL=qwen3:8b pnpm -r --include-workspace-root test`.
+
+Sessions liegen unter `~/.chrysalyst/sessions/<id>/` (je `session.json` +
+`transcript.md`); `CHRYSALYST_SESSION_DIR` überschreibt die Wurzel.
 
 ## Wohin als Nächstes
 
@@ -82,6 +100,9 @@ Ollama.
 | Was ist die Domänengrenze, was sind die Ports? | [Domänen-Ports (@chrysalyst/core)](architecture/domain-ports.md) |
 | Wie erreicht die App ein Sprachmodell? | [LLM-Adapter (OpenAI-kompatibel / Ollama)](architecture/llm-adapter.md) |
 | Wie überdauern Sessions einen Prozess? | [Dateisystem-Session-Store-Adapter](architecture/session-store-adapter.md) |
+| Was ist die Interview-Runde als Domänenlogik? | [Interview-Runde (@chrysalyst/core)](architecture/interview-round.md) |
+| Wie reist eine Runde über HTTP (SSE, Komposition)? | [Interview-Route, SSE-Kontrakt und Kompositionswurzel](architecture/interview-http-and-composition.md) |
+| Wie sieht die Frage-Ansicht aus, was ist das Designsystem? | [Browser-Client und Designsystem](architecture/web-client.md) |
 | Was macht der Server-Prozess? | [HTTP-Server (@chrysalyst/server)](architecture/http-server.md) |
 | Wie entstehen Features? Was kommt als Nächstes? | [Spec-getriebene Entwicklung (speq)](workflow/spec-driven-development.md) |
 | Wie laufen Build, Lint, Tests? | [Toolchain und Teststrategie](operations/toolchain-and-testing.md) |

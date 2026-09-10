@@ -1,22 +1,26 @@
 ---
 type: architecture
 title: Domänen-Ports (@chrysalyst/core)
-description: Die typ-only Domänengrenze von chrysalyst — CoreDependencies und die vier Ports LlmPort, SessionStorePort, SearchPort und ClockPort, ihre Entwurfsentscheidungen und die Vertragstests, die sie absichern.
+description: Die Domänengrenze von chrysalyst — CoreDependencies und die vier Ports LlmPort, SessionStorePort, SearchPort und ClockPort, ihre Entwurfsentscheidungen, die Vertragstests, und dass der Einstiegspunkt seit M3 neben den Port-Typen auch die Interview-Logik als Wert exportiert.
 tags: [hexagonal-architecture, ports, domain-core, typescript, dependency-injection]
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-09T13:28:50.488Z
+    at: 2026-09-10T15:50:21.943Z
 sources:
   - id: openwiki-source-b6d4dbadc290acfd0ace4931
     resource: repo://packages/core/package.json
+  - id: openwiki-source-27afedd47a4115ebbd33f343
+    resource: repo://packages/core/src/index.test.ts
   - id: openwiki-source-d265cc7c06dcbefb6f92a01b
     resource: repo://packages/core/src/index.ts
+  - id: openwiki-source-1f5e2ec8cd020d62ed6b5a14
+    resource: repo://packages/core/src/interview/index.ts
+  - id: openwiki-source-df99a04c4843621452957144
+    resource: repo://packages/core/src/interview/single-turn-interview.ts
   - id: openwiki-source-f485baa422c0c157e847894a
     resource: repo://packages/core/src/ports/clock.ts
   - id: openwiki-source-464bbff80fb9fcd0f9f85088
     resource: repo://packages/core/src/ports/dependencies.ts
-  - id: openwiki-source-1013cc046451284e0822a0a8
-    resource: repo://packages/core/src/ports/index.ts
   - id: openwiki-source-53b2f5508d69d2691769082c
     resource: repo://packages/core/src/ports/llm.ts
   - id: openwiki-source-aade1f45c98c13a372470076
@@ -27,20 +31,24 @@ sources:
     resource: repo://packages/core/src/ports/session-store.ts
   - id: openwiki-source-1c53a59d367e22813b6fb932
     resource: repo://packages/core/vitest.config.ts
+  - id: openwiki-source-d029aff745f51782afcfa87d
+    resource: repo://specs/platform/core-ports-contract/spec.md
   - id: openwiki-source-3e167c00b37218b53fb81835
     resource: repo://specs/platform/session-store-port/spec.md
   - id: openwiki-source-1eddfe2a3e905b4c50618167
     resource: repo://tests/workspace.test.ts
-generated: { by: "claude-code", at: "2026-09-09T13:28:50.488Z" }
+generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
 ---
 
 # Domänen-Ports (@chrysalyst/core)
 
 `@chrysalyst/core` ist die innerste Schicht der hexagonalen Architektur: die
 Menge der Schnittstellen, über die die Domänenlogik ein Sprachmodell, eine
-Websuche, Session-Speicherung und die Uhrzeit erreicht. Das Paket beschreibt
-diese Grenzen ausschließlich als Typen — es enthält keine Implementierung,
-keinen Adapter und keine Laufzeit-Abhängigkeit.
+Websuche, Session-Speicherung und die Uhrzeit erreicht — und seit M3 die erste
+gegen diese Ports geschriebene Domänenlogik selbst, die
+[Interview-Runde](interview-round.md). Das Paket enthält keinen Adapter und
+**keine Laufzeit-Abhängigkeit**; seine Regel verbietet eine Abhängigkeit, nicht
+Ausführung.
 
 ## Verantwortung und Eigentümerschaft
 
@@ -51,15 +59,21 @@ kein Dateipfad). Adapter, die diese Ports erfüllen, liegen außerhalb, in
 `packages/server` — der [LLM-Adapter](llm-adapter.md) und der
 [Dateisystem-Session-Store](session-store-adapter.md); die Suche folgt später.
 
-Der öffentliche Einstiegspunkt ist eine einzige Datei, die nur Typen
-weiterreicht: `packages/core/src/index.ts` re-exportiert mit `export type *` aus
-`ports/index.ts`, das seinerseits die fünf Port-Module bündelt. Ein Konsument,
-der `@chrysalyst/core` importiert, erhält dadurch keine Laufzeit-Bindung.
+Der öffentliche Einstiegspunkt `packages/core/src/index.ts` reicht die
+Port-Deklarationen mit `export type *` aus `ports/index.ts` weiter **und**
+re-exportiert seit M3 die Interview-Logik als Wert (`export * from
+'./interview/index.ts'` — Zustand, Transkript-Rendering, die Ein-Runden-Logik).
+Ein Import zieht damit die Laufzeit-Bindungen des Interviews nach, öffnet aber
+weiterhin keinen Socket, liest keine Datei und keine Uhr — der Test
+`opens no socket when imported` in `packages/core/src/index.test.ts` hält das
+fest, und `core-ports-contract` bekam dafür das Szenario *Domänenlogik ist vom
+Einstiegspunkt erreichbar, ohne eine Uhr oder das Dateisystem zu berühren*.
 
 ## Der typ-only-Invariant
 
-Dass `@chrysalyst/core` beim Import nichts ausführt und nichts nachzieht, ist
-kein Zufall, sondern eine erzwungene Regel:
+Dass `@chrysalyst/core` beim Import **nichts nachzieht** — kein Framework, kein
+Netzwerk-Client, kein Dateisystem — ist kein Zufall, sondern eine erzwungene
+Regel. Sie verbietet eine *Abhängigkeit*, nicht Domänencode:
 
 - `packages/core/package.json` deklariert **keine** `dependencies`, nur
   `devDependencies` für den Test.
@@ -70,10 +84,11 @@ kein Zufall, sondern eine erzwungene Regel:
   Nicht-Test-Datei unter `packages/core/src` und schlägt fehl, sobald ein
   nicht-relativer Import auftaucht.
 
-Der Grund: Die Domäne soll in jeder Umgebung identisch übersetzbar sein und
-niemals ein Framework, einen Netzwerk-Client oder das Dateisystem in den Baum
-ziehen. Testdoubles, die für einen Port einspringen, leben in den eigenen
-Testdateien des Pakets und sind von dieser Reinheitsregel ausgenommen.
+Der Grund: Die Domäne soll in jeder Umgebung identisch übersetzbar sein. Die
+Interview-Logik gehorcht derselben Regel — sie erreicht Modell, Speicher und
+Uhr nur über die injizierten `CoreDependencies`. Testdoubles, die für einen
+Port einspringen, leben in den eigenen Testdateien des Pakets und sind von der
+Reinheitsregel ausgenommen.
 
 ## CoreDependencies — was die Domäne braucht
 
@@ -190,6 +205,8 @@ ein Fehler in `ports.test-d.ts` erscheint damit als Testfehler, nicht nur als
 ## Verwandte Seiten
 
 - [Architekturüberblick](overview.md) — wie core, server und web zusammenspielen
+- [Interview-Runde (@chrysalyst/core)](interview-round.md) — der erste echte
+  Aufrufer dieser Ports
 - [LLM-Adapter](llm-adapter.md) — die erste echte Port-Implementierung
 - [Dateisystem-Session-Store](session-store-adapter.md) — die Implementierung von
   `SessionStorePort`

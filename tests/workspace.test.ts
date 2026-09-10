@@ -334,6 +334,22 @@ describe('monorepo workspace', () => {
     expect(internalDeps).toEqual([]);
   });
 
+  it('web source imports no @chrysalyst specifier', () => {
+    const offenders: string[] = [];
+    for (const file of filesUnder(
+      'packages/web/src',
+      (name) => name.endsWith('.ts') || name.endsWith('.tsx'),
+    )) {
+      for (const specifier of importedSpecifiers(readText(file))) {
+        if (specifier.startsWith(INTERNAL_PACKAGE_SCOPE)) {
+          offenders.push(`${file} -> ${specifier}`);
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
+
   it('every live test file gates on CHRYSALYST_LIVE_LLM and awaits nothing at module scope', () => {
     for (const file of liveTestFiles) {
       const source = readText(file);

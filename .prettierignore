@@ -8,3 +8,4 @@ specs/
 .claude/
 openwiki/
 .github/workflows/openwiki-update.yml
+.impeccable/

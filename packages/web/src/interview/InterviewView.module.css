@@ -1,0 +1,224 @@
+.view {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding-top: 2.5rem;
+}
+
+.kicker {
+  margin: 0 0 1rem;
+  font-size: var(--label-size);
+  font-weight: 500;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.question {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: var(--question-size);
+  line-height: var(--question-leading);
+  font-weight: 400;
+  letter-spacing: -0.003em;
+  color: var(--ink);
+}
+
+.placeholder {
+  color: var(--ink-soft);
+  opacity: 0.65;
+}
+
+.frozen {
+  color: var(--ink-soft);
+  opacity: 0.55;
+}
+
+.cursorRule {
+  display: inline-block;
+  width: 0.62em;
+  height: 2px;
+  margin-left: 0.12em;
+  vertical-align: 0.16em;
+  background: var(--ink);
+  animation: cursor-blink 1.05s steps(1, end) infinite;
+}
+
+.cursorStill {
+  animation: none;
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.note {
+  margin: 0.85rem 0 0;
+  font-size: var(--label-size);
+  font-weight: 500;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.answerBlock {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.answerLabel {
+  display: block;
+  margin-bottom: 0.65rem;
+  font-size: var(--label-size);
+  font-weight: 500;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.answerField {
+  display: block;
+  width: 100%;
+  min-height: 5.25rem;
+  padding: 0.35rem 0 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(1.75rem - 1px),
+    var(--rule) calc(1.75rem - 1px),
+    var(--rule) 1.75rem
+  );
+  background-position: 0 0.35rem;
+  font-family: var(--grotesque);
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--ink);
+  resize: none;
+}
+
+.answerField:focus {
+  border-bottom-color: var(--accent);
+}
+
+.answerField:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-bottom-color: var(--accent);
+}
+
+.answerField:disabled {
+  opacity: 0.55;
+}
+
+.actions {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.hint {
+  margin-right: auto;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.submit {
+  padding: 0.35rem 0;
+  border: 0;
+  background: none;
+  font-family: var(--grotesque);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.submit:disabled {
+  color: var(--ink-soft);
+  opacity: 0.55;
+  cursor: default;
+}
+
+.savedAnswer {
+  margin: 0.85rem 0 0;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--rule);
+  font-family: var(--grotesque);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+}
+
+.confirm {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--accent);
+  font-size: var(--label-size);
+  font-weight: 500;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--accent);
+  animation: confirm-in 0.45s ease-out;
+}
+
+@keyframes confirm-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.error {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.errorBody {
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--accent);
+}
+
+.errorLabel {
+  display: block;
+  margin: 0 0 0.4rem;
+  font-size: var(--label-size);
+  font-weight: 500;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.errorMessage {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursorRule {
+    animation: none;
+  }
+
+  .confirm {
+    animation: none;
+  }
+}

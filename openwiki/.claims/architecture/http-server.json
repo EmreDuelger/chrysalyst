@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:9850f2c855c320415b393372e88dff88830ef9fb4ef1e8871b9207abedfc981e",
+  "pageVersion": "sha256:3a3ebc2b3c28f13fe014bd11c84d1b0d50551a0f8b24a34db1c3a6f5b45996d4",
   "claims": [
     {
       "id": "claim_e1b071d0b9a24dfcb9a4a3acff490687",
-      "statement": "The @chrysalyst/server Hono app currently defines only GET /health, which returns status 200 with the JSON body { status: 'ok', version } where version is read from packages/server/package.json via a static JSON import; an undefined route returns 404.",
+      "statement": "The @chrysalyst/server Hono app chains GET /health (status 200, body { status: 'ok', version } read from packages/server/package.json via static JSON import) and the three interview routes onto one instance; an undefined route returns 404, and app.test.ts checks health via app.request(...) without binding a socket.",
       "evidence": [
         {
           "resource": "repo://packages/server/src/app.test.ts",
-          "version": "repo-file-v1:sha256:fd9a36cfd3e531daf7431a9844e3adf6c88263c6c0fed22923f379fb3bf5f6ab"
+          "version": "repo-file-v1:sha256:1b8cbd267cb0e4de58eacff71090a8bee7b8477eed74bcdd796cd0e675648575"
         },
         {
           "resource": "repo://packages/server/src/app.ts",
-          "version": "repo-file-v1:sha256:7acdeb3e054a9a6cabbb9cc8672f6fd23b2c3847732fb013e44c97cb5a176e19"
+          "version": "repo-file-v1:sha256:81e500359cd63e34ac40f513bd49c07067043d6302f9451be8ef80e34ef01707"
         }
       ]
     },
     {
       "id": "claim_8e4956c21ef543b5b959e56fc575fd75",
-      "statement": "app.ts builds the Hono instance in one chained expression and exports AppType = typeof app so the route types are captured for a type-safe client.",
+      "statement": "app.ts exports a factory createApp(deps: CoreDependencies<InterviewState>) rather than a module-scope instance, chains every route onto one expression, and derives AppType = ReturnType<typeof createApp> so a route cannot be missing from the client type and a test can build the app over fakes.",
       "evidence": [
         {
           "resource": "repo://packages/server/src/app.ts",
-          "version": "repo-file-v1:sha256:7acdeb3e054a9a6cabbb9cc8672f6fd23b2c3847732fb013e44c97cb5a176e19"
+          "version": "repo-file-v1:sha256:81e500359cd63e34ac40f513bd49c07067043d6302f9451be8ef80e34ef01707"
         }
       ]
     },
@@ -31,70 +31,84 @@
       "statement": "startServer defaults the bind host to 127.0.0.1 so no deployment exposes chrysalyst to its network unless a wider bind is requested explicitly.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/server.test.ts#L49-L57",
-          "version": "repo-lines-v1:sha256:929bfbd6f127e94bebd01913be521c1ae263da1f564c01d588e3623a1b335d12:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDNiZmUwMzYxMWMzYjdlMzk5MzE5NTM2YjAwZTMxODAyNTQ3NzFmZDhjYmQ4YmY1Y2M5Yjk5OTVhMjUzZWIyMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EzZTQ2Zjk0Mjc2YjZmNmY0ZWQxZjAyYWY3OGJlZjZhMmVlMWM0MzlkZDU1ODRiOTczOTQ4MzEzMjE0ZDJiNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTZkMzkyNDM2N2EzNTFiNTk4ZTk2YmJlNmQ4YTk0OWNjMTY0ZmQ2ZTc0MWI4Yjg0OTNlOTNjYTA5YmJkZTk4YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjZmNWI0MGIxNTg0NTdkMTc4NjRmMjE3OTA3ODZkZDVhMmVjZGI2NGI2NmE2NTFmNzg4ZDRlMjVjZDMzMDNkMiJ9"
+          "resource": "repo://packages/server/src/server.test.ts#L70-L76",
+          "version": "repo-lines-v1:sha256:77d24d70289272a4f4db822310c13237f8ea1f37f7b1065a0a7469f42bc9d344:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTVkYjRmZTFkM2Q0NGMzMTBlMGNmNmQ1OTM0NzBkZjc5MWU1YTFlY2Y3NGFmZThlM2VjNzE3MWIzYjk2OTQ3YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjE4ZTI4ZTE2M2MxYmZmM2UzNmJhOTRmNjFiMjE0ZjVlZWY1NTY4ZmQwNTQxNjY3YzE5NTE0NmM4YzEzZmIxYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTZkMzkyNDM2N2EzNTFiNTk4ZTk2YmJlNmQ4YTk0OWNjMTY0ZmQ2ZTc0MWI4Yjg0OTNlOTNjYTA5YmJkZTk4YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTAzYTI5YzJhNTMzMjA2ZDBkYWNjZDU2MzBkNzY3NWVmMjc3YzcyODczNDU1ZmUxODg4MTRhNGIwNGJjMjYwYyJ9"
         },
         {
-          "resource": "repo://packages/server/src/server.ts#L1-L45",
-          "version": "repo-lines-v1:sha256:bbb2fc7b5c8c8fc8c3b29d33fa6634a88c2a89b0978eabe30502a03f139a0582:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZjhiMzNlOWIzMzczZjhkNTc5NDk0MmIzZjIyMTE2ZmRjOTU4MzlhNDMwOWNjMDE4ZmVhOTBlN2RiNzEyNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3YWRlNGNiYjlhMzc1N2I4YzM4MWRjOTU4MzRlODBlNTgxNWViMzMzNmU3MWJiYjQ4ZjUzNzQ5YWMyY2M5MjIifQ"
+          "resource": "repo://packages/server/src/server.ts#L22-L40",
+          "version": "repo-lines-v1:sha256:fd3d0cdf83e662b61f26943b97657d2ba158cc5dd14a7142247a315f3f146b95:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliZjJiMWUxYTVjZWY5ODBiMTE5ZTIyYWNmNDllMjAzOGFkYjcyOTg5NWI5MmI2YjQ4MjQwMTIyNWYzZDYwN2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0ZDMxZjUwM2YyZGI5MjJhYjZiODc0YWNjNGJlNjI0OWNlMzdlOTk3MGYyMTg4YTM2YWYxMGMzZmVlYzU2YTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkZTczYzRiMWI4YjVjNmFlZWE1NmRhYzg2M2ZmNmUzODc5MDRiYWNhZjAyMTUyZjQ0NzNhZjNjOGJiNGJlZDcifQ"
         }
       ]
     },
     {
       "id": "claim_598185f16d6c4db8a9f472336f33ad7a",
-      "statement": "startServer resolves with a ServerHandle whose close() is the only supported way to release the bound port and resolves once the socket is fully closed, allowing the same port to be rebound.",
+      "statement": "startServer resolves with a ServerHandle whose close() is the only supported way to release the bound port and resolves once the socket is fully closed, so the same port can be rebound afterward.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/server.test.ts#L24-L38",
-          "version": "repo-lines-v1:sha256:0bbb432d33081b7f987c611d801284c80277442cee33cc3b5af3838706b4c40e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NGI3OTU5ODZiMmMxNzJiODM1YmNlMzc4MDYzM2U0YzQzYjJlMTY2Y2IzY2NjMDQ2ODllZDExYjAwY2E0NDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0ZWJlMDQ3NmY1YjkwMGQyOGY1NmZjNmM5OWIxNTEwODRlZGY4MTllNWE5NTNjOTM4OTIwMTExNzQ4YTEzODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlYWQwMzJkOTUzOTBkMGNiNzNlOTI2NmZiNWNkZDhmOThmNjg2OTI5NjNhZWUxMTEzNTQzM2I2MWU3NTBjMzAifQ"
+          "resource": "repo://packages/server/src/server.test.ts#L46-L59",
+          "version": "repo-lines-v1:sha256:7fcc25aa9f239f3c24de823e80c0cd34f5f57e0b39cadc44ea297793439a6dae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyODUyODk4NzA2YmE4NTgwZDlmYTFiY2JkZTVkMmM4ODFlNWFjNzBlODA0YWE2MjIxNmQyZjAyZGI5NGRiNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhZWEzZTVkNTJkMjk1OWQ5MmRjMjNiZTc5ZDE1YTQ5ZDgzOWFjZGMzN2Y1ZmE4ZGJlMGMzZjc2MjdhY2RhY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlOTViNGU3OTBkNzcyNmM2YmQxNzc3ZDNkMjJmZWJlYjI3NTFiZjg3ODRlYzk5NGY4ZDgzNDYxNTBhYzUyMzgifQ"
         },
         {
-          "resource": "repo://packages/server/src/server.ts#L7-L57",
-          "version": "repo-lines-v1:sha256:4a79b08a3bcec7555424874cf959ebc9edbc59c70e777cc087e3e14013050610:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFhNmYzNmI5MTZjYThiYmM3NDA1Mjg2NjUzZTdhNzRhOWVmNDYyMGVjYzQ2N2YyNGQyMWRhNTVhYmI2NGFiMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://packages/server/src/server.ts#L14-L21",
+          "version": "repo-lines-v1:sha256:65fa5c9e19ddd34a1d1b5424bdc51397e1bd84a62ce9b2a95b408709d00e9abd:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDU4NDcyMDBkZTYwMDAyNTJiMTFmOGMxYTZlODhkYTc1ZWNjMmFiZTJlNDRlMmM4MjI1ZTg3MTE5ZGMyOWNiYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTBmMzJmNWQyYTk4NmIzYmY5MWIyZGZiMTY0NWE3NzExMzQxNjJmZmJlZDgwZjhkMGM3ZjQzMjNjMWU4NjY2YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjI0ZWJiYzVjNDg4MmJhMmUwMmU2MmJkNDQ5NmM2MTk0ZjY1OTQ2ZDE3MWY0ZWY2MTY0ZjA4YjljNjJkMzdkYyJ9"
         }
       ]
     },
     {
       "id": "claim_238f0f39383a471597363817b5729792",
-      "statement": "When the socket never binds (a taken port above all), startServer rejects with an Error reading 'Cannot start the chrysalyst server on <host>:<port>' that carries the underlying Node error as its cause.",
+      "statement": "When the socket never binds — a taken port above all — startServer rejects with an Error reading 'Cannot start the chrysalyst server on <host>:<port>' carrying the underlying Node error as its cause.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/server.test.ts#L40-L47",
-          "version": "repo-lines-v1:sha256:e1aded797e6ab638364d936710ce318bebf0fbb1bd4725864beae7013f64ef11:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ0NjFkNjIxMjM2MDgzYTUwODFiZTlkNjQ0Yjk2ZjAzZWU1MjgwYjQ2ODQ5YzhkMmU3NjhhY2RlYWIxMjg4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EzZTQ2Zjk0Mjc2YjZmNmY0ZWQxZjAyYWY3OGJlZjZhMmVlMWM0MzlkZDU1ODRiOTczOTQ4MzEzMjE0ZDJiNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTk2ZTNhNTU3NTVkYTMzMDBiODNjMGNkMGZkYjRlZmEwYzlkMzRmZWI4ZjA0OWMyNmY1YzI4MmQzNWFjYTgzNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTcwNTk0NzdiOTMyN2M1NmNjYThhM2FjZmFlOGU0NDQyMDRjYzU0NDgyZTFlZTVlNzM1MzRjNjU4M2YwZjQ2ZiJ9"
+          "resource": "repo://packages/server/src/server.test.ts#L61-L68",
+          "version": "repo-lines-v1:sha256:fb747090074d92dea5887d6f675d795d806ba01b7a4a53b1ef03b1064d3d3567:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ0NjFkNjIxMjM2MDgzYTUwODFiZTlkNjQ0Yjk2ZjAzZWU1MjgwYjQ2ODQ5YzhkMmU3NjhhY2RlYWIxMjg4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EzZTQ2Zjk0Mjc2YjZmNmY0ZWQxZjAyYWY3OGJlZjZhMmVlMWM0MzlkZDU1ODRiOTczOTQ4MzEzMjE0ZDJiNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTk2ZTNhNTU3NTVkYTMzMDBiODNjMGNkMGZkYjRlZmEwYzlkMzRmZWI4ZjA0OWMyNmY1YzI4MmQzNWFjYTgzNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDI3ODNlNTM2ZWZjYWJhZTQxNTliMWZjZDgwNDE5NTFlY2EyNWJjMjRkNzQxYmE0NzEzMTkzZDg0NTFjZTI5YSJ9"
         },
         {
-          "resource": "repo://packages/server/src/server.ts#L26-L45",
-          "version": "repo-lines-v1:sha256:abbfb87dbe82f49018462b3f337bfccc7ac63b9bfe5f09e625f8ec57ff894c83:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkZTU1M2ZiMWQ1MWJkY2MxODFjNDlkYjgyNzRhNGQ5OGRkMGQ2NjAyMTU1MjY5YzVlMWM4MTg0ZGI3ODhhMjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBlMDU5NzQ1ZDJmNzZmZWIyZjU0MmFmMTEzZDdhN2U2NDllOWI3ZWIxZjU2MDNhMDA2MWI3MTMxNDU2YzgxNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3YWRlNGNiYjlhMzc1N2I4YzM4MWRjOTU4MzRlODBlNTgxNWViMzMzNmU3MWJiYjQ4ZjUzNzQ5YWMyY2M5MjIifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_6f55107a3cb446189985df8d643a1329",
-      "statement": "The LLM adapter is not mounted on the Hono app: main.ts only starts the server on port 3000, and the http_server feature spec states the app carries the health route and nothing else — no adapter, LLM client, or search client.",
-      "evidence": [
-        {
-          "resource": "repo://packages/server/src/main.ts",
-          "version": "repo-file-v1:sha256:73dbd3450a7d757a178e3a7ee71ac61c1f6ae941c149515aa592434394c7ad6d"
-        },
-        {
-          "resource": "repo://specs/platform/http-server/spec.md#L1-L9",
-          "version": "repo-lines-v1:sha256:6f8eef2ffbff89037a5146a8f60151c79cb824c4479b417a4e54c3886ee0889d:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjE2MDgyZGFiNjU2NDdjMDk5ODQyYzkxMTJjZTI2MjhiMjFmMGJkMjQwMmFkZWNjNmQ0NTBjOWZmN2FjNDg2MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlNWY1ZWQ5ZjE4NmI5MDg5MTIzYTJkOTVhZTMyZjFkNGMwMTczMWIwYWU2NmNlY2M1YTI5NDg3ZTY1YjQxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2M4OTY2MDIxYWEzM2JmNmI4YjM4ZTg2NDFlNjk0NTAwNWYxYzM4YzdjYmE4MWUzYWZlNmRkZTlhY2M0YjYyZCJ9"
+          "resource": "repo://packages/server/src/server.ts#L38-L48",
+          "version": "repo-lines-v1:sha256:2a09da8e27514fc8a9ee29311ff5003204bf14c135fac5d66c9700e9580af682:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5ZDEwMzZiODFhNDA2ZjEzMjU5YTI5OGU3MzlkZTA1OThmMGI4YmM2NWQxYjg0ZjFhOTY4OWY4MDUzMGUwNTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3NjMwOTViZjBhNDQ2Yjg1ZmZmMzg2NzEzMTdkODkwNTRjNTlmZmY4M2ZhYWYwODVkMGZlMjNhYjY4Mjk1YWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlYzVjZmI1ZTU3YzQwNDM2YTZkZmQ1ZjcyNThmNDEwYmM1MWJhYmMzYWU4NGQxOWI3ZDM0YTE1ZWVkMzU0YjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlZjQwZjdkY2EzZGJiMzQyODA5YjU1YTlhZGUxNjQ4MzJiN2RiNjU3ODRiNTk3YzNkNmI0NWQyMWY5ZTc4NjIifQ"
         }
       ]
     },
     {
       "id": "claim_cb2d7096767e4d9ca7241d36f7e7c809",
-      "statement": "A Hono hc client parameterised with AppType exposes client.health.$get as a function, and accessing a route the app does not define fails the type check.",
+      "statement": "A Hono hc client parameterised with AppType exposes client.health.$get plus the three interview routes as functions — the question and answer routes with a typed :id path parameter and the answer route with a typed { answer } json body — and accessing a route the app does not define fails the type check.",
       "evidence": [
         {
           "resource": "repo://packages/server/src/client.test-d.ts",
-          "version": "repo-file-v1:sha256:982a07e0247cffe69c7960538d8db0e2fe76c4bf0352e3a636b3d8db4fe19f49"
+          "version": "repo-file-v1:sha256:fb13ee450c686e78d30169630b9fa5ded8ad31ce8d07f166ed9d15640d9b0931"
+        }
+      ]
+    },
+    {
+      "id": "claim_a84de35b385c45dea5967f6908da8ba5",
+      "statement": "startServer takes the app as its first argument (startServer(app, port, host?)) rather than importing it, typed only by the fetch member (ServableApp), so the composition root decides which app runs and a test can bind one built over fakes.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/main.ts",
+          "version": "repo-file-v1:sha256:5600bf683f9ed37606de85468cad9d87e260f67679dbbb8cfbbb4ea34edf2a2a"
+        },
+        {
+          "resource": "repo://packages/server/src/server.ts#L1-L48",
+          "version": "repo-lines-v1:sha256:e665ceae37f68705b01f5ecf56b40e4fb2c5bc24789b4db8f55f0481d16d51b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZjhiMzNlOWIzMzczZjhkNTc5NDk0MmIzZjIyMTE2ZmRjOTU4MzlhNDMwOWNjMDE4ZmVhOTBlN2RiNzEyNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3NjMwOTViZjBhNDQ2Yjg1ZmZmMzg2NzEzMTdkODkwNTRjNTlmZmY4M2ZhYWYwODVkMGZlMjNhYjY4Mjk1YWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlZjQwZjdkY2EzZGJiMzQyODA5YjU1YTlhZGUxNjQ4MzJiN2RiNjU3ODRiNTk3YzNkNmI0NWQyMWY5ZTc4NjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_86e496e62a434303adcefbf389899d13",
+      "statement": "Both real adapters are now mounted on the Hono app: main.ts builds the dependency set with createDependenciesFromEnv() (the LLM adapter and the transcript-rendering filesystem session store), passes it to createApp, and starts the server on port 3000.",
+      "evidence": [
+        {
+          "resource": "repo://packages/server/src/composition.ts",
+          "version": "repo-file-v1:sha256:4f8e227fe8fd14323905c6de8623c428a64ad49d48a187e5f35bffe7a3f6937a"
+        },
+        {
+          "resource": "repo://packages/server/src/main.ts",
+          "version": "repo-file-v1:sha256:5600bf683f9ed37606de85468cad9d87e260f67679dbbb8cfbbb4ea34edf2a2a"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-07T20:27:51.484Z"
+    "at": "2026-09-10T15:50:21.943Z"
   }
 }

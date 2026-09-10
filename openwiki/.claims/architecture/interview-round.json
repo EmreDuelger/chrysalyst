@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5bbf101ed73a0b067584d43f692cc2c960ffcc7e251e22715cd3d47ead7d4e37",
+  "claims": [
+    {
+      "id": "claim_9db9e8c6b20a4002aa6db119d3328e13",
+      "statement": "packages/core/src/interview/ is chrysalyst's first domain logic and the first real caller of the ports; the package entry point now adds `export * from './interview/index.ts'` beside the type-only port re-export, so importing @chrysalyst/core emits the interview's runtime bindings while still opening no socket, file, or clock.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/index.ts",
+          "version": "repo-file-v1:sha256:79d1f731fd5f3d5b62b28922dcdbc3fcf3282bf705ccefd9b73d6cd4d61fe7ed"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/index.ts",
+          "version": "repo-file-v1:sha256:43c74958f2f74d9e6e890abc2fc64606c45902487aa5539dda75bbc5be3db2ab"
+        }
+      ]
+    },
+    {
+      "id": "claim_5bdd108631054ac486c78b3e156ba137",
+      "statement": "The interview is deliberately one round only — M7 owns the question tree, M8 the turn loop, M10 distillation — and the opening question is produced cold from a fixed module-constant system prompt with no idea input.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L10-L26",
+          "version": "repo-lines-v1:sha256:df8206a43784c3df0fde2a42ddcb7560cb3d25ea0d368e2e03e9b0715b224b24:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczMzY4ZGI0YzBjMzAxYTkxOTQxZWU0MTg2YTM0NmZhNTdkNDIzOWIzYTZiYzM2ZjNiMGVlM2E1M2FjOGZkYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmYTg1NzUzZTgwZGJlMGU2YjZlYTgzMTM3MDNmYTcxMjQyZjFlNTI0NTgwYTY4OTc0ZDI0OTY1Yzg1NmU1NzEifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L246-L281",
+          "version": "repo-lines-v1:sha256:3132302d24c542e1892367d3905fc86ee1d3a61986c11a4208ad7fc7f9599b16:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhZmU2OGVhZWVjMTczMmY5YWIxZWJkNmUyZTU3YjE0ZjY3NjM1Y2UwOGFiN2ZmNWU5MjU2N2ZlOGEwZmNjYTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwOTkzMzFkYjY1MGJlMTQ5YzAyY2E4MjYzNjZlOTRjMzM2ZTE5ZDE4ODE2OWI0NmZlMDM5ODU0NTk3MWNjYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE1NjdkMjcwMjJlNTUwNDRhOTI3YTY0YTlhMjhkZTM5MTc4ZGFmMmZlYzdiYzQ4MjAxYzA0ZjMwNWZjNTg4YWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_06a0904d04324924b5ab23d2b3ddd3f3",
+      "statement": "InterviewState v1 is `{ turns: readonly Turn[] }` — a list from the start because M8 grows the interview to many turns and a pair would force a schema break on the second — and Turn is a union tagged by `status` rather than by the presence of `answer`, because the tag is the only form TypeScript narrows on after a JSON round trip.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/state.ts",
+          "version": "repo-file-v1:sha256:a7d06be608f41afb7d229e11fc3bafd0cc524603ee3d3740770a1a3a7deb224f"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L3-L29",
+          "version": "repo-lines-v1:sha256:9a1255e776d363629236b511a26e0af752925c2d84057d29d2180ed1f582b91f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5ZDc3ZmM5YmFmYmMyOWExMzRlZTE3MWUyYjMyZTJiNzhlZDg1ODBhM2ZkNzQ3Nzc5ZjMxMWUwNmU1ZTZmNmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyYTVhNmI5Mjg1YjZjMzg0NWFlMjhiMDQ2MDBjYzE2NjVhMjI1NDBiM2QyOGMyYTNmMGQ5MmQ1NzE1MDllYTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxNmZmYjUxNDgzOGEyYzdmOGE4N2M0YmVhNTg2YmE5MmNkMjg2MDM4YzQ0NzNmYjk0MjgyN2EwMjliNGYzYWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0ZGE2MjExMDRjNDJjZTczODllNzFkZGQ4YmQ3MThhNGFlOTUwMWIyMmQ4ZTcxMGE0MWFjOWNkZjUzZTEyMDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aaa879bd5eb34b95a92cb24b0571908a",
+      "statement": "The turn timestamps askedAt and answeredAt are ISO 8601 strings, never Date, because the session store returns everything under `state` exactly as JSON.parse produced it; AnsweredTurn carries the answering instant beside the answer so an answer with no time cannot be represented.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/state.ts#L24-L58",
+          "version": "repo-lines-v1:sha256:2ae41ea7c588629684b06aad5d638770982253575ea45560097561fa35f4f65c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmMmEyZjk5NmYwOGU2ODBiZDI5MjEzNWE2ZmE0OTc4YmRhMjZlNjAyZDg0ZjMzY2IxZDU5NDc3NWQ0MzA0YjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwZjcxMGE0NjE1MTg2MDM3N2RjNmIwY2NlOWNjM2ViMTc4YjJiODExNGUzNDI2ZWMwMmZiOGUyZTVlMjc3YTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1N2FjMDIyMzE4NGUzNWI5NzlkM2NjZTk2MjQyNzI2MzcxMGM2ZWM1NDBjOTE2MTI4ODExODVjNGVkZGM5NjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMzNGIxMWZkMDg2OTcyODJkYzc3NDkxNzkxMzEzZTY4M2I0ZmEyZmJjMTM2OWE3MTUwYmMxMjA5OTcwYTFmNTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_41669f043f5645ddb9e3bd8ff02cfa5f",
+      "statement": "createSingleTurnInterview binds CoreDependencies once and returns three operations — begin (leaves an existing session untouched), openingQuestion (yields the question's chunks or resolves undefined for a never-begun id), recordAnswer (answers recorded/no-session/no-open-question) — and no status code appears in the domain.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L36-L80",
+          "version": "repo-lines-v1:sha256:409ef2416d5122b226a87f686bff3f6342073f00dac67e95d13dc73d3fd7c905:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2YTY4ZDgxZTk2MWRiOGJhZDlmNzQyYmM1NzNkOGY4MmQzZjU1YzVkYjI0N2ZkN2IyZWRiMzAxZDJjNWJkYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiOWYwZmRhNDMzNDc4NmRlMGEyMWYyNzY5MzRhMjA4NWRjZmI5NDAxNDEwNWYyMGFiNjBlZDAwZDZmZDEyOTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI3ZjBiNTIzOGUxYjhhMDYwMDJkYzMxNTA1NDI4OTQxMDFmNTc5ZTBiYThkMWEwZWY2YTZhOTNiYWUyYWFkNTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE3NWU3ZDQ2ODU5ODczNDhhZWE5NmFlYWJkMGM4MTUxYjkyNjJjZTU5YzU5Nzg1ZDBkZjBhMTkxMDQwZGJlNWQifQ"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L85-L112",
+          "version": "repo-lines-v1:sha256:d991479c26acd7375f25dc5a17e35477756e49140761540f97985fd5275d6de3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyYjk0YWM1MWI3MmI2MGYyMjkxNzRhYjkyZDc3YTc3MWRiOGEzY2FmNGRlYTAwYmZjMTU0ZTJkYzAzNzFiYzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk4YzE3ZTc1OGVjNDJlMjg1NGM5YmIxNDE5NTA5ZTFiOGVkYTMyZDIwOTIwZGQwM2EzODA1MjQ0OTI2OTFkMzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUzMTM1ODZjMzgyM2Y1OWFlMjJkOTRhNTU5YTliNDc0YmE5ZjExMDI1M2U2NGMzOGJkYmFmMTk5MTRmZmRiMTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7c91ababe27c4ed3aca1b6eaf681cb73",
+      "statement": "openingQuestion resolving loads the session and decides existence (so a caller can refuse with 404 before opening a stream and nothing is inferred), while the generator's first pull is what reaches the model; a session already holding a turn replays the stored question via replayStoredQuestion and reaches no model, leaving askedAt untouched.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L231-L245",
+          "version": "repo-lines-v1:sha256:a7f0adbeb6ddb52f2b3005646e039bddc490e9ec51d89509d4a30f68a340b893:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzOTAxNDBhNWU4ZDJmMzNkY2Q0NGFmNzhkMjAwYjY3ODVmNDExZjgzZDgxODg1YmIxOThkZjlhNGQxNDY4MWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0MTA5OTcxMmU3ODlmY2UxZDcyZGU0MWM3NTgxMzhlY2FmMDkyNzZhNWQ1YzkzZmZkMjI3MWNmNTRlZTJhNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTI5ZTkxZTBmOTljM2U4MjVkZTY5YjQzNWZiNjQ4NGQxYjBhMWRmMmY0NjU2MWFiZjFhMjlmMDQxODhiODgifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L296-L318",
+          "version": "repo-lines-v1:sha256:22156038b653d56272f5c2bb14ca12127b2ea1b1107a053eb8d915a2469795a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiNDc3NDhmNjA0MTUxY2YwNjNlZWYwMjdiYzJlYjhhYmE5YjU3OThiYjc2OWFjNjJkZDUyZDczMDM3ZjJhM2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyYjQwNWJhMWE0ZGQyMmNiZDc3OTBjMDczNzJlNDI3YThhMzk0OTJiZmU3NDIyMGQ4MWFiYTIxOWQ3MTZmNGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlZGVmZDM4YjdjNjcyNjUzMTU5MTk0MzZiYmE2NGQ2MWY2NDQ0ZGM1MjM0YTlmYTUxNjJjOTcwOTBjOTZhMDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3MmZiMjNlYmYxNjg3MDM3YjIwMWI2ODA3YWZjMmE1ZDU0MGI4MTM2ZDAwMjVhNzY2YzhjNTQwODM1M2EyZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_09b28a45619141d98d4b8e4fa1bd5c28",
+      "statement": "The asked turn is saved only after the model stream ends of its own accord and yields non-blank text, and a caller's iteration ends only after that save resolves — so a caller that reached the end is looking at a question already on disk, and an abandoned, rejected, or blank production leaves nothing behind.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L145-L185",
+          "version": "repo-lines-v1:sha256:9d65195c99c78db6093804cd227ec3eb2013e98a0927631bc268322a63dc85be:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjNDNjYjYxMzNlZWY4MzNjOTBjYWI3Zjg4N2FjOWViMWQ1OTZjM2Y0Y2M1ODcwYzM1NmM5YzFkZTRkNjhmOWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3MTJkNzFmZmMzNDJiYWVkNGIyYzU2NGZlZjMyOGE2ZjIxZjBkNmZhNzY5MjZjYTIxYmRhMTU1OGI3M2MxMWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bda97269b5244e928edf1669c2bd91b1",
+      "statement": "One QuestionProduction serves every waiting caller, making the model reachable once per session rather than once per request; the interview owns an AbortController per production and hands the model that signal, never a caller's, and the production is cancelled only once every caller sharing it has left — the moment the last caller's signal aborts, not at the model's next chunk.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L200-L230",
+          "version": "repo-lines-v1:sha256:2c392a03eb2d935bd58b1cecd2fb6dc3d5a45541cefe1fc30de9bb78ae77a0ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1MmI2NzRjMDZiZGE2OWZkNDc1MDM2OGIyNjU3MmEwZjM4MzlhYzRkZGI5Y2U4ZDEwOGU1NWY3ZDU2MGVkOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwMjY2MDUxN2ZjZTg5ZmU1YmRjOTE1N2VkYTE3OTA5NGQ5ZWM5ZDE0Yjk5MWU2ZTU0ODI2MGU5NjY0NjlkNzAifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L246-L281",
+          "version": "repo-lines-v1:sha256:3132302d24c542e1892367d3905fc86ee1d3a61986c11a4208ad7fc7f9599b16:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhZmU2OGVhZWVjMTczMmY5YWIxZWJkNmUyZTU3YjE0ZjY3NjM1Y2UwOGFiN2ZmNWU5MjU2N2ZlOGEwZmNjYTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwOTkzMzFkYjY1MGJlMTQ5YzAyY2E4MjYzNjZlOTRjMzM2ZTE5ZDE4ODE2OWI0NmZlMDM5ODU0NTk3MWNjYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE1NjdkMjcwMjJlNTUwNDRhOTI3YTY0YTlhMjhkZTM5MTc4ZGFmMmZlYzdiYzQ4MjAxYzA0ZjMwNWZjNTg4YWQifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L89-L100",
+          "version": "repo-lines-v1:sha256:bfa15186ea3636f9f2b9403d0463230ad7d1c961351f499357ae31dfbdde3ecc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhMDkwY2ZmMjFkOGIzYWI0YTA0ODg1ZTAyN2Q5NzkwOGQ4Y2ZmYjRjYWI3NjM0YmIzMGZlZDY4MTBmMmVhMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjMzJjYzNmMzRmZWNkMmQ2ZGMzM2ZjNDU3OGM3MDEzYTU3ZTBiZDgzMjQyM2VjYmQyZDY4YWZkNmVhMTBiYmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyMDk4YWRlOWNkNTE3ZDk1YWQ1ODg0YjhmMDJkNTMzYzM0MzVjYTE3ODY2YTVlYmFiZTViZTQwYjE5ZDY4ZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk3YjE2MWU1ODdhMjZlNDVlNmRlMGM3NzE3NzdlYThlMGNiMzI3ZWMxNzMwYWM0ZDI4N2ZiYzEzM2Q4ODlmNDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a4e2998212584cc6855d4bbd03410a7b",
+      "statement": "leave() advances the production once more and also calls iterator.return?.(): advance() coalesces via `pending ??= pullChunk()` so it only serves a stream that reads its signal between chunks, while iterator.return covers a stream that never reads the signal whose finally would otherwise never run.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L200-L230",
+          "version": "repo-lines-v1:sha256:2c392a03eb2d935bd58b1cecd2fb6dc3d5a45541cefe1fc30de9bb78ae77a0ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1MmI2NzRjMDZiZGE2OWZkNDc1MDM2OGIyNjU3MmEwZjM4MzlhYzRkZGI5Y2U4ZDEwOGU1NWY3ZDU2MGVkOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwMjY2MDUxN2ZjZTg5ZmU1YmRjOTE1N2VkYTE3OTA5NGQ5ZWM5ZDE0Yjk5MWU2ZTU0ODI2MGU5NjY0NjlkNzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f0375400f2204d6c96e015abc8da2156",
+      "statement": "The map guarding in-flight productions is a closure variable and therefore process-local: one process reaches the model once per session, but two processes over one session directory can still produce two questions; endProduction calls forget() the instant the save resolves, and which production a caller belongs to is decided on its first pull against a freshly loaded session.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L128-L145",
+          "version": "repo-lines-v1:sha256:c1d1d5eaf8190b78385b05ace2807a2bd41f6f28f3a2ebbfb743cf08d5f6166d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxNzA2YmRhZTkzZTExYzE0ZThmMjE0ODkyYzVlMDQ1NmU2NzM3MWZmYjhhOTQ4YmEwMzdjYjUzMjQ5MTMwNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3ZDI1MzJiZGE0OGIxNWExMGZhOTVjZGQxMWQ4ODg4ZDIzMDZmZWFkYWU5M2E0NmI0NjMyMmY2NWQ3ODIyMjIifQ"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L283-L318",
+          "version": "repo-lines-v1:sha256:77297fc90387cd03e53df45e30ad7bc33636742ee0761e12a431a2d9a15d9ed2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MGY4MjBiYjc2NzViYjc1NTI0MDEwNDM1Mzg0YWYxZmRlMTNjNjFmY2JhNDZlOWJmYWM4Yzg4NDhkNmYwZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyYjQwNWJhMWE0ZGQyMmNiZDc3OTBjMDczNzJlNDI3YThhMzk0OTJiZmU3NDIyMGQ4MWFiYTIxOWQ3MTZmNGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5NzgwZTFhNTQzZTE1ZjQ3MDNmYjZiYWRiZTcxYmMwNjc5NmUyNzM5ZDJjNDg4OWIxMjYzYmUyNTU3OTU5NDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3MmZiMjNlYmYxNjg3MDM3YjIwMWI2ODA3YWZjMmE1ZDU0MGI4MTM2ZDAwMjVhNzY2YzhjNTQwODM1M2EyZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3779efd3173a4876b35d5595a026809a",
+      "statement": "renderTranscript is a pure function that returns the Markdown transcript.md holds — a header with the session id and both envelope timestamps, one section per turn — taking the port's own StoredSession so the store passes save's argument straight through; the transcript's shape is a fact about the interview domain, not the store, which never interprets TState.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/transcript.ts",
+          "version": "repo-file-v1:sha256:28887604dc481304c000368c25175a373673cc8b724cf059612281350de64577"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L31-L56",
+          "version": "repo-lines-v1:sha256:73206465f9a8a7dc10c32d9dea89ba03b47a4deaf7ce7cdcb797a89a964a4ef5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZDZlZDYyYTMzYjEzNTA0ZmFmZWNjNTc1ZjhkODUzNWQxNTIwZmE5MWZmOTcyZWQyNTFlYWNmNDVlZmU2NmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmY2E5NDljYjNiZWZlYmNiZGEyMzJmZDI1ZmE1YmZhMjZkOGYyODU0NTg5NDNiZWEyODAxNmQ5MzE0ZTllMzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzYmMwOGY1MzE2MTBmNjg0NTI3NGIzODZjNjhmZjFmOGJhZjQ4NzEwZmJjZGVkODBkMjk2ZDY4YjQ0ZTQ1ZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmZTk2N2IxOTUzODRhYTJmMDNiNWMwYmZmYjljZDZmZjc2YWQ1NjE4ZDJhMzI0Yjg5ODA3OTkxYWYzMjQ1NTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d5f89e6159d84663bea119c3c5775ef2",
+      "statement": "Plan 004 promotes seven ADRs: InterviewState v1 tagged union, core-renders-transcript / store-takes-optional-renderer, the SSE three-event contract, the interview factory over CoreDependencies, packages/web restating the wire shapes with no server dependency, the app built by a factory, and the plain-CSS-tokens-plus-CSS-Modules styling stack.",
+      "evidence": [
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L1-L2",
+          "version": "repo-lines-v1:sha256:716ffb514838a2c7f8a87c4bea586ba92cd286038c4473fb942827a029b4f3ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRhMTkxMTA5MDQ3M2QzOWY3OGViMzM5NjlhYjc0OGUwZWU2ODhjNjFlYTZjOTAyNzMyYWMyZTk5NDUxMTBmNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTIwMzM5NmYyYjdmOGEwNmNlOWM5OWM4NTE3ODcyYjJkZjQ4NTY0YmQzN2ZjMGZhMGM4NWQ3N2YwOTQ2NmE4YyJ9"
+        },
+        {
+          "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L139-L190",
+          "version": "repo-lines-v1:sha256:a7b5d36e4f622619531d1ec6ad1e922a5020b717ac8add3c7e30896bb03491c8:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyZTdjZDhmMTk4NTE3NmVmMWIzZDFhYjQ0ZmFhODRiNTgzYmQzNjVlZDVhZDU5NDE2NmFkOTlmMjI1YWU4MzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyY2Q2MWY0NDRkYzU2Yjc4ZjhmMWRiNTkzNDJjNmY4Y2VhNGVmZDAxNGRhMGJlZTFhOTFmNDM2YzY3NmU0NzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkYTIwZThlYzM4M2EyODZmNzRjZWVlMGRlN2MzMDlkYjIxZmQ4ZWVmZDU3ZDEwN2NhYzZmYjFmZjBmZjBjNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.0",
+    "at": "2026-09-10T15:50:21.943Z"
+  }
+}

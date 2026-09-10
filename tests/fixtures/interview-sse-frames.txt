@@ -1,0 +1,12 @@
+event: token
+data: {"text":"What problem does your product solve,\n"}
+
+event: token
+data: {"text":"and what do people do about it today?"}
+
+event: done
+data: {"question":"What problem does your product solve,\nand what do people do about it today?"}
+
+event: error
+data: {"message":"Cannot reach the language model at http://127.0.0.1:11434/v1"}
+

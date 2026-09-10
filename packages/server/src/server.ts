@@ -1,8 +1,13 @@
 import { serve, type ServerType } from '@hono/node-server';
 
-import { app } from './app.ts';
-
 const DEFAULT_HOST = '127.0.0.1';
+
+/**
+ * The app this module can bind: anything exposing the `fetch` member
+ * `@hono/node-server` calls per request. Typed by that member alone so the
+ * server names no route type and stays ignorant of which app it serves.
+ */
+type ServableApp = Pick<Parameters<typeof serve>[0], 'fetch'>;
 
 /**
  * The handle a started server hands back to its caller. `close` is the only
@@ -16,14 +21,17 @@ export interface ServerHandle {
 }
 
 /**
- * Binds the Hono app to a Node TCP socket. The host defaults to the loopback
- * interface so no deployment accidentally exposes chrysalyst to its network;
- * a caller that needs a wider bind must ask for it explicitly. Resolves once
- * the socket is listening, so callers can read the bound address immediately;
- * rejects if the socket never binds — a taken port above all — with the
- * attempted host and port named and the underlying Node error as `cause`.
+ * Binds the given app to a Node TCP socket. The app is passed in rather than
+ * imported, so the composition root decides which app is served and a test can
+ * bind one built over fakes. The host defaults to the loopback interface so no
+ * deployment accidentally exposes chrysalyst to its network; a caller that
+ * needs a wider bind must ask for it explicitly. Resolves once the socket is
+ * listening, so callers can read the bound address immediately; rejects if the
+ * socket never binds — a taken port above all — with the attempted host and
+ * port named and the underlying Node error as `cause`.
  */
 export function startServer(
+  app: ServableApp,
   port: number,
   host: string = DEFAULT_HOST,
 ): Promise<ServerHandle> {

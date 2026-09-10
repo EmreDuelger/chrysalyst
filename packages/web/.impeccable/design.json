@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-09T00:00:00Z",
+  "title": "Design System: chrysalyst web",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "oklch(94.8% 0.012 84)",
+        "tonalRamp": ["#211f1b", "#3b3830", "#575349", "#767162", "#98917f", "#bcb5a2", "#dcd6c8", "#f4f1ea"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Near-Black Ink",
+        "canonical": "oklch(23% 0 0)",
+        "tonalRamp": ["#1a1a1a", "#2f2f2e", "#474644", "#61605d", "#828079", "#a6a49b", "#cbc9bf", "#eceae2"]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(43% 0.008 74)",
+        "tonalRamp": ["#24231f", "#38362f", "#4d4a41", "#55524b", "#736e63", "#978f7f", "#bdb4a1", "#e0d9c8"]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Editorial Vermilion",
+        "canonical": "oklch(56% 0.16 32)",
+        "tonalRamp": ["#361008", "#551a0e", "#792515", "#9c311d", "#c8402b", "#dc6d59", "#eba392", "#f7d7cd"]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(86% 0.014 85)",
+        "tonalRamp": ["#2b2921", "#433f33", "#5d5847", "#7c765f", "#9d9680", "#bdb6a1", "#d8d2c4", "#efece2"]
+      }
+    },
+    "typographyMeta": {
+      "question": { "displayName": "Question", "purpose": "The interview question, set as an editorial standfirst. Only large type on the page; streams in token by token." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "The chrysalyst wordmark in the topbar; the only serif UI element." },
+      "body": { "displayName": "Body", "purpose": "Typed answer text; line-height locks to the 1.75rem writing baseline inside the field." },
+      "caption": { "displayName": "Caption", "purpose": "Inline error message body — the one place copy is set below 1rem." },
+      "action": { "displayName": "Action", "purpose": "The submit control label; semibold, lightly tracked, sentence case." },
+      "label": { "displayName": "Label", "purpose": "All 11px uppercase tracked micro-labels and status lines." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "cursor-blink", "value": "cursor-blink 1.05s steps(1, end) infinite", "purpose": "Hard on/off blink of the 2px streaming cursor rule. No fade. Removed under prefers-reduced-motion and frozen static in the failed state." },
+      { "name": "confirm-in", "value": "confirm-in 0.45s ease-out", "purpose": "Opacity fade from 0 on the recorded confirmation line — the single authored accent beat. Removed under prefers-reduced-motion." }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Topbar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Ruled masthead: mark plus wordmark on the left, tracked metadata line on the right.",
+      "html": "<header class=\"ds-topbar\"><span class=\"ds-topbar-wordmark\"><svg class=\"ds-topbar-mark\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 1.5 22.5 12 12 22.5 1.5 12Z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/><path d=\"M1.5 12 12 22.5 22.5 12Z\" fill=\"currentColor\"/></svg>chrysalyst</span><span class=\"ds-topbar-meta\">Interview · 01</span></header>",
+      "css": ".ds-topbar { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; max-width: 40rem; margin: 0 auto; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); } .ds-topbar-wordmark { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--serif); font-size: 1.0625rem; font-weight: 500; letter-spacing: 0.01em; color: var(--ink); } .ds-topbar-mark { display: block; flex: none; width: 15px; height: 15px; color: var(--ink); } .ds-topbar-meta { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: var(--ink-soft); }"
+    },
+    {
+      "name": "Question Standfirst",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The editorial centrepiece: an 11px tracked kicker above a large serif question that streams in with a trailing cursor rule.",
+      "html": "<div><p class=\"ds-kicker\" aria-hidden=\"true\">The question</p><p class=\"ds-question\" aria-live=\"polite\">What problem does your product solve<span class=\"ds-cursor-rule\" aria-hidden=\"true\"></span></p><p class=\"ds-note\" role=\"status\">the question is still being written</p></div>",
+      "css": ".ds-kicker { margin: 0 0 1rem; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); } .ds-question { margin: 0; font-family: var(--serif); font-size: 1.75rem; line-height: 1.32; font-weight: 400; letter-spacing: -0.003em; color: var(--ink); } .ds-note { margin: 0.85rem 0 0; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }"
+    },
+    {
+      "name": "Streaming Cursor Rule",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The anti-chatbot streaming signal: one 2px hairline blinking hard on/off. Static in the failed state, removed under reduced motion.",
+      "html": "<span class=\"ds-cursor-rule\" aria-hidden=\"true\"></span>",
+      "css": ".ds-cursor-rule { display: inline-block; width: 0.62em; height: 2px; margin-left: 0.12em; vertical-align: 0.16em; background: var(--ink); animation: ds-cursor-blink 1.05s steps(1, end) infinite; } @keyframes ds-cursor-blink { 50% { opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-cursor-rule { animation: none; } }"
+    },
+    {
+      "name": "Ruled Answer Field",
+      "kind": "input",
+      "refersTo": "answer-field",
+      "description": "A sheet of ruled writing paper: underline rules only, no box, typed text sitting on a 1.75rem baseline. Focus turns the baseline rule vermilion.",
+      "html": "<label class=\"ds-answer-label\" for=\"ds-answer\">Your answer</label><textarea class=\"ds-answer-field\" id=\"ds-answer\"></textarea>",
+      "css": ".ds-answer-label { display: block; margin-bottom: 0.65rem; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); } .ds-answer-field { display: block; width: 100%; min-height: 5.25rem; padding: 0.35rem 0 0.5rem; border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; background-color: transparent; background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.75rem - 1px), var(--rule) calc(1.75rem - 1px), var(--rule) 1.75rem); background-position: 0 0.35rem; font-family: var(--grotesque); font-size: 1rem; line-height: 1.75rem; color: var(--ink); resize: none; } .ds-answer-field:focus { outline: none; border-bottom-color: var(--accent); } .ds-answer-field:disabled { opacity: 0.55; }"
+    },
+    {
+      "name": "Record Submit Control",
+      "kind": "button",
+      "refersTo": "submit-control",
+      "description": "A right-aligned text link that submits; no button chrome. Vermilion when active, warm grey when disabled.",
+      "html": "<div class=\"ds-actions\"><span class=\"ds-hint\">One question this round.</span><button class=\"ds-submit\" type=\"submit\">Record answer<span aria-hidden=\"true\">&nbsp;&rarr;</span></button></div>",
+      "css": ".ds-actions { display: flex; align-items: baseline; gap: 1.5rem; margin-top: 1rem; } .ds-hint { margin-right: auto; font-size: 0.75rem; color: var(--ink-soft); } .ds-submit { padding: 0.35rem 0; border: 0; background: none; font-family: var(--grotesque); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.04em; color: var(--accent); cursor: pointer; } .ds-submit:disabled { color: #a7a299; cursor: default; } .ds-submit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Recorded Confirmation",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "A quiet one-line receipt in vermilion above a vermilion hairline; fades in once over 0.45s.",
+      "html": "<p class=\"ds-confirm\" role=\"status\">Recorded &mdash; saved to this session</p>",
+      "css": ".ds-confirm { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--accent); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); animation: ds-confirm-in 0.45s ease-out; } @keyframes ds-confirm-in { from { opacity: 0; } to { opacity: 1; } } @media (prefers-reduced-motion: reduce) { .ds-confirm { animation: none; } }"
+    },
+    {
+      "name": "Inline Error",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The stream broke, said in place: a hidden vermilion label and an ink message behind a 2px vermilion left rule. Replaces the answer block, never overlays.",
+      "html": "<div class=\"ds-error\"><div class=\"ds-error-body\"><p class=\"ds-error-label\" aria-hidden=\"true\">The question stopped</p><p class=\"ds-error-message\" role=\"alert\">Cannot reach the language model. Check that Ollama is running, then reload.</p></div></div>",
+      "css": ".ds-error { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); } .ds-error-body { padding-left: 0.9rem; border-left: 2px solid var(--accent); } .ds-error-label { display: block; margin: 0 0 0.4rem; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); } .ds-error-message { margin: 0; font-size: 0.9375rem; line-height: 1.55; color: var(--ink); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Standfirst",
+    "overview": "chrysalyst's browser client is a magazine page that happens to be interactive. One question is set like an editorial standfirst — serif, large, unhurried — and answered in a ruled column below it. There is no chat thread and no wizard chrome. Hairline rules and tracked uppercase micro-labels do all the structural work; whitespace does the rest. The register is Monocle / Apartamento / Études: warm paper, near-black ink, and a single editorial vermilion spent only on the few marks that must be noticed. The system is flat — no card, no shadow, square corners. Depth is 1px rules and air. The one place ink gives way to colour is a state change: a focused field, a completed save, a broken stream. Density is low; the composition is a single centred ~40rem column with generous outer margin and no responsive breakpoints.",
+    "keyCharacteristics": [
+      "One serif voice for the question, one grotesque voice for everything else.",
+      "Structure is rules and space — never boxes, never shadow.",
+      "Vermilion is a state signal, not a brand wash.",
+      "Uppercase tracked micro-labels (0.16em) annotate every region.",
+      "A single ~40rem column, centred, with no responsive breakpoints."
+    ],
+    "rules": [
+      { "name": "The One Red Rule", "body": "Vermilion appears on at most one element per state. If a second thing on screen is red, one of them is wrong.", "section": "colors" },
+      { "name": "The No-Box Rule", "body": "Content is separated by rules and space only. A background fill, a border on more than one side, or a rounded container is a violation of the world.", "section": "colors" },
+      { "name": "The Two Voices Rule", "body": "Serif is the question and the wordmark — nothing else. Everything a user operates or reads as interface is Libre Franklin.", "section": "typography" },
+      { "name": "The Tracked-Label Rule", "body": "Any label at 11px is uppercase and tracked 0.16em. Never track body or question text positive; the question carries a slight negative track (-0.003em).", "section": "typography" },
+      { "name": "The Flat-Forever Rule", "body": "Surfaces never leave the page plane. If a block needs to feel separate, add a hairline rule and more space above it — not a shadow, not a fill.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every surface on the warm paper ground (#f4f1ea) with no fill, no card, no shadow — structure with 1px hairline rules (#d8d2c4) and space.",
+      "Do set questions and only questions (plus the wordmark) in Source Serif 4; everything operable or informational is Libre Franklin.",
+      "Do spend vermilion (#c8402b) on exactly one element per state: the submit control, the focused field rule, the confirmation, or the error mark.",
+      "Do track 11px labels uppercase at 0.16em; keep the column at the 40rem measure, centred.",
+      "Do gate every animation behind prefers-reduced-motion, and give any motion-only status a visible text equivalent.",
+      "Do write error copy that names the failure and the recovery step."
+    ],
+    "donts": [
+      "Don't introduce a second accent hue, a gradient, or tinted text — secondary text is Soft Ink (#55524b) only.",
+      "Don't add border-radius above the 2px ceiling, and prefer 0.",
+      "Don't wrap content in a bordered or filled box, or add a box-shadow.",
+      "Don't use bouncing dots or a spinner for streaming — the streaming signal is the single blinking 2px rule.",
+      "Don't widen the measure past 40rem or left-align the column."
+    ]
+  }
+}

@@ -34,9 +34,21 @@ const envelopeBodySchema = z.object({
 
 type EnvelopeBody = z.infer<typeof envelopeBodySchema>;
 
-/** How a caller points the store at the directory tree that holds its sessions. */
-export interface FilesystemSessionStoreConfig {
+/**
+ * How a caller points the store at the directory tree that holds its sessions,
+ * and optionally how a stored session becomes its `transcript.md`.
+ *
+ * The type parameter is defaulted so a caller that never renders — and
+ * `sessionStoreConfigFromEnv`, whose declared return type names no state — keeps
+ * compiling unchanged. `renderTranscript` is the state owner's business, not the
+ * store's: `@chrysalyst/core` renders the interview's and the composition root
+ * supplies it. With none configured the store writes a metadata header and reads
+ * nothing under `state`, so a caller persisting some other `TState` needs no
+ * renderer.
+ */
+export interface FilesystemSessionStoreConfig<TState = unknown> {
   readonly rootDir: string;
+  readonly renderTranscript?: (session: StoredSession<TState>) => string;
 }
 
 /**
@@ -60,9 +72,16 @@ export interface FilesystemSessionStoreConfig {
  * `session.json` that is present but unreadable rejects and names the file it
  * could not read. Collapsing the two would have a caller silently begin a
  * fresh session over one whose state it merely failed to load.
+ *
+ * `transcript.md` is written from `config.renderTranscript` when a caller
+ * configures one and from a metadata header otherwise; the store never reads
+ * `TState` itself. A renderer that throws fails the save the same way a write
+ * failure does — the previous revision stays loadable, no temporary file
+ * survives, and the rejection names the session directory with the renderer's
+ * error as `cause`.
  */
 export function createFilesystemSessionStore<TState>(
-  config: FilesystemSessionStoreConfig,
+  config: FilesystemSessionStoreConfig<TState>,
 ): SessionStorePort<TState> {
   return {
     async list(): Promise<readonly SessionId[]> {
@@ -115,7 +134,9 @@ export function createFilesystemSessionStore<TState>(
 
       try {
         const envelope = JSON.stringify(toEnvelope(session), null, 2);
-        const transcript = toTranscript(session);
+        const transcript = config.renderTranscript
+          ? config.renderTranscript(session)
+          : toTranscript(session);
 
         await mkdir(directory, { recursive: true, mode: DIRECTORY_MODE });
         await commitRevision(directory, envelope, transcript);

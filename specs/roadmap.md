@@ -153,8 +153,8 @@ Dateisystem (`mkdtemp`).
 landet auf der Platte. Erstes laufendes Produkt.
 
 **Liefert:** Minimaler Einzelschritt-Use-Case in `packages/core` über
-`CoreDependencies`, Hono-SSE-Route, `hc<AppType>`-Client in `packages/web`, eine
-streamende Frage-Ansicht. Token strömen bis ins DOM. Plus: **Engine-Struktur-Spike**
+`CoreDependencies`, Hono-SSE-Route, `packages/web` erreicht die API über HTTP mit
+eigener Deklaration der drei Wire-Shapes, eine streamende Frage-Ansicht. Token strömen bis ins DOM. Plus: **Engine-Struktur-Spike**
 — dieselbe eine Runde einmal über einen hand-gerollten Turn-Loop und einmal über
 LangGraph.js `interrupt()` + einen `SessionStorePort`-gestützten Checkpointer, um
 die Persistenz-Integrationskosten konkret zu spüren.

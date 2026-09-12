@@ -4,7 +4,7 @@
 
 | Result | Details |
 |--------|---------|
-| **PASS** (implementation scope) | Tasks 1–5 are done, reviewed, and verified locally. Task 6's three hosted-run URLs are the outstanding gate — see § Outstanding: Task 6. |
+| **PASS** | All six tasks are done, reviewed, and verified — locally and on three hosted runs. C2 and M4 are ready for `/speq:record`. |
 | Code review | 5 findings — 5 fixed |
 
 | Check | Status |
@@ -14,7 +14,7 @@
 | Lint | ✓ |
 | Format | ✓ |
 | Scenario Coverage | ✓ |
-| Manual Tests | ✓ (non-hosted rows; hosted rows belong to task 6) |
+| Manual Tests | ✓ (non-hosted and hosted rows both — see § Task 6: Hosted Fail-Closed Proof) |
 
 ## Test Evidence
 
@@ -104,12 +104,21 @@ Round 1 found 5 findings against `tests/ci-pipeline.test.ts` and `tests/workspac
 - **Live tier confirmed both ways.** The standard run skips both live suites; the flagged run (`CHRYSALYST_LIVE_LLM=1 CHRYSALYST_LLM_MODEL=qwen3:8b`) runs and passes them, proving this plan disables the tier in CI specifically, not everywhere.
 - **The coverage anchor holds.** `config.test.coverage` sits under `test:`, not at the top level — the exact misplacement the plan review's round-1 blocker found and that would have silently disabled the gate.
 
-## Outstanding: Task 6
+## Task 6: Hosted Fail-Closed Proof
 
-Task 6 ("Prove the pipeline fails closed on a real hosted run") is explicitly out of orchestrator scope — plan.md § Parallelization: "Group D is not dispatched to an implementer. Task 6 needs a human approval and `git-agent` writes." It requires:
+This is C2's and M4's actual exit criterion — three hosted runs proving the pipeline fails closed, not this report's local test evidence.
 
-1. Human approval to push `feat/ci-test-tiers` and open the feature pull request.
-2. A `ci-test-tiers-failclosed` scratch branch carrying three sequential breakages (formatting, coverage floor, live-tier flag), each reverting its predecessor, each producing one hosted run URL.
-3. Human closure of the scratch pull request and branch deletion in the GitHub UI.
+**Feature PR.** `feat/ci-test-tiers` pushed, PR #6 opened against `main`: https://github.com/EmreDuelger/chrysalyst/pull/6. Its `check` job is green, with both `*.live.test.ts` files reported as skipped and no `CHRYSALYST_LIVE_LLM` in the job environment.
 
-**`/speq:record ci-test-tiers` MUST NOT run until all three run URLs from task 6 are recorded in this report** — plan.md § Impact and § Implementation Tasks both state this gate explicitly, because those three runs are C2's and M4's actual exit criteria, not this report's local test evidence.
+| Row | Run | Result |
+|-----|-----|--------|
+| Baseline (feature PR, unmodified) | https://github.com/EmreDuelger/chrysalyst/actions/runs/34701305766 | Green, 42s. Both live suites skipped. |
+| Breakage 1 — formatting | https://github.com/EmreDuelger/chrysalyst/actions/runs/34701438211 | Fails at `pnpm format:check` and no earlier step; `pnpm lint` cleared first. |
+| Breakage 2 — coverage floor | https://github.com/EmreDuelger/chrysalyst/actions/runs/34701514536 | Clears lint, format:check, typecheck; fails at `pnpm -r --include-workspace-root test` — `ERROR: Coverage for lines (97.76%) does not meet global threshold (100%)`. |
+| Breakage 3 — live tier forced on | https://github.com/EmreDuelger/chrysalyst/actions/runs/34701596270 | Clears lint, format:check, typecheck; fails inside `tests/ci-pipeline.test.ts` on the named `sets CHRYSALYST_LIVE_LLM nowhere in the workflow` assertion — a fast named failure, not a 120-second Ollama timeout. |
+
+**Sequencing note.** Plan.md's task 6 step 3 called for pushing the scratch branch unchanged and opening its pull request before any breakage, so the first breakage would arrive as a `synchronize` event. GitHub's `gh pr create` refuses that: it returns `GraphQL: No commits between feat/ci-test-tiers and ci-test-tiers-failclosed` when the head branch is identical to its base. The sequence was adapted — breakage 1 was committed and pushed first, then the pull request was opened. `on: pull_request` triggers on `opened` the same as on `synchronize` (both are in its implicit default type list), so the `opened` event became breakage 1's isolated run instead of a wasted baseline run. Breakages 2 and 3 followed the plan exactly, each reverting its predecessor in the same commit before landing the next breakage, each arriving as its own `synchronize` event.
+
+**Cleanup.** PR #7 (`ci-test-tiers-failclosed` → `feat/ci-test-tiers`) closed unmerged and the branch deleted, per plan.md's assignment of that step to a human — `git-agent`'s operation set has no close-pull-request or delete-branch operation. `git-agent` then checked the workspace back out to `feat/ci-test-tiers`, which carries no breakage at any point and needs no cleanup of its own.
+
+**Finding for follow-up, outside this plan's scope.** The breakage-1 run's log shows `##[warning] Unexpected input(s) 'require-lockfile', valid inputs are ['version', 'dest', 'runtime', 'cache', 'cache-dependency-path', 'package-json-file', 'install', 'token']` from the `pnpm/setup@v2` step. The pinned action version does not define a `require-lockfile` input; GitHub Actions treats an unrecognized input as a warning, not an error, so the step still runs `pnpm install` — with `install: true` as its own default — but does not actually enforce `--frozen-lockfile`. The workflow's frozen-lockfile guarantee (decision [2], plan.md § The workflow) is currently unenforced in practice, though every dependency-havoc scenario it guards against would still be caught by `pnpm-lock.yaml` mismatches surfacing as install or test failures. This needs its own small follow-up plan to either pass the input the action's current version actually recognizes or fall back to an explicit `pnpm install --frozen-lockfile` step; it is not part of `ci-test-tiers`'s scenario coverage and does not block this plan's exit criteria.

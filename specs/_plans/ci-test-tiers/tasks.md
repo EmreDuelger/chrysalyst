@@ -24,4 +24,12 @@
 - [x] 4.5 Check format:check script both reports violations and doesn't rewrite files (tests/workspace.test.ts)
 
 ## Not dispatched — human + git-agent only
-- [ ] 6 Prove the pipeline fails closed on a real hosted run (human approval required; out of orchestrator scope until Group C is verified green)
+- [x] 6 Prove the pipeline fails closed on a real hosted run
+  - [x] 6.1 Push `feat/ci-test-tiers`, open PR #6 (base: main) — green: https://github.com/EmreDuelger/chrysalyst/actions/runs/34701305766
+  - [x] 6.2 Open scratch PR #7 (`ci-test-tiers-failclosed` → `feat/ci-test-tiers`) carrying breakage 1 (GitHub refused an unchanged-branch PR, so the `opened` event doubles as breakage 1's isolated run — see verification-report.md § Outstanding for the adaptation)
+  - [x] 6.3 Breakage 1 (formatting) — fails at `pnpm format:check`: https://github.com/EmreDuelger/chrysalyst/actions/runs/34701438211
+  - [x] 6.4 Breakage 2 (coverage) — fails at test step, threshold error naming lines: https://github.com/EmreDuelger/chrysalyst/actions/runs/34701514536
+  - [x] 6.5 Breakage 3 (live tier) — fails inside guard suite's `CHRYSALYST_LIVE_LLM` assertion: https://github.com/EmreDuelger/chrysalyst/actions/runs/34701596270
+  - [x] 6.6 PR #7 closed unmerged, `ci-test-tiers-failclosed` deleted (human-directed, executed via `gh pr close --delete-branch`)
+  - [x] 6.7 `git-agent` checkout back to `feat/ci-test-tiers` — done, PR #6 still ready
+  - [x] 6.8 Recorded the three run URLs in verification-report.md § Outstanding, removed the "blocked" framing

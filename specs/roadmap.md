@@ -53,11 +53,11 @@ erste Meilenstein sie berührt.
 |---|---|---|---|---|
 | M0 | Monorepo-Scaffold | ✅ erledigt (`001-add-monorepo-scaffold`) | — | — |
 | C1 | `openwiki --init` *(Chore)* | ✅ erledigt | M0 | — |
-| C2 | Minimale CI *(Chore)* | ⬜ offen | M0 | — |
+| C2 | Minimale CI *(Chore)* | ✅ erledigt (`006-ci-test-tiers`) | M0 | — |
 | M1 | Ollama-LLM-Adapter | ✅ erledigt (`002-add-ollama-llm-adapter`) | C1, C2 | 1 |
 | M2 | Dateisystem-Session-Store | ✅ erledigt (`003-add-filesystem-session-store`) | M0 | — |
 | M3 | Walking Skeleton: eine echte Frage E2E + Engine-Spike | ✅ erledigt (004-single-question-walking-skeleton · 005-engine-structure-spike) | M1, M2 | 1 (dünn) |
-| M4 | CI-Test-Stufen + `core`-Coverage-Gate | ⬜ offen | M3 | — (Leitplanke) |
+| M4 | CI-Test-Stufen + `core`-Coverage-Gate | ✅ erledigt (`006-ci-test-tiers`) | M3 | — (Leitplanke) |
 | M5 | DE/EN-Fundament | ⬜ offen | M3 | 1 (Constraint) |
 | M6 | Backend-Setup-Gate | ⬜ offen | M3 | 1 (Constraint) |
 | M7 | Fragebaum-Modell | ⬜ offen | M3, M5 | **1** |

@@ -453,6 +453,7 @@ Version trägt für diesen Weg keinen Aufwand.
 | **Strukturierter LLM-Output** | Leitplanke; erster Aufrufer ist **M10** | In `decision-log [6]` gelöscht statt deklariert, vom ersten echten Aufrufer zu entwerfen. Die Destillation ist dieser Aufrufer. Umsetzung über `Output.object()` + zod im Adapter. |
 | **Session-Schema-Evolution** | Leitplanke; ab **M2** | `TState` wächst über M2 → M8 → M9 → M14. Ohne `schemaVersion` ab dem ersten Schreiben brechen spätere Meilensteine bestehende Session-Ordner still — und die Mission verspricht lesbare Sessions. |
 | **Engine-Struktur** | Entschieden in **M3**: hand-gerollt | `specs/_decision/005-engine-structure-spike.md`. LangGraph.js scheiterte an zwei unabhängigen Bedingungen der Entscheidungsregel: der Checkpointer überschritt das LOC-Budget, und das persistierte Dokument war keine lesbare `InterviewState` mehr. |
+| **Agentisches Tool-Loop-Verhalten** | einzig denkbarer Ort: **M16**, in `packages/server` hinter `SearchPort`/`LlmPort` — nie in `core` | M7/M8/M12/M13 bleiben deterministisch (Mission: geführtes, auditierbares Interview, kein autonomer Agent); auch die LangGraph-Arme des M3-Spikes hatten statische Graph-Kanten, keine LLM-geplante Navigation. M16 ist der einzige Punkt mit einer echten dynamischen Werkzeugentscheidung (suchen? welche Query? reicht der Treffer?) — aktuell als Einmal-Call skizziert, nicht als offene Schleife, und selbst als descope-Kandidat markiert. |
 
 ---
 

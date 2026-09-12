@@ -24,7 +24,7 @@ const OPENING_SYSTEM_PROMPT = [
   'no explanation, no reasoning, and no second question.',
 ].join(' ');
 
-const OPENING_USER_MESSAGE = 'Begin the interview.';
+  const OPENING_USER_MESSAGE = 'Begin the interview.';
 
 /**
  * What recording an answer did, in the interview's own vocabulary.

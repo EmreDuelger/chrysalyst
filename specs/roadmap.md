@@ -41,7 +41,7 @@ erste Meilenstein sie berührt.
 | Leitplanke | Entscheidung | Status |
 |---|---|---|
 | **Kein Agent-Framework in der Domäne** | Die Interview-Engine lebt in `packages/core` als eigener Code. Kein LangChain/LangGraph/deepagents als Domänen-Abhängigkeit. Begründung: `core` ist laut Mission framework-frei; der Fragebaum ist von uns geschrieben und deterministisch, kein LLM-geplanter Graph. | fest |
-| **Engine-Struktur** | Hand-gerollter Zustandsautomat **oder** LangGraph.js in `core`. M3 baut beide Turn-Loop-Varianten als Wegwerf-Spike (Fokus: Persistenz-Integration `SessionStorePort` vs. LangGraph-Checkpointer). Entscheidung wird vor M7 als ADR festgehalten. | offen — Spike in M3 |
+| **Engine-Struktur** | Hand-gerollter Zustandsautomat über direktem `SessionStorePort`-Zugriff, kein LangGraph.js in `core`. Der Wegwerf-Spike in M3 maß Persistenz-Integrationskosten (`SessionStorePort` vs. LangGraph-Checkpointer) und entschied zugunsten des Zustandsautomaten — siehe `specs/_decision/005-engine-structure-spike.md`. | fest |
 | **`LlmPort`-Adapter** | **Vercel AI SDK (`ai` v6)** in `packages/server`, hinter dem Port. Eine Schnittstelle für Ollama, llama.cpp und LM Studio; geprüftes SSE-Token-Streaming; `Output.object()` + zod für strukturierten Output mit Repair. `packages/core` importiert es nie. | fest |
 | **Strukturierter LLM-Output** | `Output.object()` + zod-Schema im Adapter. Kein hand-gerollter JSON-Parser. Der `LlmPort`-Vertrag bekommt in M10 eine Antwortform. | fest — Delta in M10 |
 | **Kein Cloud-LLM-SDK** | Weder Anthropic- noch OpenAI-SDK irgendwo im Produktcode. Die App läuft gegen lokale Modelle. | fest |
@@ -56,7 +56,7 @@ erste Meilenstein sie berührt.
 | C2 | Minimale CI *(Chore)* | ⬜ offen | M0 | — |
 | M1 | Ollama-LLM-Adapter | ✅ erledigt (`002-add-ollama-llm-adapter`) | C1, C2 | 1 |
 | M2 | Dateisystem-Session-Store | ✅ erledigt (`003-add-filesystem-session-store`) | M0 | — |
-| M3 | Walking Skeleton: eine echte Frage E2E + Engine-Spike | ⬜ offen | M1, M2 | 1 (dünn) |
+| M3 | Walking Skeleton: eine echte Frage E2E + Engine-Spike | ✅ erledigt (004-single-question-walking-skeleton · 005-engine-structure-spike) | M1, M2 | 1 (dünn) |
 | M4 | CI-Test-Stufen + `core`-Coverage-Gate | ⬜ offen | M3 | — (Leitplanke) |
 | M5 | DE/EN-Fundament | ⬜ offen | M3 | 1 (Constraint) |
 | M6 | Backend-Setup-Gate | ⬜ offen | M3 | 1 (Constraint) |
@@ -229,9 +229,9 @@ Abnahmekriterium von M18.
 
 **Ziel:** Die Struktur möglicher Frage-Pfade existiert als Domänen-Modell.
 
-**Liefert:** Ein Zweig-/Knoten-Modell in `packages/core`, gebaut in der in M3
-entschiedenen Struktur (hand-gerollt oder LangGraph.js). Kein adaptives Verhalten
-— nur das Modell und seine Invarianten.
+**Liefert:** Ein Zweig-/Knoten-Modell in `packages/core`, gebaut als hand-gerollter
+Zustandsautomat über `SessionStorePort` — die in M3 entschiedene Struktur. Kein
+adaptives Verhalten — nur das Modell und seine Invarianten.
 
 **Pläne:** `question-tree-model`
 
@@ -452,7 +452,7 @@ Version trägt für diesen Weg keinen Aufwand.
 | **impeccable-Design** | Subphase jedes UI-Plans + ein konsolidierender Durchgang in **M18** | `decision-log [14]` vertagt den Styling-Stack auf das erste UI-Feature (= M3). M18 vereinheitlicht, erfindet nicht neu. |
 | **Strukturierter LLM-Output** | Leitplanke; erster Aufrufer ist **M10** | In `decision-log [6]` gelöscht statt deklariert, vom ersten echten Aufrufer zu entwerfen. Die Destillation ist dieser Aufrufer. Umsetzung über `Output.object()` + zod im Adapter. |
 | **Session-Schema-Evolution** | Leitplanke; ab **M2** | `TState` wächst über M2 → M8 → M9 → M14. Ohne `schemaVersion` ab dem ersten Schreiben brechen spätere Meilensteine bestehende Session-Ordner still — und die Mission verspricht lesbare Sessions. |
-| **Engine-Struktur** | Spike in **M3**, ADR vor **M7** | Hand-gerollt vs. LangGraph.js in `core`. M3 baut beide Turn-Loop-Varianten als Wegwerf-Code, Fokus auf die Persistenz-Integration. |
+| **Engine-Struktur** | Entschieden in **M3**: hand-gerollt | `specs/_decision/005-engine-structure-spike.md`. LangGraph.js scheiterte an zwei unabhängigen Bedingungen der Entscheidungsregel: der Checkpointer überschritt das LOC-Budget, und das persistierte Dokument war keine lesbare `InterviewState` mehr. |
 
 ---
 

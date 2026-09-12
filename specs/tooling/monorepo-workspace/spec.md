@@ -57,9 +57,10 @@ The workspace contains exactly three packages — `@chrysalyst/core`, `@chrysaly
 
 * *GIVEN* the root manifest
 * *WHEN* its scripts are inspected
-* *THEN* the scripts MUST include `dev`, `lint`, `format`, and `typecheck`
+* *THEN* the scripts MUST include `dev`, `lint`, `format`, `format:check` and `typecheck`
 * *AND* the `dev` script MUST run the package `dev` scripts in parallel
 * *AND* the `test` and `typecheck` scripts MUST NOT require a build step to run first
+* *AND* `format:check` MUST report a formatting violation without rewriting a file, because the pipeline runs it on a runner whose working tree is discarded
 
 ### Scenario: Live-tier tests are gated by an environment flag
 

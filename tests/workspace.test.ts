@@ -286,12 +286,31 @@ describe('monorepo workspace', () => {
     const root = readManifest('package.json');
     const scripts = root.scripts ?? {};
 
-    for (const script of ['dev', 'test', 'typecheck', 'lint', 'format']) {
+    for (const script of [
+      'dev',
+      'test',
+      'typecheck',
+      'lint',
+      'format',
+      'format:check',
+    ]) {
       expect(scripts[script], `root script ${script}`).toBeTypeOf('string');
     }
 
     expect(scripts.test).not.toContain('build');
     expect(scripts.typecheck).not.toContain('build');
+    expect(
+      scripts['format:check'],
+      'format:check must report a formatting violation rather than exit 0 on unformatted input',
+    ).toMatch(/(?:^|\s)(?:--check|-c)(?:\s|$)/);
+    expect(
+      scripts['format:check'],
+      'format:check must not rewrite files on a runner whose working tree is discarded',
+    ).not.toMatch(/(?:^|\s)--write(?:\s|$)/);
+    expect(
+      scripts['format:check'],
+      'format:check must not rewrite files on a runner whose working tree is discarded',
+    ).not.toMatch(/(?:^|\s)-\w*w/);
   });
 
   it('core declares no runtime dependencies and its non-test source imports none', () => {

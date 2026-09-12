@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 1,
+  "id": "61c5ce96-7f7c-4260-8242-145283aa9fcb",
+  "createdAt": "2026-09-11T21:19:26.332Z",
+  "updatedAt": "2026-09-11T21:19:41.235Z",
+  "state": {
+    "checkpoints": {
+      "": {
+        "1f1ae267-78da-6d80-ffff-98166a4d175a": {
+          "checkpoint": {
+            "type": "json",
+            "json": {
+              "v": 4,
+              "id": "1f1ae267-78da-6d80-ffff-98166a4d175a",
+              "ts": "2026-09-11T21:19:26.296Z",
+              "channel_values": {
+                "turns": [],
+                "answer": "",
+                "__start__": {
+                  "turns": [],
+                  "answer": ""
+                },
+                "__pregel_tasks": []
+              },
+              "channel_versions": {
+                "__start__": 1
+              },
+              "versions_seen": {
+                "__input__": {}
+              }
+            }
+          },
+          "metadata": {
+            "type": "json",
+            "json": {
+              "source": "input",
+              "step": -1,
+              "parents": {}
+            }
+          }
+        },
+        "1f1ae267-78f5-6b30-8000-3adb83205851": {
+          "checkpoint": {
+            "type": "json",
+            "json": {
+              "v": 4,
+              "id": "1f1ae267-78f5-6b30-8000-3adb83205851",
+              "ts": "2026-09-11T21:19:26.307Z",
+              "channel_values": {
+                "turns": [],
+                "answer": "",
+                "__pregel_tasks": [],
+                "branch:to:askOpeningQuestion": null
+              },
+              "channel_versions": {
+                "__start__": 2,
+                "turns": 2,
+                "answer": 2,
+                "branch:to:askOpeningQuestion": 2
+              },
+              "versions_seen": {
+                "__input__": {},
+                "__start__": {
+                  "__start__": 1
+                }
+              }
+            }
+          },
+          "metadata": {
+            "type": "json",
+            "json": {
+              "source": "loop",
+              "step": 0,
+              "parents": {}
+            }
+          },
+          "parentCheckpointId": "1f1ae267-78da-6d80-ffff-98166a4d175a"
+        },
+        "1f1ae267-d795-6550-8001-4f1bec8b9bbc": {
+          "checkpoint": {
+            "type": "json",
+            "json": {
+              "v": 4,
+              "id": "1f1ae267-d795-6550-8001-4f1bec8b9bbc",
+              "ts": "2026-09-11T21:19:36.229Z",
+              "channel_values": {
+                "turns": [
+                  {
+                    "status": "asked",
+                    "question": "Can you describe the product you're thinking about and the problem it solves?",
+                    "askedAt": "2026-09-11T21:19:36.226Z"
+                  }
+                ],
+                "answer": "",
+                "__pregel_tasks": [],
+                "branch:to:awaitAnswer": null
+              },
+              "channel_versions": {
+                "__start__": 2,
+                "turns": 3,
+                "answer": 2,
+                "branch:to:askOpeningQuestion": 3,
+                "branch:to:awaitAnswer": 3
+              },
+              "versions_seen": {
+                "__input__": {},
+                "__start__": {
+                  "__start__": 1
+                },
+                "askOpeningQuestion": {
+                  "branch:to:askOpeningQuestion": 2
+                }
+              }
+            }
+          },
+          "metadata": {
+            "type": "json",
+            "json": {
+              "source": "loop",
+              "step": 1,
+              "parents": {}
+            }
+          },
+          "parentCheckpointId": "1f1ae267-78f5-6b30-8000-3adb83205851"
+        },
+        "1f1ae268-06fd-6900-8002-b7e0d1e0a464": {
+          "checkpoint": {
+            "type": "json",
+            "json": {
+              "v": 4,
+              "id": "1f1ae268-06fd-6900-8002-b7e0d1e0a464",
+              "ts": "2026-09-11T21:19:41.200Z",
+              "channel_values": {
+                "turns": [
+                  {
+                    "status": "asked",
+                    "question": "Can you describe the product you're thinking about and the problem it solves?",
+                    "askedAt": "2026-09-11T21:19:36.226Z"
+                  }
+                ],
+                "answer": "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model.",
+                "__pregel_tasks": [],
+                "branch:to:recordAnswer": null
+              },
+              "channel_versions": {
+                "__start__": 2,
+                "turns": 3,
+                "answer": 4,
+                "branch:to:askOpeningQuestion": 3,
+                "branch:to:awaitAnswer": 4,
+                "branch:to:recordAnswer": 4
+              },
+              "versions_seen": {
+                "__input__": {},
+                "__start__": {
+                  "__start__": 1
+                },
+                "askOpeningQuestion": {
+                  "branch:to:askOpeningQuestion": 2
+                },
+                "__interrupt__": {
+                  "turns": 3,
+                  "answer": 2,
+                  "__start__": 2,
+                  "branch:to:askOpeningQuestion": 3,
+                  "branch:to:awaitAnswer": 3
+                },
+                "awaitAnswer": {
+                  "branch:to:awaitAnswer": 3
+                }
+              }
+            }
+          },
+          "metadata": {
+            "type": "json",
+            "json": {
+              "source": "loop",
+              "step": 2,
+              "parents": {}
+            }
+          },
+          "parentCheckpointId": "1f1ae267-d795-6550-8001-4f1bec8b9bbc"
+        },
+        "1f1ae268-0704-6e30-8003-3daa997e99a0": {
+          "checkpoint": {
+            "type": "json",
+            "json": {
+              "v": 4,
+              "id": "1f1ae268-0704-6e30-8003-3daa997e99a0",
+              "ts": "2026-09-11T21:19:41.203Z",
+              "channel_values": {
+                "turns": [
+                  {
+                    "status": "answered",
+                    "question": "Can you describe the product you're thinking about and the problem it solves?",
+                    "askedAt": "2026-09-11T21:19:36.226Z",
+                    "answer": "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model.",
+                    "answeredAt": "2026-09-11T21:19:41.201Z"
+                  }
+                ],
+                "answer": "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model.",
+                "__pregel_tasks": []
+              },
+              "channel_versions": {
+                "__start__": 2,
+                "turns": 5,
+                "answer": 4,
+                "branch:to:askOpeningQuestion": 3,
+                "branch:to:awaitAnswer": 4,
+                "branch:to:recordAnswer": 5
+              },
+              "versions_seen": {
+                "__input__": {},
+                "__start__": {
+                  "__start__": 1
+                },
+                "askOpeningQuestion": {
+                  "branch:to:askOpeningQuestion": 2
+                },
+                "__interrupt__": {
+                  "turns": 3,
+                  "answer": 2,
+                  "__start__": 2,
+                  "branch:to:askOpeningQuestion": 3,
+                  "branch:to:awaitAnswer": 3
+                },
+                "awaitAnswer": {
+                  "branch:to:awaitAnswer": 3
+                },
+                "recordAnswer": {
+                  "branch:to:recordAnswer": 4
+                }
+              }
+            }
+          },
+          "metadata": {
+            "type": "json",
+            "json": {
+              "source": "loop",
+              "step": 3,
+              "parents": {}
+            }
+          },
+          "parentCheckpointId": "1f1ae268-06fd-6900-8002-b7e0d1e0a464"
+        }
+      }
+    },
+    "writes": {
+      "": {
+        "1f1ae267-78da-6d80-ffff-98166a4d175a": {
+          "cf7d4e0c-8f1d-5c74-b8e8-fbc2694b6182,0": [
+            "cf7d4e0c-8f1d-5c74-b8e8-fbc2694b6182",
+            "turns",
+            {
+              "type": "json",
+              "json": []
+            }
+          ],
+          "cf7d4e0c-8f1d-5c74-b8e8-fbc2694b6182,1": [
+            "cf7d4e0c-8f1d-5c74-b8e8-fbc2694b6182",
+            "answer",
+            {
+              "type": "json",
+              "json": ""
+            }
+          ],
+          "cf7d4e0c-8f1d-5c74-b8e8-fbc2694b6182,2": [
+            "cf7d4e0c-8f1d-5c74-b8e8-fbc2694b6182",
+            "branch:to:askOpeningQuestion",
+            {
+              "type": "json",
+              "json": null
+            }
+          ]
+        },
+        "1f1ae267-78f5-6b30-8000-3adb83205851": {
+          "09770b04-8f0e-516a-8407-1676dd833ed4,0": [
+            "09770b04-8f0e-516a-8407-1676dd833ed4",
+            "turns",
+            {
+              "type": "json",
+              "json": [
+                {
+                  "status": "asked",
+                  "question": "Can you describe the product you're thinking about and the problem it solves?",
+                  "askedAt": "2026-09-11T21:19:36.226Z"
+                }
+              ]
+            }
+          ],
+          "09770b04-8f0e-516a-8407-1676dd833ed4,1": [
+            "09770b04-8f0e-516a-8407-1676dd833ed4",
+            "branch:to:awaitAnswer",
+            {
+              "type": "json",
+              "json": null
+            }
+          ]
+        },
+        "1f1ae267-d795-6550-8001-4f1bec8b9bbc": {
+          "2c6e742c-1e34-5b0c-93d7-a225fd07c359,-3": [
+            "2c6e742c-1e34-5b0c-93d7-a225fd07c359",
+            "__interrupt__",
+            {
+              "type": "json",
+              "json": {
+                "id": "6150361d5938b689a76aeb02cd5dec82",
+                "value": "Can you describe the product you're thinking about and the problem it solves?"
+              }
+            }
+          ],
+          "00000000-0000-0000-0000-000000000000,-4": [
+            "00000000-0000-0000-0000-000000000000",
+            "__resume__",
+            {
+              "type": "json",
+              "json": "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model."
+            }
+          ],
+          "2c6e742c-1e34-5b0c-93d7-a225fd07c359,-4": [
+            "2c6e742c-1e34-5b0c-93d7-a225fd07c359",
+            "__resume__",
+            {
+              "type": "json",
+              "json": [
+                "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model."
+              ]
+            }
+          ],
+          "2c6e742c-1e34-5b0c-93d7-a225fd07c359,1": [
+            "2c6e742c-1e34-5b0c-93d7-a225fd07c359",
+            "answer",
+            {
+              "type": "json",
+              "json": "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model."
+            }
+          ],
+          "2c6e742c-1e34-5b0c-93d7-a225fd07c359,2": [
+            "2c6e742c-1e34-5b0c-93d7-a225fd07c359",
+            "branch:to:recordAnswer",
+            {
+              "type": "json",
+              "json": null
+            }
+          ]
+        },
+        "1f1ae268-06fd-6900-8002-b7e0d1e0a464": {
+          "8325796c-44a3-5d63-9655-dadef45b32f3,0": [
+            "8325796c-44a3-5d63-9655-dadef45b32f3",
+            "turns",
+            {
+              "type": "json",
+              "json": [
+                {
+                  "status": "answered",
+                  "question": "Can you describe the product you're thinking about and the problem it solves?",
+                  "askedAt": "2026-09-11T21:19:36.226Z",
+                  "answer": "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model.",
+                  "answeredAt": "2026-09-11T21:19:41.201Z"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

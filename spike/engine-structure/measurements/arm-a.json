@@ -1,0 +1,54 @@
+[
+  {
+    "axis": 4,
+    "metric": "hermetic round with no Ollama",
+    "value": "yes — turn-loop.ts runs unchanged against the shared fake LlmPort; the only cost was this harness (mkdtemp store + createScriptedLlm), no arm-A-specific test seam was added to turn-loop.ts itself"
+  },
+  {
+    "axis": 1,
+    "metric": "non-blank, non-comment LOC of the persistence-integration module",
+    "value": {
+      "file": "arm-a/turn-loop.ts",
+      "loc": 110,
+      "note": "no separate persistence module exists — direct save/load is inlined throughout turn-loop.ts, so the whole file is the measurement"
+    }
+  },
+  {
+    "axis": 1,
+    "metric": "distinct concepts a reader must hold to modify it",
+    "value": [
+      "SessionId",
+      "StoredSession<InterviewState>",
+      "InterviewState / Turn (AskedTurn | AnsweredTurn) and isAnswered",
+      "CoreDependencies (llm, sessions, clock)",
+      "LlmRequest / LlmMessage roles",
+      "ClockPort.now()",
+      "SessionStorePort.save/load, called directly",
+      "the async-generator streaming protocol (manual chunk accumulation via for-await)",
+      "the invariant that the asked turn is saved only after the stream’s last chunk"
+    ]
+  },
+  {
+    "axis": 1,
+    "metric": "failed attempts before the cross-process resume worked",
+    "value": {
+      "count": 0,
+      "note": "live-ask.ts and live-answer.ts both succeeded on the first invocation against Ollama qwen3:8b; the persisted session.json was correct on the first read back"
+    }
+  },
+  {
+    "axis": 4,
+    "metric": "hermetic round with no Ollama",
+    "value": "yes — turn-loop.ts runs unchanged against the shared fake LlmPort; the only cost was this harness (mkdtemp store + createScriptedLlm), no arm-A-specific test seam was added to turn-loop.ts itself"
+  },
+  {
+    "axis": 4,
+    "metric": "hermetic round with no Ollama",
+    "value": "yes — turn-loop.ts runs unchanged against the shared fake LlmPort; the only cost was this harness (mkdtemp store + createScriptedLlm), no arm-A-specific test seam was added to turn-loop.ts itself"
+  },
+  {
+    "axis": 4,
+    "metric": "hermetic round with no Ollama",
+    "value": "yes — turn-loop.ts runs unchanged against the shared fake LlmPort; the only cost was this harness (mkdtemp store + createScriptedLlm), no arm-A-specific test seam was added to turn-loop.ts itself"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "6bd935da-db0d-4f27-9ede-b266f3e8b561",
+  "createdAt": "2026-09-11T21:06:19.573Z",
+  "updatedAt": "2026-09-11T21:06:35.538Z",
+  "state": {
+    "turns": [
+      {
+        "status": "answered",
+        "question": "Can you describe the product you're thinking about and the problem it solves?",
+        "askedAt": "2026-09-11T21:06:31.223Z",
+        "answer": "chrysalyst turns a vague product idea into a clear, development-ready spec through a guided interview with a small local model.",
+        "answeredAt": "2026-09-11T21:06:35.538Z"
+      }
+    ]
+  }
+}

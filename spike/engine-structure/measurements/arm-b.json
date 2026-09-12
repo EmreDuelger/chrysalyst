@@ -1,0 +1,169 @@
+[
+  {
+    "axis": 1,
+    "metric": "non-blank, non-comment LOC of the persistence-integration module",
+    "value": {
+      "file": "arm-b/session-store-checkpointer.ts",
+      "loc": 334,
+      "countedBy": "non-blank lines whose first non-space character is not //, /* or *, applied to the prettier-formatted file — the same counter arm A used",
+      "stopRule": "task 5 stops above 300 LOC. The artifact is complete and passes arm-b/checkpointer.spike.test.ts (10 cases), so the reached state is \"works, and costs 334\" rather than \"abandoned unfinished\"",
+      "againstConditionTwo": "plan.md § The decision rule condition 2 accepts at or under 200 LOC; this is 134 over that line and 34 over task 5’s own stop ceiling",
+      "armAComparison": "arm-a/turn-loop.ts is 108 LOC by the same counter, and that file is the whole turn loop, not only its persistence integration"
+    }
+  },
+  {
+    "axis": 1,
+    "metric": "distinct concepts a reader must hold to modify it",
+    "value": [
+      "BaseCheckpointSaver and its five abstract members (getTuple, list, put, putWrites, deleteThread)",
+      "Checkpoint (v, id, ts, channel_values, channel_versions, versions_seen) — format version 4",
+      "CheckpointTuple (config, checkpoint, metadata, parentConfig, pendingWrites)",
+      "CheckpointMetadata (source: input|loop|update|fork, step, parents)",
+      "PendingWrite [channel, value] and CheckpointPendingWrite [taskId, channel, value]",
+      "WRITES_IDX_MAP and the negative-index rule for __error__, __scheduled__, __interrupt__, __resume__",
+      "SerializerProtocol.dumpsTyped/loadsTyped and its [type, Uint8Array] encoding",
+      "thread_id, checkpoint_ns, checkpoint_id inside RunnableConfig.configurable",
+      "channel versions and the uuid6 ordering that makes \"the latest checkpoint\" expressible",
+      "CheckpointListOptions (limit, before, filter)",
+      "the parent chain via parentConfig, and getDeltaChannelHistory’s default walk over it",
+      "SessionId and StoredSession<TState>",
+      "SessionStorePort.list/load/save, and the absence of delete",
+      "the spike-local CheckpointArchive shape and its two nested maps",
+      "the read-modify-write hazard the port’s replace-whole-document save creates"
+    ]
+  },
+  {
+    "axis": 1,
+    "metric": "BaseCheckpointSaver members that SessionStorePort cannot satisfy",
+    "value": {
+      "blockingMember": "abstract deleteThread(threadId: string): Promise<void>",
+      "reason": "SessionStorePort declares list, load and save and no delete. Its own doc comment states the omission is deliberate: \"There is no delete: no use case asks to remove a session, and an unasked method is one every future adapter would have to implement untested.\" Nothing behind the port can be reached to build one, so the member rejects with that fact in the message rather than tombstoning an empty archive — a tombstone would leave the session directory, the identifier in SessionStorePort.list(), and transcript.md all present.",
+      "attempts": "one. The gap is structural, not a failed encoding: there is no second approach to try that does not either edit the port or reach past it to the filesystem, both of which plan.md forbids.",
+      "othersSatisfied": "getTuple, list, put and putWrites are all satisfiable over the port as recorded, each on the first attempt"
+    }
+  },
+  {
+    "axis": 1,
+    "metric": "friction found while writing the checkpointer",
+    "value": [
+      "serde.dumpsTyped answers a Uint8Array and the filesystem store persists state through JSON.stringify, which turns a Uint8Array into {\"0\":123,...}. The bytes must be re-encoded before storage; nothing in either contract says so. Found by reading filesystem-session-store.ts toEnvelope against jsonplus.ts _dumps, not from documentation.",
+      "putWrites’ idempotency rule — a repeat at a non-negative index is dropped, a repeat at a negative index replaces — appears in no published signature or doc page. It was read out of MemorySaver’s source.",
+      "put and putWrites are both read-modify-write of the whole session document, because SessionStorePort.save replaces rather than merges and offers no compare-and-swap. They are serialized in-process through a promise chain here; across processes nothing can serialize them, so two node invocations writing one thread concurrently silently lose a revision. Arm A writes one InterviewState per step and has no equivalent exposure.",
+      "checkpoint_ns uses | as its own separator, so the archive nests by namespace rather than using a composite key that would have to escape it.",
+      "createFilesystemSessionStore rejects any identifier that is not a single path segment; LangGraph constrains thread_id not at all. A thread_id containing / typechecks and fails at put, inside the adapter.",
+      "The archive grows without bound: LangGraph appends a checkpoint per superstep, never prunes, and the port has no delete — so the whole document is rewritten, larger, on every step."
+    ]
+  },
+  {
+    "axis": 1,
+    "metric": "non-blank, non-comment LOC of the graph and the resume wiring",
+    "value": {
+      "graph": {
+        "file": "arm-b/round-graph.ts",
+        "loc": 93
+      },
+      "graphPlusEntryPoints": {
+        "files": [
+          "arm-b/round-graph.ts",
+          "arm-b/live-ask.ts",
+          "arm-b/live-answer.ts"
+        ],
+        "loc": 160
+      },
+      "stopRule": "task 6 stops above 300 LOC. Neither reading reaches it, so task 6 completed rather than stopped.",
+      "armAComparison": "arm-a/live-ask.ts plus arm-a/live-answer.ts are 57 LOC by the same counter; arm A needs no graph module because its turn loop is the engine."
+    }
+  },
+  {
+    "axis": 1,
+    "metric": "failed attempts before the cross-process resume worked",
+    "value": {
+      "count": 0,
+      "note": "live-ask.ts suspended at interrupt() and live-answer.ts resumed it in a separate node invocation, both on their first run against Ollama qwen3:8b. One typecheck error preceded the run — result.__interrupt__, as the documentation writes it, is not on the state type an Annotation.Root produces; isInterrupted() plus the INTERRUPT key is the typed route — but that was a compile failure, not a failed resume.",
+      "proofTheQuestionCameOffDisk": "the answered turn in measurements/arm-b-session.json carries askedAt 2026-09-11T21:19:36.226Z, written by process 1, beside answeredAt 2026-09-11T21:19:41.201Z, written by process 2. The model was not called a second time."
+    }
+  },
+  {
+    "axis": 1,
+    "metric": "what interrupt() required of the checkpointer that task 5 did not anticipate",
+    "value": [
+      "A __resume__ write arrives under the task id 00000000-0000-0000-0000-000000000000, which belongs to no task — it is where Command({ resume }) parks the value before the interrupted task is rescheduled. The archive keys writes by `${taskId},${index}`, which happened to keep it; a scheme keyed on the WRITES_IDX_MAP index alone would have collided it with the real task’s __resume__ at -4 and dropped one, silently, and only ever on a resume.",
+      "Both __resume__ writes live at the same checkpoint with different shapes: a bare string under the null task id, a one-element array under the real task id. A checkpointer that deduplicated per channel rather than per (taskId, index) would break the resume.",
+      "The negative-index replace rule is load-bearing exactly here. __interrupt__ is -3 and __resume__ is -4, and the resume pass rewrites both at the already-stored checkpoint. Had putWrites kept the first write at a negative index, as it does at a non-negative one, the second process would have replayed the first process’s interrupt instead of resuming.",
+      "The resume is driven by pendingWrites on the interrupted checkpoint, not by channel_values. getTuple called with no checkpoint_id therefore has to answer the newest checkpoint *with its writes attached*; answering the checkpoint alone compiles, runs, and hangs the resume.",
+      "interrupt() re-runs its node from the first line on resume, so the model call had to be its own node. A two-node graph that called the model and then interrupted would have asked qwen3:8b a second question in process 2 — working code, wrong behaviour, and invisible without checking askedAt."
+    ]
+  },
+  {
+    "axis": 1,
+    "metric": "what session.json actually holds",
+    "value": {
+      "topLevelStateKeys": [
+        "checkpoints",
+        "writes"
+      ],
+      "checkpointsForOneRound": 5,
+      "writeRecordsForOneRound": 11,
+      "bytes": {
+        "armB": 12260,
+        "armA": 589,
+        "ratio": 20.8
+      },
+      "interviewStateRecoverableAt": "state.checkpoints[\"\"][\"1f1ae268-0704-6e30-8003-3daa997e99a0\"].checkpoint.json.channel_values.turns",
+      "interviewStateVerdict": "the turns array at that path is key-for-key identical to arm A’s state.turns — status, question, askedAt, answer, answeredAt. It is InterviewState v1, but five levels below `state`, in one of five checkpoints, and finding it requires knowing that \"the current one\" means the lexicographically largest uuid6 id in the namespace.",
+      "schemaVersion": "present and 1 for both arms, written by createFilesystemSessionStore into the envelope regardless of what state holds — so it discriminates nothing, exactly as plan.md § The decision rule condition 1 says.",
+      "transcriptMd": "the metadata-header fallback for both arms: this spike configures no renderTranscript, so transcript.md holds the session id and two timestamps and nothing about the interview."
+    }
+  },
+  {
+    "axis": 4,
+    "metric": "ChatOllama binding cost (plan.md § Arm B’s chat-model binding, cheap binding)",
+    "value": {
+      "loc": 4,
+      "note": "a `new ChatOllama({ baseUrl, model })` literal in each of the two entry points, nothing else",
+      "outcome": "completed, first attempt",
+      "divergence": "ChatOllama reaches Ollama’s native API at http://127.0.0.1:11434 while chrysalyst’s LlmPort adapter reaches the OpenAI-compatible API at http://127.0.0.1:11434/v1, whose default lives in openai-compatible-llm.ts as DEFAULT_BASE_URL. The two configurations do not share an environment variable, so this binding needs its own — CHRYSALYST_OLLAMA_URL here — and production would carry two independently configured LLM clients.",
+      "modelOutput": "qwen3:8b emitted no <think> block through ChatOllama on this run; round-graph.ts strips one defensively because a reasoning model may."
+    }
+  },
+  {
+    "axis": 4,
+    "metric": "guardrail-compliant BaseChatModel binding over LlmPort (plan.md § Arm B’s chat-model binding, second row)",
+    "value": {
+      "file": "arm-b/llm-port-chat-model.ts",
+      "loc": 70,
+      "outcome": "completed. The 200-LOC stop ceiling was not approached and no @langchain/core internal was reached — every member implemented is on the documented abstract surface.",
+      "againstConditionThree": "plan.md § The decision rule condition 3 requires the binding to complete inside 200 LOC. It completed at 70.",
+      "membersImplemented": [
+        "_llmType(): string — abstract on BaseLanguageModel",
+        "_generate(messages, options): Promise<ChatResult> — abstract on BaseChatModel, over LlmPort.complete",
+        "_streamResponseChunks(messages, options): AsyncGenerator<ChatGenerationChunk> — non-abstract, overridden so stream() yields the port’s chunks instead of one buffered chunk, over LlmPort.stream"
+      ],
+      "membersInherited": "lc_namespace, _modelType(), generatePrompt(), invoke(), stream(), the callback plumbing and the cache path all come from BaseChatModel unchanged",
+      "theOneTranslation": "LangChain types a message system | human | ai | tool | function | developer | remove; LlmPort knows system | user | assistant. Three map across, the rest have no domain meaning, and the binding rejects them by name rather than guessing.",
+      "whatItGivesUp": "no tool binding, no structured output, no sampling parameters. LlmRequest names messages and at most a model, so a binding carrying more would be measuring something the port cannot express. M7 through M13 ask for none of them; a later milestone that does would have to widen LlmPort first, which is where the real cost of this route sits.",
+      "provenSufficient": "arm-b/binding-drives-node.check.ts drives the task-6 graph, its interrupt(), and the resume entirely through this binding over the shared fake LlmPort, with no Ollama and no network — so \"enough for one node to call\" is demonstrated, not asserted.",
+      "friction": "none worth the name. The abstract surface is two members plus one optional streaming override, all documented, and the implementation compiled and passed its five cases on the first run. The contrast with the checkpointer is the finding: LangChain’s model seam fits an existing port cleanly, and LangGraph’s persistence seam does not."
+    }
+  },
+  {
+    "axis": 4,
+    "metric": "hermetic arm-B round with no Ollama",
+    "value": "achievable via the task-7 LlmPortChatModel binding over the shared fake LlmPort, at 70 LOC — no LangChain test double needed. arm-b/binding-drives-node.check.ts runs the whole round, interrupt and resume, against a mkdtemp store with no daemon and no network. Task 8 formalises this as arm-b/round.spike.test.ts."
+  },
+  {
+    "axis": 4,
+    "metric": "arm-b/round.spike.test.ts: hermetic round, formalised",
+    "value": "achievable via arm-b/llm-port-chat-model.ts’s LlmPortChatModel binding over the shared fake LlmPort, at 70 LOC — the interrupt and the cross-invocation resume both pass with no Ollama and no network, collected by `pnpm vitest run arm-b`"
+  },
+  {
+    "axis": 4,
+    "metric": "arm-b/round.spike.test.ts: hermetic round, formalised",
+    "value": "achievable via arm-b/llm-port-chat-model.ts’s LlmPortChatModel binding over the shared fake LlmPort, at 70 LOC — the interrupt and the cross-invocation resume both pass with no Ollama and no network, collected by `pnpm vitest run arm-b`"
+  },
+  {
+    "axis": 4,
+    "metric": "arm-b/round.spike.test.ts: hermetic round, formalised",
+    "value": "achievable via arm-b/llm-port-chat-model.ts’s LlmPortChatModel binding over the shared fake LlmPort, at 70 LOC — the interrupt and the cross-invocation resume both pass with no Ollama and no network, collected by `pnpm vitest run arm-b`"
+  }
+]

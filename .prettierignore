@@ -9,3 +9,4 @@ specs/
 openwiki/
 .github/workflows/openwiki-update.yml
 .impeccable/
+spike/

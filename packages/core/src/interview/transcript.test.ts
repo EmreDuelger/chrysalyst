@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { renderTranscript } from './transcript.ts';
-import type { AnsweredTurn, AskedTurn, InterviewState } from './state.ts';
+import type { AnsweredTurn, AskedTurn, InterviewState, Turn } from './state.ts';
 import type { StoredSession } from '../ports/index.ts';
 
 const SESSION_ID = 'a3f1c2d4-0000-4000-8000-000000000000';
@@ -27,18 +27,18 @@ const ANSWERED_TURN: AnsweredTurn = {
   answeredAt: ANSWERED_AT,
 };
 
-function storedSession(state: InterviewState): StoredSession<InterviewState> {
+function storedSession(turns: readonly Turn[]): StoredSession<InterviewState> {
   return {
     id: SESSION_ID,
     createdAt: CREATED_AT,
     updatedAt: UPDATED_AT,
-    state,
+    state: { locale: 'en', turns },
   };
 }
 
 describe('renderTranscript', () => {
   it('names the session identifier and both envelope timestamps', () => {
-    const markdown = renderTranscript(storedSession({ turns: [] }));
+    const markdown = renderTranscript(storedSession([]));
 
     expect(markdown).toContain(SESSION_ID);
     expect(markdown).toContain(CREATED_AT.toISOString());
@@ -46,9 +46,7 @@ describe('renderTranscript', () => {
   });
 
   it('renders an answered turn as its question and answer, each beside its instant', () => {
-    const markdown = renderTranscript(
-      storedSession({ turns: [ANSWERED_TURN] }),
-    );
+    const markdown = renderTranscript(storedSession([ANSWERED_TURN]));
 
     expect(markdown).toContain(QUESTION);
     expect(markdown).toContain(ASKED_AT);
@@ -57,7 +55,7 @@ describe('renderTranscript', () => {
   });
 
   it('renders an asked turn with its answer shown as still awaited', () => {
-    const markdown = renderTranscript(storedSession({ turns: [ASKED_TURN] }));
+    const markdown = renderTranscript(storedSession([ASKED_TURN]));
 
     expect(markdown).toContain(QUESTION);
     expect(markdown).toContain(ASKED_AT);
@@ -67,7 +65,7 @@ describe('renderTranscript', () => {
   });
 
   it('renders the header alone for an empty turn list, naming no question', () => {
-    const markdown = renderTranscript(storedSession({ turns: [] }));
+    const markdown = renderTranscript(storedSession([]));
 
     expect(markdown).toContain(SESSION_ID);
     expect(markdown).not.toContain(QUESTION);
@@ -76,7 +74,7 @@ describe('renderTranscript', () => {
   });
 
   it('is pure: the same stored session renders identically every call', () => {
-    const stored = storedSession({ turns: [ANSWERED_TURN] });
+    const stored = storedSession([ANSWERED_TURN]);
 
     expect(renderTranscript(stored)).toBe(renderTranscript(stored));
   });

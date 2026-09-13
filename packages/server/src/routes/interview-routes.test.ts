@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -43,6 +43,22 @@ const fullQuestion = (decodeFrame(doneFrame).data as { question: string })
   .question;
 const unreachableMessage = (decodeFrame(errorFrame).data as { message: string })
   .message;
+
+/*
+ * The request field name and the fallback language are a domain decision
+ * `packages/core` owns; this fixture is what keeps this suite's bodies and
+ * assertions honest against that decision rather than restating it from
+ * memory. See tests/fixtures/README.md.
+ */
+const localeFixture = JSON.parse(
+  readFileSync(
+    join(repoRoot, 'tests', 'fixtures', 'interview-locales.json'),
+    'utf8',
+  ),
+) as { supported: string[]; fallback: string; createSessionField: string };
+const namedLocale =
+  localeFixture.supported.find((tag) => tag !== localeFixture.fallback) ??
+  localeFixture.supported[0];
 
 const JSON_HEADERS = { 'content-type': 'application/json' };
 
@@ -210,13 +226,92 @@ describe('POST /interview', () => {
     const response = await app.request('/interview', { method: 'POST' });
 
     expect(response.status).toBe(201);
-    const body = (await response.json()) as { id: unknown };
+    const body = (await response.json()) as { id: unknown; locale: unknown };
     expect(typeof body.id).toBe('string');
+    expect(typeof body.locale).toBe('string');
     await expect(sessions.load(body.id as string)).resolves.toMatchObject({
       state: { turns: [] },
     });
     expect(llm.requests).toHaveLength(0);
   });
+
+  it('answers 201 with an id and the named language, and stores that language', async () => {
+    const { app, sessions } = buildApp(chunkedLlm(modelChunks));
+
+    const response = await app.request('/interview', {
+      method: 'POST',
+      headers: JSON_HEADERS,
+      body: JSON.stringify({ [localeFixture.createSessionField]: namedLocale }),
+    });
+
+    expect(response.status).toBe(201);
+    const body = (await response.json()) as { id: string; locale: string };
+    expect(body.locale).toBe(namedLocale);
+    await expect(sessions.load(body.id)).resolves.toMatchObject({
+      state: { locale: namedLocale, turns: [] },
+    });
+  });
+
+  const namelessBodies = [
+    { body: 'no body', init: { method: 'POST' } as RequestInit },
+    {
+      body: 'a non-JSON body',
+      init: {
+        method: 'POST',
+        headers: JSON_HEADERS,
+        body: 'not json at all',
+      } as RequestInit,
+    },
+    {
+      body: 'a JSON object with no locale',
+      init: {
+        method: 'POST',
+        headers: JSON_HEADERS,
+        body: '{}',
+      } as RequestInit,
+    },
+  ];
+
+  it.each(namelessBodies)(
+    'answers 201 with the fallback for $body',
+    async ({ init }) => {
+      const { app, sessions } = buildApp(chunkedLlm(modelChunks));
+
+      const response = await app.request('/interview', init);
+
+      expect(response.status).toBe(201);
+      const body = (await response.json()) as { id: string; locale: string };
+      expect(body.locale).toBe(localeFixture.fallback);
+      await expect(sessions.load(body.id)).resolves.toMatchObject({
+        state: { locale: localeFixture.fallback, turns: [] },
+      });
+    },
+  );
+
+  const rejectedLocales = [
+    { locale: 'an unsupported tag', value: 'fr' },
+    { locale: 'a non-string value', value: 42 },
+  ];
+
+  it.each(rejectedLocales)(
+    'answers 400 naming the supported languages for $locale and stores nothing',
+    async ({ value }) => {
+      const { app } = buildApp(chunkedLlm(modelChunks));
+
+      const response = await app.request('/interview', {
+        method: 'POST',
+        headers: JSON_HEADERS,
+        body: JSON.stringify({ [localeFixture.createSessionField]: value }),
+      });
+
+      expect(response.status).toBe(400);
+      const body = (await response.json()) as { message: string };
+      for (const tag of localeFixture.supported) {
+        expect(body.message).toContain(tag);
+      }
+      await expect(readdir(rootDir)).resolves.toEqual([]);
+    },
+  );
 });
 
 describe('GET /interview/:id/question', () => {

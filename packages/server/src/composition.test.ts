@@ -34,6 +34,7 @@ describe('createDependenciesFromEnv', () => {
       createdAt: new Date('2026-01-01T00:00:00.000Z'),
       updatedAt: new Date('2026-01-01T00:01:00.000Z'),
       state: {
+        locale: 'en',
         turns: [
           {
             status: 'asked',

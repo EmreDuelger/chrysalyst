@@ -1,3 +1,9 @@
+import {
+  CREATE_SESSION_FIELD,
+  SUPPORTED_LOCALES,
+  isLocale,
+  type Locale,
+} from '../locale/locale.ts';
 import { parseSseFrames, type SseFrame } from './sse-frames.ts';
 
 /**
@@ -5,14 +11,15 @@ import { parseSseFrames, type SseFrame } from './sse-frames.ts';
  *
  * `@chrysalyst/web` declares no workspace package, so it cannot import the
  * server's route or event types. It restates the wire contract here instead —
- * the three SSE payload shapes and the two JSON bodies — and treats
- * `interview/interview-http-api` as the specification both sides are written
- * from (decision-log [4]: the typed `hc` client was declined because it cannot
- * type an SSE event name or payload, which is the larger half of this
- * contract). `tests/fixtures/interview-sse-frames.txt` is that contract's
- * executable half: the route test asserts the server emits those bytes and
- * this module's test asserts they decode back to these shapes, so a rename on
- * either side fails a run rather than only a browser.
+ * the three SSE payload shapes and the three JSON bodies (the session-creation
+ * request and response each carry `{ id?, locale }`; the answer request
+ * carries `{ answer }`) — and treats `interview/interview-http-api` as the
+ * specification both sides are written from (decision-log [4]: the typed `hc`
+ * client was declined because it cannot type an SSE event name or payload,
+ * which is the larger half of this contract). `tests/fixtures/interview-sse-frames.txt`
+ * is that contract's executable half: the route test asserts the server emits
+ * those bytes and this module's test asserts they decode back to these
+ * shapes, so a rename on either side fails a run rather than only a browser.
  *
  * This module owns the JSON decoding of the wire and every check the frame
  * parser deliberately skips: the parser is total and never throws, so an
@@ -28,12 +35,18 @@ export type AnswerResult =
   | { readonly outcome: 'recorded' }
   | { readonly outcome: 'refused'; readonly message: string };
 
+/** A newly created interview session and the language it will be conducted in. */
+export interface CreatedSession {
+  readonly id: string;
+  readonly locale: Locale;
+}
+
 /** The transport the client calls, injected so tests never touch the network. */
 export type FetchImpl = typeof fetch;
 
 /** The interview API as the view consumes it, with the transport already bound. */
 export interface InterviewApi {
-  readonly createSession: () => Promise<string>;
+  readonly createSession: (locale: Locale) => Promise<CreatedSession>;
   readonly openQuestionStream: (
     id: string,
     signal?: AbortSignal,
@@ -54,20 +67,30 @@ function answerRoute(id: string): string {
 }
 
 /**
- * Creates an interview session and answers its identifier. Rejects when the
- * API does not confirm the session with a `201`.
+ * Creates an interview session in the given language and answers its
+ * identifier and the language the server will conduct it in. Rejects when
+ * the API does not confirm the session with a `201`, or when its response
+ * carries no supported language.
  */
 export async function createSession(
+  locale: Locale,
   fetchImpl: FetchImpl = fetch,
-): Promise<string> {
-  const response = await fetchImpl(SESSION_ROUTE, { method: 'POST' });
+): Promise<CreatedSession> {
+  const response = await fetchImpl(SESSION_ROUTE, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ [CREATE_SESSION_FIELD]: locale }),
+  });
   if (response.status !== CREATED) {
     throw new Error(
       `Creating an interview session failed: POST ${SESSION_ROUTE} answered ${String(response.status)}`,
     );
   }
   const payload: unknown = await response.json();
-  return readString(payload, 'id', 'the session-creation response');
+  return {
+    id: readString(payload, 'id', 'the session-creation response'),
+    locale: readLocale(payload, 'the session-creation response'),
+  };
 }
 
 /**
@@ -203,4 +226,14 @@ function readString(payload: unknown, field: string, context: string): string {
   throw new Error(
     `${context} carried no string "${field}": ${JSON.stringify(payload)}`,
   );
+}
+
+function readLocale(payload: unknown, context: string): Locale {
+  const value = readString(payload, CREATE_SESSION_FIELD, context);
+  if (!isLocale(value)) {
+    throw new Error(
+      `The session-creation response named an unsupported language "${value}": the supported languages are ${SUPPORTED_LOCALES.join(' and ')}`,
+    );
+  }
+  return value;
 }

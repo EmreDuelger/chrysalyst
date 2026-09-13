@@ -1,13 +1,25 @@
+import type { Locale } from './locale.ts';
+
 /**
- * A session's domain state, version 1: the turns the interview has produced.
+ * A session's domain state, version 1: the language the interview is held in,
+ * and the turns it has produced.
  *
  * A list rather than a single question/answer pair from the start, because M8
  * grows the interview to many turns and a list costs nothing at one element,
  * whereas a pair would force a schema break on the second turn. The session
  * store's `schemaVersion` is unaffected — it versions the on-disk envelope,
  * not the domain state it wraps.
+ *
+ * The language belongs to the state rather than to the envelope or to whoever
+ * is reading: it is chosen when the session is created, never changes, and is
+ * a property of the transcript — what the person was interviewed in, not what
+ * a later reader would prefer. Like every instant here, a loaded value is only
+ * as trustworthy as `JSON.parse` made it, and a session written before this
+ * field existed carries no language at all; the interview's single load
+ * boundary is what turns the declared type into a true one.
  */
 export interface InterviewState {
+  readonly locale: Locale;
   readonly turns: readonly Turn[];
 }
 

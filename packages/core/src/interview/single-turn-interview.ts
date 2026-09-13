@@ -1,3 +1,6 @@
+import { resolveLocale } from './locale.ts';
+import type { Locale } from './locale.ts';
+import { openingPrompts } from './prompts.ts';
 import { isAnswered } from './state.ts';
 import type { AnsweredTurn, AskedTurn, InterviewState } from './state.ts';
 import type {
@@ -6,25 +9,6 @@ import type {
   SessionId,
   StoredSession,
 } from '../ports/index.ts';
-
-/**
- * The instruction that produces the opening question, and the turn that asks
- * for it.
- *
- * Both are constants of this module rather than configuration: the wording is
- * a fact about how chrysalyst interviews, not a knob a caller should reach.
- * They are English because every interface string in this milestone is; M5 is
- * the milestone that externalises prompts and strings per locale.
- */
-const OPENING_SYSTEM_PROMPT = [
-  'You are chrysalyst, an interviewer who turns a vague product idea into a',
-  'clear specification. Ask exactly one opening question that invites the',
-  'person to describe the product they have in mind and the problem it solves.',
-  'Reply with that single question and nothing else: no greeting, no preamble,',
-  'no explanation, no reasoning, and no second question.',
-].join(' ');
-
-const OPENING_USER_MESSAGE = 'Begin the interview.';
 
 /**
  * What recording an answer did, in the interview's own vocabulary.
@@ -38,10 +22,16 @@ export type AnswerOutcome = 'recorded' | 'no-session' | 'no-open-question';
 /** The three operations one round of the interview consists of. */
 export interface SingleTurnInterview {
   /**
-   * Opens a session under the given identifier, leaving an identifier that
-   * already holds one exactly as it stands rather than resetting its turns.
+   * Opens a session under the given identifier in the named language, leaving
+   * an identifier that already holds one exactly as it stands rather than
+   * resetting its turns.
+   *
+   * The language is named here because it is chosen once: an identifier that
+   * already holds a session keeps the language that session was begun in, so
+   * the language a person was interviewed in cannot be changed out from under
+   * the turns already stored in it.
    */
-  begin(id: SessionId): Promise<void>;
+  begin(id: SessionId, locale: Locale): Promise<void>;
 
   /**
    * Answers the session's opening question as the chunks it is made of, or
@@ -51,9 +41,10 @@ export interface SingleTurnInterview {
    * Resolving is what decides existence and pulling is what reaches the model,
    * so a caller can refuse the request before opening a stream and nothing is
    * inferred for a request that is refused. A session that already holds a
-   * turn replays its stored question and reaches no model. The `signal` ends
-   * this caller's iteration alone; see {@link createSingleTurnInterview} for
-   * why it never reaches the model.
+   * turn replays its stored question and reaches no model. The question is
+   * asked in the session's own stored language, never the caller's. The
+   * `signal` ends this caller's iteration alone; see
+   * {@link createSingleTurnInterview} for why it never reaches the model.
    */
   openingQuestion(
     id: SessionId,
@@ -95,11 +86,12 @@ interface QuestionProduction {
   advance(): Promise<void>;
 }
 
-function openingConversation(): LlmRequest {
+function openingConversation(locale: Locale): LlmRequest {
+  const prompt = openingPrompts[locale];
   return {
     messages: [
-      { role: 'system', content: OPENING_SYSTEM_PROMPT },
-      { role: 'user', content: OPENING_USER_MESSAGE },
+      { role: 'system', content: prompt.system },
+      { role: 'user', content: prompt.user },
     ],
   };
 }
@@ -116,7 +108,7 @@ function startProduction(
   const controller = new AbortController();
   const chunks: string[] = [];
   const iterator = deps.llm
-    .stream(openingConversation(), controller.signal)
+    .stream(openingConversation(session.state.locale), controller.signal)
     [Symbol.asyncIterator]();
 
   let settle!: {
@@ -173,7 +165,10 @@ function startProduction(
         id: session.id,
         createdAt: session.createdAt,
         updatedAt: askedAt,
-        state: { turns: [...session.state.turns, asked] },
+        state: {
+          locale: session.state.locale,
+          turns: [...session.state.turns, asked],
+        },
       });
     } catch (error) {
       failWith(error);
@@ -297,11 +292,39 @@ export function createSingleTurnInterview(
     return started;
   };
 
+  /**
+   * The session stored under this identifier, its language resolved, and the
+   * only place this module loads a session at all.
+   *
+   * The store returns everything under `state` exactly as `JSON.parse` gave it
+   * back, so the `Locale` that state declares is a claim about the sessions
+   * this milestone wrote rather than about the ones already on disk: one
+   * written before the language existed carries none, and a stray write could
+   * carry a tag outside the supported set. Resolving here, once, is what lets
+   * every reader below simply read `state.locale`; a wrapper each call site
+   * had to remember instead would leave the next reader this module gains to a
+   * review rather than to the compiler. It is also what puts a supported tag
+   * on disk the next time that session's own progress is saved, because every
+   * save rebuilds its state from the session this returns.
+   */
+  async function loadInterview(
+    id: SessionId,
+  ): Promise<StoredSession<InterviewState> | undefined> {
+    const session = await deps.sessions.load(id);
+    if (session === undefined) {
+      return undefined;
+    }
+    return {
+      ...session,
+      state: { ...session.state, locale: resolveLocale(session.state.locale) },
+    };
+  }
+
   async function* streamQuestion(
     id: SessionId,
     signal: AbortSignal | undefined,
   ): AsyncGenerator<string> {
-    const current = await deps.sessions.load(id);
+    const current = await loadInterview(id);
     if (current === undefined) {
       return;
     }
@@ -342,8 +365,8 @@ export function createSingleTurnInterview(
   }
 
   return {
-    async begin(id) {
-      const existing = await deps.sessions.load(id);
+    async begin(id, locale) {
+      const existing = await loadInterview(id);
       if (existing !== undefined) {
         return;
       }
@@ -352,12 +375,12 @@ export function createSingleTurnInterview(
         id,
         createdAt: now,
         updatedAt: now,
-        state: { turns: [] },
+        state: { locale, turns: [] },
       });
     },
 
     async openingQuestion(id, signal) {
-      const session = await deps.sessions.load(id);
+      const session = await loadInterview(id);
       if (session === undefined) {
         return undefined;
       }
@@ -369,7 +392,7 @@ export function createSingleTurnInterview(
     },
 
     async recordAnswer(id, answer) {
-      const session = await deps.sessions.load(id);
+      const session = await loadInterview(id);
       if (session === undefined) {
         return 'no-session';
       }
@@ -389,7 +412,10 @@ export function createSingleTurnInterview(
         id: session.id,
         createdAt: session.createdAt,
         updatedAt: answeredAt,
-        state: { turns: [...session.state.turns.slice(0, -1), answered] },
+        state: {
+          locale: session.state.locale,
+          turns: [...session.state.turns.slice(0, -1), answered],
+        },
       });
       return 'recorded';
     },

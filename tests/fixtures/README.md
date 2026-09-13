@@ -38,3 +38,28 @@ carries all four:
 
 Renaming an event name or a payload field on either side (`text`, `question`,
 `message`) fails a run rather than only a browser.
+
+## `interview-locales.json`
+
+The `interview/single-question-interview` and `platform/web-shell` contracts'
+shared language vocabulary: `{ supported, fallback, createSessionField }`. The
+supported tags, the fallback tag and the name of the field a session-creation
+request uses to name a language are a domain decision that `packages/core`
+owns and `packages/web` cannot import — it has no dependency on `@chrysalyst/core`
+— so it restates the same three values, and this fixture is what keeps that
+restatement honest, the way `interview-sse-frames.txt` already does for the SSE
+event contract.
+
+### Who reads it
+
+- **`packages/core`'s language test** (`locale.test.ts`) asserts `SUPPORTED_LOCALES`
+  and `FALLBACK_LOCALE` equal the fixture's `supported` array and `fallback` value.
+- **`packages/server`'s route test** (`interview-routes.test.ts`) reads
+  `createSessionField` and `fallback` to build its request bodies and assertions
+  for `POST /interview`.
+- **`packages/web`'s language test** (`locale.test.ts`) asserts its own
+  `SUPPORTED_LOCALES`, `FALLBACK_LOCALE` and creation field name against the
+  fixture's three values.
+
+A renamed tag, a changed fallback or a renamed request field fails a run rather
+than only a browser.

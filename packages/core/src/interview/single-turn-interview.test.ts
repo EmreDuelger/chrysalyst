@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
+import { FALLBACK_LOCALE } from './locale.ts';
+import type { Locale } from './locale.ts';
+import { openingPrompts } from './prompts.ts';
 import { createSingleTurnInterview } from './single-turn-interview.ts';
 import type { InterviewState, Turn } from './state.ts';
 import type {
@@ -179,14 +182,56 @@ function fixedClock(instants: readonly Date[]): ClockPort {
 function seededSession(
   id: SessionId,
   turns: readonly Turn[],
-  timestamps: { readonly createdAt?: Date; readonly updatedAt?: Date } = {},
+  options: {
+    readonly createdAt?: Date;
+    readonly updatedAt?: Date;
+    readonly locale?: Locale;
+  } = {},
 ): StoredSession<InterviewState> {
   return {
     id,
-    createdAt: timestamps.createdAt ?? CREATED_AT,
-    updatedAt: timestamps.updatedAt ?? CREATED_AT,
-    state: { turns },
+    createdAt: options.createdAt ?? CREATED_AT,
+    updatedAt: options.updatedAt ?? CREATED_AT,
+    state: { locale: options.locale ?? 'en', turns },
   };
+}
+
+/**
+ * A stored session exactly as an M3-era `session.json` holds it: no `locale`
+ * key at all under `state`. Cast through `unknown` rather than widening
+ * {@link InterviewState}, because this double represents data already on
+ * disk, not a shape this milestone's type should accept.
+ */
+function sessionWithoutLocale(
+  id: SessionId,
+  turns: readonly Turn[],
+  options: { readonly createdAt?: Date; readonly updatedAt?: Date } = {},
+): StoredSession<InterviewState> {
+  return {
+    id,
+    createdAt: options.createdAt ?? CREATED_AT,
+    updatedAt: options.updatedAt ?? CREATED_AT,
+    state: { turns },
+  } as unknown as StoredSession<InterviewState>;
+}
+
+/**
+ * A stored session whose `state.locale` holds a tag outside {@link Locale} —
+ * data no session written by this milestone can produce, but one a stray
+ * write or a future language could. Cast through `unknown` for the same
+ * reason as {@link sessionWithoutLocale}.
+ */
+function sessionWithUnsupportedLocale(
+  id: SessionId,
+  turns: readonly Turn[],
+  options: { readonly createdAt?: Date; readonly updatedAt?: Date } = {},
+): StoredSession<InterviewState> {
+  return {
+    id,
+    createdAt: options.createdAt ?? CREATED_AT,
+    updatedAt: options.updatedAt ?? CREATED_AT,
+    state: { locale: 'fr', turns },
+  } as unknown as StoredSession<InterviewState>;
 }
 
 function askedTurn(question: string = QUESTION): Turn {
@@ -209,7 +254,7 @@ function answeredTurn(): Turn {
 
 describe('createSingleTurnInterview', () => {
   describe('begin', () => {
-    it('stores an empty turn list under the given id and reaches no model', async () => {
+    it('stores an empty turn list and the named language, and reaches no model', async () => {
       const model = scriptedLlm([QUESTION]);
       const store = memoryStore();
       const interview = createSingleTurnInterview({
@@ -218,32 +263,39 @@ describe('createSingleTurnInterview', () => {
         clock: fixedClock([CREATED_AT]),
       });
 
-      await interview.begin('s1');
+      await interview.begin('s1', 'de');
 
       const stored = store.current('s1');
       expect(stored).toBeDefined();
       expect(stored?.state.turns).toEqual([]);
+      expect(stored?.state.locale).toBe('de');
       expect(stored?.createdAt.getTime()).toBe(CREATED_AT.getTime());
       expect(stored?.updatedAt.getTime()).toBe(CREATED_AT.getTime());
       expect(model.requests).toHaveLength(0);
     });
 
-    it('leaves a stored session untouched rather than resetting its turns', async () => {
+    it("leaves a stored session's turns, createdAt and language alone when begun again in the other language", async () => {
       const model = scriptedLlm([QUESTION]);
       const store = memoryStore();
       const existing = answeredTurn();
-      store.seed(seededSession('s1', [existing], { createdAt: CREATED_AT }));
+      store.seed(
+        seededSession('s1', [existing], {
+          createdAt: CREATED_AT,
+          locale: 'de',
+        }),
+      );
       const interview = createSingleTurnInterview({
         llm: model.port,
         sessions: store.port,
         clock: fixedClock([new Date('2026-02-04T00:00:00.000Z')]),
       });
 
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const stored = store.current('s1');
       expect(stored?.state.turns).toEqual([existing]);
       expect(stored?.createdAt.getTime()).toBe(CREATED_AT.getTime());
+      expect(stored?.state.locale).toBe('de');
       expect(model.requests).toHaveLength(0);
     });
   });
@@ -261,7 +313,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const received: string[] = [];
       for await (const chunk of requireStream(
@@ -285,7 +337,7 @@ describe('createSingleTurnInterview', () => {
       });
     });
 
-    it('sends one system and one user message asking for a single question, and names no model', async () => {
+    it("sends the stored language's system and user templates and names no model", async () => {
       const model = scriptedLlm([QUESTION]);
       const store = memoryStore();
       const interview = createSingleTurnInterview({
@@ -293,22 +345,171 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'de');
 
       await collect(requireStream(await interview.openingQuestion('s1')));
 
       expect(model.requests).toHaveLength(1);
       const request = model.requests[0];
-      expect(request.messages).toHaveLength(2);
-      const roles = request.messages.map((message) => message.role);
-      expect(roles.filter((role) => role === 'system')).toHaveLength(1);
-      expect(roles.filter((role) => role === 'user')).toHaveLength(1);
-      const systemMessage =
-        request.messages.find((message) => message.role === 'system')
-          ?.content ?? '';
-      expect(systemMessage.toLowerCase()).toMatch(/\b(one|single)\b/);
-      expect(systemMessage.toLowerCase()).toMatch(/question/);
+      expect(request.messages).toEqual([
+        { role: 'system', content: openingPrompts.de.system },
+        { role: 'user', content: openingPrompts.de.user },
+      ]);
       expect(request.model).toBeUndefined();
+    });
+
+    it('serves a German session the German templates and an English session the English ones, differing in both messages', async () => {
+      const germanModel = scriptedLlm([QUESTION]);
+      const germanStore = memoryStore();
+      const germanInterview = createSingleTurnInterview({
+        llm: germanModel.port,
+        sessions: germanStore.port,
+        clock: fixedClock([CREATED_AT, ASKED_AT]),
+      });
+      await germanInterview.begin('s1', 'de');
+
+      const englishModel = scriptedLlm([QUESTION]);
+      const englishStore = memoryStore();
+      const englishInterview = createSingleTurnInterview({
+        llm: englishModel.port,
+        sessions: englishStore.port,
+        clock: fixedClock([CREATED_AT, ASKED_AT]),
+      });
+      await englishInterview.begin('s1', 'en');
+
+      await collect(requireStream(await germanInterview.openingQuestion('s1')));
+      await collect(
+        requireStream(await englishInterview.openingQuestion('s1')),
+      );
+
+      const germanRequest = germanModel.requests[0];
+      const englishRequest = englishModel.requests[0];
+      expect(germanRequest.messages).toEqual([
+        { role: 'system', content: openingPrompts.de.system },
+        { role: 'user', content: openingPrompts.de.user },
+      ]);
+      expect(englishRequest.messages).toEqual([
+        { role: 'system', content: openingPrompts.en.system },
+        { role: 'user', content: openingPrompts.en.user },
+      ]);
+      expect(germanRequest.messages[0].content).not.toBe(
+        englishRequest.messages[0].content,
+      );
+      expect(germanRequest.messages[1].content).not.toBe(
+        englishRequest.messages[1].content,
+      );
+    });
+
+    it('falls back for a state with no locale and for one holding an unsupported tag, rejects neither, and writes the fallback tag on the next save', async () => {
+      const noLocaleModel = scriptedLlm([QUESTION]);
+      const noLocaleStore = memoryStore();
+      noLocaleStore.seed(sessionWithoutLocale('s1', []));
+      const noLocaleInterview = createSingleTurnInterview({
+        llm: noLocaleModel.port,
+        sessions: noLocaleStore.port,
+        clock: fixedClock([ASKED_AT]),
+      });
+
+      await collect(
+        requireStream(await noLocaleInterview.openingQuestion('s1')),
+      );
+
+      expect(noLocaleModel.requests).toHaveLength(1);
+      expect(noLocaleModel.requests[0].messages).toEqual([
+        { role: 'system', content: openingPrompts[FALLBACK_LOCALE].system },
+        { role: 'user', content: openingPrompts[FALLBACK_LOCALE].user },
+      ]);
+
+      const noLocaleAnswerModel = scriptedLlm([QUESTION]);
+      const noLocaleAnswerStore = memoryStore();
+      noLocaleAnswerStore.seed(
+        sessionWithoutLocale('s1', [askedTurn()], { updatedAt: ASKED_AT }),
+      );
+      const noLocaleAnswerInterview = createSingleTurnInterview({
+        llm: noLocaleAnswerModel.port,
+        sessions: noLocaleAnswerStore.port,
+        clock: fixedClock([ANSWERED_AT]),
+      });
+
+      await collect(
+        requireStream(await noLocaleAnswerInterview.openingQuestion('s1')),
+      );
+      expect(noLocaleAnswerModel.requests).toHaveLength(0);
+      expect(noLocaleAnswerStore.saves).toHaveLength(0);
+
+      const noLocaleOutcome = await noLocaleAnswerInterview.recordAnswer(
+        's1',
+        'Weeknight dinners for busy families.',
+      );
+
+      expect(noLocaleOutcome).toBe('recorded');
+      const noLocaleStored = noLocaleAnswerStore.current('s1');
+      expect(noLocaleStored?.state.locale).toBe(FALLBACK_LOCALE);
+      expect(noLocaleStored?.state.turns).toEqual([
+        {
+          status: 'answered',
+          question: QUESTION,
+          askedAt: ASKED_AT.toISOString(),
+          answer: 'Weeknight dinners for busy families.',
+          answeredAt: ANSWERED_AT.toISOString(),
+        },
+      ]);
+
+      const unsupportedModel = scriptedLlm([QUESTION]);
+      const unsupportedStore = memoryStore();
+      unsupportedStore.seed(sessionWithUnsupportedLocale('s2', []));
+      const unsupportedInterview = createSingleTurnInterview({
+        llm: unsupportedModel.port,
+        sessions: unsupportedStore.port,
+        clock: fixedClock([ASKED_AT]),
+      });
+
+      await collect(
+        requireStream(await unsupportedInterview.openingQuestion('s2')),
+      );
+
+      expect(unsupportedModel.requests).toHaveLength(1);
+      expect(unsupportedModel.requests[0].messages).toEqual([
+        { role: 'system', content: openingPrompts[FALLBACK_LOCALE].system },
+        { role: 'user', content: openingPrompts[FALLBACK_LOCALE].user },
+      ]);
+
+      const unsupportedAnswerModel = scriptedLlm([QUESTION]);
+      const unsupportedAnswerStore = memoryStore();
+      unsupportedAnswerStore.seed(
+        sessionWithUnsupportedLocale('s2', [askedTurn()], {
+          updatedAt: ASKED_AT,
+        }),
+      );
+      const unsupportedAnswerInterview = createSingleTurnInterview({
+        llm: unsupportedAnswerModel.port,
+        sessions: unsupportedAnswerStore.port,
+        clock: fixedClock([ANSWERED_AT]),
+      });
+
+      await collect(
+        requireStream(await unsupportedAnswerInterview.openingQuestion('s2')),
+      );
+      expect(unsupportedAnswerModel.requests).toHaveLength(0);
+      expect(unsupportedAnswerStore.saves).toHaveLength(0);
+
+      const unsupportedOutcome = await unsupportedAnswerInterview.recordAnswer(
+        's2',
+        'Weeknight dinners for busy families.',
+      );
+
+      expect(unsupportedOutcome).toBe('recorded');
+      const unsupportedStored = unsupportedAnswerStore.current('s2');
+      expect(unsupportedStored?.state.locale).toBe(FALLBACK_LOCALE);
+      expect(unsupportedStored?.state.turns).toEqual([
+        {
+          status: 'answered',
+          question: QUESTION,
+          askedAt: ASKED_AT.toISOString(),
+          answer: 'Weeknight dinners for busy families.',
+          answeredAt: ANSWERED_AT.toISOString(),
+        },
+      ]);
     });
 
     it('serves a concurrent second request from the in-flight production and stores one turn', async () => {
@@ -321,7 +522,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const firstText = collect(
         requireStream(await interview.openingQuestion('s1')),
@@ -353,7 +554,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const firstIterator = requireStream(
         await interview.openingQuestion('s1'),
@@ -388,7 +589,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT, secondAskedAt]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const early = requireStream(await interview.openingQuestion('s1'));
       const savedText = await collect(
@@ -424,6 +625,26 @@ describe('createSingleTurnInterview', () => {
       );
     });
 
+    it('writes nothing for a session carrying no language that is only read', async () => {
+      const model = scriptedLlm(['a fresh question?']);
+      const store = memoryStore();
+      store.seed(
+        sessionWithoutLocale('s1', [askedTurn('The stored question?')]),
+      );
+      const interview = createSingleTurnInterview({
+        llm: model.port,
+        sessions: store.port,
+        clock: fixedClock([new Date('2026-02-05T00:00:00.000Z')]),
+      });
+
+      await collect(requireStream(await interview.openingQuestion('s1')));
+
+      expect(store.saves).toHaveLength(0);
+      const stored = store.current('s1');
+      expect(stored?.state.turns).toHaveLength(1);
+      expect(stored?.state).not.toHaveProperty('locale');
+    });
+
     it('stores nothing and does not reject when the caller aborts mid-stream', async () => {
       const model = scriptedLlm(['What problem ', 'does it ', 'solve?'], {
         gateAfter: 1,
@@ -434,7 +655,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const controller = new AbortController();
       const iterator = requireStream(
@@ -472,7 +693,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const controller = new AbortController();
       const iterator = requireStream(
@@ -515,7 +736,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const controller = new AbortController();
       const iterator = requireStream(
@@ -539,7 +760,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       await expect(
         collect(requireStream(await interview.openingQuestion('s1'))),
@@ -559,7 +780,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ASKED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
 
       const caught = await collect(
         requireStream(await interview.openingQuestion('s1')),
@@ -648,7 +869,7 @@ describe('createSingleTurnInterview', () => {
         sessions: store.port,
         clock: fixedClock([CREATED_AT, ANSWERED_AT]),
       });
-      await interview.begin('s1');
+      await interview.begin('s1', 'en');
       const savesAfterBegin = store.saves.length;
 
       const outcome = await interview.recordAnswer(

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:109c65dcaf716af6858e1dd0dd9f2b84429b04919a562ba8b6b7e834a79a6a90",
+  "pageVersion": "sha256:f40a83cb30018ec2cde6a899779321f32ec80ddec41bcb48035c0a113aa1db6f",
   "claims": [
     {
       "id": "claim_97742f8d2604481990ae3151eeb95d84",
@@ -11,8 +11,8 @@
           "version": "repo-file-v1:sha256:4871c540f2350fdddf995e5367445140e870eaf1d4973e8d0aae31f2026c39b9"
         },
         {
-          "resource": "repo://specs/platform/monorepo-workspace/spec.md#L1-L7",
-          "version": "repo-lines-v1:sha256:bb6d18457c552fd5f4ad6b6a3de781fcf8de261beb10dc3793a8160a86151638:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDIyYmFiNzAzNDYxYmM5NDFmZGY2OWU0NmQ0MGRlZWE3NmZiMzBkYjQ5YjQ0OGEzMDU5ZmQ1MGJmMWVmMTg1YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWFlNDQxMjkwODUxNDEzZTAwZDAwMDRkMzk2OGJmYmEyNTc3NmFiMTZlZGI2MTc5YjY2YTcwNWMyMzRjMjcwNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjgyODJhNjVlZGEzZmM4NDk3Y2ZiYWY3MjBkZGUxNDg0MjZmZGYwMjIwYzQyZjc3ZDMzODQ4YjA0MmFjMzkzYiJ9"
+          "resource": "repo://specs/tooling/monorepo-workspace/spec.md",
+          "version": "repo-file-v1:sha256:5de1e296095d0870956ac936ed4637f1704168bc10183d20224c78a894228c71"
         },
         {
           "resource": "repo://tests/workspace.test.ts#L8-L12",
@@ -61,46 +61,38 @@
           "version": "repo-file-v1:sha256:2683590c29d584886efec40c85c2d4a678db769bf604deafe0fc56595548fba1"
         },
         {
-          "resource": "repo://specs/platform/monorepo-workspace/spec.md#L45-L62",
-          "version": "repo-lines-v1:sha256:573d794b1e1daadfcc0c1041d5bf4214ae893b80a93d3e1ed281d3907d3855a4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxMWY1ODMyY2E1YTZjMjA5MDIzZGM1ZDlhOWIwNWQ5ZDZhNDUwYTI5MmY2ZmMyZTg4M2Q5NDlhOGE5ZDA5MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0ZTgxZTlmYzFkMDgzMmM4Y2IzNDE4MTgyNjdkMWU5OGM2YjFlYTAwMjFmMDc4MzM0ODljMjIyZTZlMDNkNTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3NTQ0MTg1NjlkNmEyMzdjN2RiZjlkN2RmNmI0OTYwMWM0ZDM4ZWM0MjQzODQ0ODhkMjVlNzI3OWNjYzM2ZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjczYmRlYmU2NWZjYWE1YmQ2NjhiY2E4ODdiMjUwZmZlZTY3ODQ0ZTdiMjU1MThmOWFlNDBmMzI5NmU1ZmE2MzYifQ"
+          "resource": "repo://specs/tooling/monorepo-workspace/spec.md",
+          "version": "repo-file-v1:sha256:5de1e296095d0870956ac936ed4637f1704168bc10183d20224c78a894228c71"
         }
       ]
     },
     {
       "id": "claim_6a5651f9d1aa4899976ae101e4983ec0",
-      "statement": "Since M3 the web package renders a working interview: App() names the product and mounts InterviewView, which owns the whole conversation with the API; the shell itself calls no server route and the API client is a prop so a test drives the view without a network.",
+      "statement": "Since M3 the web package renders a working interview: App() names the product, owns the chrome's language (detected/remembered since M5), and mounts InterviewView, which owns the whole conversation with the API; the shell itself calls no server route and the API client is a prop so a test drives the view without a network.",
       "evidence": [
         {
           "resource": "repo://packages/web/src/App.tsx",
-          "version": "repo-file-v1:sha256:80e9de2be589bb77753fd75c3e2bf852100182e73ee1387f5a8bfc4c87ebf815"
-        },
-        {
-          "resource": "repo://specs/platform/web-shell/spec.md#L1-L9",
-          "version": "repo-lines-v1:sha256:e1cbc178f1869cfdbbd904c13e7957f17b792f3a6024ca305a46aaf21fdbc2e9:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNlOGY4YmFmMGFhNzcxMmQxMDQ3MDk4ZTY0MGQxZGNjOWYxNjQ3ZDgyYzMzNzA0YjE3YWVjN2MyMjAzZDM4MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlNWY1ZWQ5ZjE4NmI5MDg5MTIzYTJkOTVhZTMyZjFkNGMwMTczMWIwYWU2NmNlY2M1YTI5NDg3ZTY1YjQxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWYxMDEzZWVhYmVhZWQzMjI3ZjFlOWFlNDJmZGMwMDYzZmQ0NmViYzk0YmVkYTg4ZTliYzQ2ZGMwY2IyMGVmZiJ9"
+          "version": "repo-file-v1:sha256:ea4ef4210c34cd503e2247b4569dca3df1a936d9e883af72266cb2c7819ee529"
         }
       ]
     },
     {
       "id": "claim_8f96543f75db429d866896883d3f48d6",
-      "statement": "The roadmap orders work as milestones M0..M18 plus one post-v1 milestone, with a walking-skeleton strategy: M1-M3 build a thin vertical slice through every layer before the question tree, distillation or contradiction checking exist. M0, M1 and M2 are done; M3 (walking skeleton + engine spike) is the next open milestone.",
+      "statement": "The roadmap orders work as milestones M0..M18 plus one post-v1 milestone, with a walking-skeleton strategy: M1-M3 build a thin vertical slice through every layer before the question tree, distillation or contradiction checking exist. M0 through M5 are done (scaffold, LLM adapter, session store, walking skeleton, CI test tiers, and the DE/EN bilingual foundation); M6 (backend setup gate) is the next open milestone.",
       "evidence": [
         {
-          "resource": "repo://specs/roadmap.md#L52-L75",
-          "version": "repo-lines-v1:sha256:8834f6a94db118c2a4e8bc70d59851619cc40ec4a0c76dacb6ee850f28774416:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwODhlYTJlMDY0YWU2NWJkMWZiNjY4NTNmNTFjZmNjYzdjOGQ2NWMzNzQxZWI0YTM5MjVhY2UyMmJkZWZkZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4OTE1Y2I1OGMwNjNiYzM3ZjE2Y2M0OWMzNjUyZDg0MjBhZWFmMjI1OTgyZGI5NmY1Zjc4OWU0YzI1ZDU4NjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNGY1YmU5ZGQxYTVhNjRhNTkxM2M3NGFiYjllMGRiNzFkODZmNmQzMjI1MDRmZDE3YzUzNDkxNTFkZGI1NmMifQ"
-        },
-        {
-          "resource": "repo://specs/roadmap.md#L9-L33",
-          "version": "repo-lines-v1:sha256:3f92f34b8b1838bd47016f6a5b9f6b8258ffd7624b5c08edfc91b86e0b76d47f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmMmJmZWI4NDZlMGM0NDc1Y2Y0MWQ2MzBiNmFmNTE2YWViMTJhMGY5MWI3MmUzMjdiMjM4NzUwNmRmMTU5NGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2ZDM0MjY0ZGFmYjdiMzQxYTMyMzM2MTE0MWM5M2QzM2I2N2M0NTA5OThmYTJhZTgwNDgzYjQ3NzRjNDc1YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5OTc2MTcxNzJkZWQyZmJjYzNkNjM1NzkyOWFkYzk4OTMxMzYzN2VmMzAyZmEzOTljYjUyODUzNzJiOTU5ZGQifQ"
+          "resource": "repo://specs/roadmap.md#L50-L64",
+          "version": "repo-lines-v1:sha256:b0e74f2aabc74450c79576d0398610ab858944158a424f572bc4ee920293ae03:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmNDBmOGRmZWFkYTRhZTg0ZjYyZWJhN2UwYzM0ZThmODUwNGQ4MjM2ODlkMDQ3NTRmN2ZiOTc5MGM0NTMyZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjMzY1M2QxZTk1ZTQ4ZTljODMxODIyNzcxZDM5NWUwZmEzY2Y0OWZkNjAxYzMyZDQzMDk4ZTNlNDg3NWU1MTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3OGNjMmY1ZDBkMWE0MTI4MzZhZTAyN2QwNDY5OTVkZWRjYWNlMzAwYjk3Mzg0NDgwMjc4MTM1ZjBhNmYzNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlZjg5NGY5ODQyNWFhMjEwODAwN2U4MzUwOTI4MzBjNmRlZjQzNjIwYTk4MTNmNzAwNWNlNTU5NzQ0MTMzYWEifQ"
         }
       ]
     },
     {
       "id": "claim_1939d81590b749f486c51e84dacf76fb",
-      "statement": "Roadmap-wide technical guardrails fix: no agent framework in the domain (the interview engine is hand-written deterministic code in packages/core), the LlmPort adapter is the Vercel AI SDK ai v6 in packages/server which core never imports, no cloud LLM SDK anywhere in product code, and every persisted session carries a schemaVersion field from M2 onward.",
+      "statement": "Roadmap-wide technical guardrails fix: no agent framework in the domain (the interview engine is hand-written deterministic code in packages/core), the LlmPort adapter is the Vercel AI SDK ai v6 in packages/server which core never imports, no cloud LLM SDK anywhere in product code, and every persisted session carries a schemaVersion field from M2 onward, with TState's growth path (M2 → M5 → M8 → M9 → M14) tracked explicitly so a later milestone growing the state knows the schemaVersion stayed put through M5.",
       "evidence": [
         {
-          "resource": "repo://specs/roadmap.md#L35-L48",
-          "version": "repo-lines-v1:sha256:d8f76b43f55397c8278952c72ed353225185fc9957e07aa9107d9aa6e07f9416:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4MzkyNGU1MzQ2MzA3ZmIxNmM4Mzg3NmJjZTdiODcwYTZmNzUyODcyOTkxNWE1Mjk4Nzk4YzA0YjQ3ZGVmMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwN2VkY2E0NWRjNzljNzViNjliMGMyYjk1MWYzM2M5MTg4ODUzMTAwZTFjYzA1OTIxYTYxOTA2NDJhYTkwOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Mjc4ODAwNTU2MWFlMmIxZThiZTIzMjgyYmYwMTdhNDY4NjVmNGZjNDg2MDJlYWRiMDdlYTkzN2FiMmRjYmIifQ"
+          "resource": "repo://specs/roadmap.md#L36-L49",
+          "version": "repo-lines-v1:sha256:1544cc88bfb6f1c90cafd32f7fc4ff37d1751e2fdf84b5893589680bff8b9755:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYWI1YjZiZWVjNmU4MDQ3YTNkMjg3OTUyZDZkZGNkZmUzMjNkMjlmM2Q3N2VlNmNmMmM2NzE2NmY5ZjM5YzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjZTI5MzdhYzdiODc0NDMxNTQ2NWVkNGVlYTVkZjJlM2NkYTBmMWI5M2FiN2NiM2M5MGI3ZGZmOWFmYTZjNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjMjBjOTljYmY2YjM0NTBlODA0Mzc3MzkzZjNiYzU4YmZjMzFhYzgwZDhjNjIwNDBhYjI4ODNmOTI5YWQyZjAifQ"
         }
       ]
     },
@@ -131,6 +123,6 @@
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-10T15:50:21.943Z"
+    "at": "2026-09-13T13:26:03.722Z"
   }
 }

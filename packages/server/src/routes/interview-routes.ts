@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
-import type { SingleTurnInterview } from '@chrysalyst/core';
+import { FALLBACK_LOCALE, isLocale, SUPPORTED_LOCALES } from '@chrysalyst/core';
+import type { Locale, SingleTurnInterview } from '@chrysalyst/core';
 import { Hono } from 'hono';
 import type { HonoRequest } from 'hono';
 import { streamSSE } from 'hono/streaming';
@@ -18,6 +19,19 @@ const submittedAnswer = z.object({
   answer: z
     .string()
     .refine((answer) => answer.trim() !== '', 'an answer must carry text'),
+});
+
+/**
+ * The only shape a session-creation request's body may carry a language in.
+ *
+ * `locale` is left as `unknown` rather than a `Locale` literal so that a tag
+ * outside the supported set, or a value that is not a string at all, both
+ * reach the route as a value to check against {@link isLocale} rather than as
+ * a parse failure — the two are told apart there, where the distinction
+ * between absence and wrongness is drawn against the request as a whole.
+ */
+const sessionCreation = z.object({
+  locale: z.unknown().optional(),
 });
 
 /**
@@ -102,9 +116,23 @@ async function writeQuestion(
 export function createInterviewRoutes(interview: SingleTurnInterview) {
   return new Hono()
     .post('/interview', async (c) => {
+      const body = await jsonBody(c.req);
+      const parsed =
+        body === undefined ? undefined : sessionCreation.safeParse(body);
+      const namedLocale =
+        parsed?.success === true ? parsed.data.locale : undefined;
+      if (namedLocale !== undefined && !isLocale(namedLocale)) {
+        return c.json(
+          {
+            message: `Cannot create a session: locale ${JSON.stringify(namedLocale)} must be one of ${SUPPORTED_LOCALES.join(', ')}`,
+          },
+          400,
+        );
+      }
+      const locale: Locale = namedLocale ?? FALLBACK_LOCALE;
       const id = randomUUID();
-      await interview.begin(id);
-      return c.json({ id }, 201);
+      await interview.begin(id, locale);
+      return c.json({ id, locale }, 201);
     })
     .get('/interview/:id/question', async (c) => {
       const id = c.req.param('id');

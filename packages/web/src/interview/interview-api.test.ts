@@ -108,18 +108,24 @@ async function collect(
 
 describe('interview API client', () => {
   describe('createSession', () => {
-    it('posts to the interview route and returns the minted identifier', async () => {
+    it('posts the locale as JSON and returns the minted identifier and locale', async () => {
       const { impl, calls } = recordingFetch(
         () =>
-          new Response(JSON.stringify({ id: 'session-42' }), { status: 201 }),
+          new Response(JSON.stringify({ id: 'session-42', locale: 'de' }), {
+            status: 201,
+          }),
       );
 
-      const id = await createSession(impl);
+      const session = await createSession('de', impl);
 
-      expect(id).toBe('session-42');
+      expect(session).toEqual({ id: 'session-42', locale: 'de' });
       expect(calls).toHaveLength(1);
       expect(calls[0]?.url).toBe('/interview');
       expect(calls[0]?.init?.method).toBe('POST');
+      expect(calls[0]?.init?.headers).toEqual({
+        'content-type': 'application/json',
+      });
+      expect(calls[0]?.init?.body).toBe(JSON.stringify({ locale: 'de' }));
     });
 
     it('rejects when the server does not answer 201', async () => {
@@ -127,7 +133,29 @@ describe('interview API client', () => {
         () => new Response('nope', { status: 500 }),
       );
 
-      await expect(createSession(impl)).rejects.toThrow(/500/);
+      await expect(createSession('en', impl)).rejects.toThrow(/500/);
+    });
+
+    it('rejects a response whose locale is missing', async () => {
+      const { impl } = recordingFetch(
+        () =>
+          new Response(JSON.stringify({ id: 'session-42' }), { status: 201 }),
+      );
+
+      await expect(createSession('en', impl)).rejects.toThrow(/locale/i);
+    });
+
+    it('rejects a response whose locale is unsupported', async () => {
+      const { impl } = recordingFetch(
+        () =>
+          new Response(JSON.stringify({ id: 'session-42', locale: 'fr' }), {
+            status: 201,
+          }),
+      );
+
+      await expect(createSession('en', impl)).rejects.toThrow(
+        'The session-creation response named an unsupported language "fr": the supported languages are de and en',
+      );
     });
   });
 

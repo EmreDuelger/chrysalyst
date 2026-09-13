@@ -5,7 +5,7 @@ description: Die Domänengrenze von chrysalyst — CoreDependencies und die vier
 tags: [hexagonal-architecture, ports, domain-core, typescript, dependency-injection]
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
+    at: 2026-09-13T13:26:03.722Z
 sources:
   - id: openwiki-source-b6d4dbadc290acfd0ace4931
     resource: repo://packages/core/package.json
@@ -15,6 +15,10 @@ sources:
     resource: repo://packages/core/src/index.ts
   - id: openwiki-source-1f5e2ec8cd020d62ed6b5a14
     resource: repo://packages/core/src/interview/index.ts
+  - id: openwiki-source-ed98ffd976c8efe49b7a2d91
+    resource: repo://packages/core/src/interview/locale.ts
+  - id: openwiki-source-15e22470495001481cf50cac
+    resource: repo://packages/core/src/interview/prompts.ts
   - id: openwiki-source-df99a04c4843621452957144
     resource: repo://packages/core/src/interview/single-turn-interview.ts
   - id: openwiki-source-f485baa422c0c157e847894a
@@ -37,7 +41,7 @@ sources:
     resource: repo://specs/platform/session-store-port/spec.md
   - id: openwiki-source-1eddfe2a3e905b4c50618167
     resource: repo://tests/workspace.test.ts
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
 ---
 
 # Domänen-Ports (@chrysalyst/core)
@@ -68,6 +72,17 @@ weiterhin keinen Socket, liest keine Datei und keine Uhr — der Test
 `opens no socket when imported` in `packages/core/src/index.test.ts` hält das
 fest, und `core-ports-contract` bekam dafür das Szenario *Domänenlogik ist vom
 Einstiegspunkt erreichbar, ohne eine Uhr oder das Dateisystem zu berühren*.
+
+Seit M5 (DE/EN-Fundament) exportiert der Interview-Barrel
+(`packages/core/src/interview/index.ts`) zwei weitere Module als Werte:
+`locale.ts` (`Locale`, `SUPPORTED_LOCALES`, `FALLBACK_LOCALE`, `isLocale`,
+`resolveLocale`) und `prompts.ts` (`openingPrompts`, ein
+`Readonly<Record<Locale, OpeningPrompt>>` mit je einem eigenständig auf
+Deutsch bzw. Englisch verfassten System- und User-Template). Beide bleiben
+innerhalb der Typ-only-Invariante — `resolveLocale` nimmt `unknown` entgegen,
+weil seine Aufrufer einen aus JSON geparsten oder aus einem Request-Body
+gelesenen Wert übergeben, und fällt auf `FALLBACK_LOCALE` zurück, statt
+abzulehnen.
 
 ## Der typ-only-Invariant
 

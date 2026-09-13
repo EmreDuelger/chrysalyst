@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:15b74ff6c72458b888c080294d7b4ef9eab597b2b7a8a4325b3693539d67769c",
+  "pageVersion": "sha256:3cef2d3fe0b84e03a0be4dfeea57014b982b617f51f017dd5e6f9c62d008b841",
   "claims": [
     {
       "id": "claim_25b956f5858e42dcbe559ea6955ab44b",
@@ -16,7 +16,7 @@
         },
         {
           "resource": "repo://packages/core/src/interview/index.ts",
-          "version": "repo-file-v1:sha256:43c74958f2f74d9e6e890abc2fc64606c45902487aa5539dda75bbc5be3db2ab"
+          "version": "repo-file-v1:sha256:29a5db77847019da0ee140afa410d5c097b083a3a74f7dcb0c92a40958699903"
         }
       ]
     },
@@ -110,7 +110,7 @@
         },
         {
           "resource": "repo://packages/core/vitest.config.ts",
-          "version": "repo-file-v1:sha256:d2b8eab0df0fe56a24e5240313c9a21ed478c413857f224639b5d2564c25b6d5"
+          "version": "repo-file-v1:sha256:c9ef2408ef4e295e0b949d86ec3ca911031f5d6d83c976e5b8bdbf62b519a7fc"
         }
       ]
     },
@@ -148,11 +148,11 @@
     },
     {
       "id": "claim_84b3af4595f848cbbb012cda4febfc89",
-      "statement": "The core purity rule forbids a runtime dependency and any non-relative import in non-test source — not domain code that executes; the interview logic obeys it by reaching the model, store, and clock only through the injected CoreDependencies.",
+      "statement": "The core purity rule forbids a runtime dependency and any non-relative import in non-test source — not domain code that executes; the interview logic obeys it by reaching the model, store, and clock only through the injected CoreDependencies, and its own imports (locale.ts, prompts.ts, state.ts, and the ports barrel) are all relative.",
       "evidence": [
         {
-          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L1-L40",
-          "version": "repo-lines-v1:sha256:498965820cfe86ef7d2db6a4d4e9cf28cdc1f2360a0e15b12676da2e324ba725:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiNjBjMzc2MWE0YjI1MmQyZmNhMzU4ZjZiMjc2MjJjNTJjMmVjNDE4ZjhiMGQzZjg4ZDFmZTdiYzE2Y2RmNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmMmEyZjk5NmYwOGU2ODBiZDI5MjEzNWE2ZmE0OTc4YmRhMjZlNjAyZDg0ZjMzY2IxZDU5NDc3NWQ0MzA0YjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4YzcxMzZmYzMwYzZjOWE5YmIwMzJlOWFkMDg5OTBhNjQ4NTFkMDc4MmQ1ZjVmMDg5OGViY2I5MmJmN2Q1MzAifQ"
+          "resource": "repo://packages/core/src/interview/single-turn-interview.ts#L1-L11",
+          "version": "repo-lines-v1:sha256:13bf70f5a897753af1e75c57562cb805623ed97ccfd520e3d9960679ae5eb793:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyN2Q4NDM3YjIzOTY1YmQyYTk3MjMzY2JjNWY3OGQ0OTQ4NjljNTQ4YWQwZTMxZjU0MjkyY2Y4MTc4ODQ3NGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3ODRhNmY3YjllN2NmYzg4MWUyMjIzNDVlM2JjZjk0N2MxYmU2YjJlYjVkOTIzMGUyNWQ1MzFkNmQyMDZiODAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQwNWFlMDhmMGVjNzg2YmJiZGZlYzg3OGIzNTI1NzRiYzFhZDk2NjRiNzk5MWM5NzA0NGM1NDA1MzYxMDA5ZjEifQ"
         },
         {
           "resource": "repo://specs/platform/core-ports-contract/spec.md",
@@ -160,13 +160,31 @@
         },
         {
           "resource": "repo://tests/workspace.test.ts",
-          "version": "repo-file-v1:sha256:9044762430622a7cd69f4408f855feeae427eb85ec9570410efe8870a1934644"
+          "version": "repo-file-v1:sha256:c718a84011985ab300a1926440923a80eed1a85a34dbd73aee76fa36eeee49a5"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee91d7c91dad4758b74a919b41e1093c",
+      "statement": "Since M5, the interview barrel `packages/core/src/interview/index.ts` also re-exports `locale.ts` (Locale, SUPPORTED_LOCALES, FALLBACK_LOCALE, isLocale, resolveLocale) and `prompts.ts` (openingPrompts, a Readonly<Record<Locale, OpeningPrompt>> with an independently authored German and English template), so importing @chrysalyst/core now also carries the domain's bilingual vocabulary.",
+      "evidence": [
+        {
+          "resource": "repo://packages/core/src/interview/index.ts",
+          "version": "repo-file-v1:sha256:29a5db77847019da0ee140afa410d5c097b083a3a74f7dcb0c92a40958699903"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/locale.ts",
+          "version": "repo-file-v1:sha256:30e285a51ece0f1d867e2969f4a96cd010b5553e895dd0bff6f9836b487db6be"
+        },
+        {
+          "resource": "repo://packages/core/src/interview/prompts.ts",
+          "version": "repo-file-v1:sha256:558dd994e54b6de82e0805458cebfefa0d5e71f70199bbb52b18c2b0322fdf7a"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-10T15:50:21.943Z"
+    "at": "2026-09-13T13:26:03.722Z"
   }
 }

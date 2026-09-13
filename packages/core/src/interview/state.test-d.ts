@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import type { AnsweredTurn, AskedTurn, Turn } from './state.ts';
+import type { AnsweredTurn, AskedTurn, InterviewState, Turn } from './state.ts';
 
 const QUESTION = 'What problem does your product solve?';
 const ASKED_AT = '2026-02-03T09:00:00.000Z';
@@ -41,5 +41,14 @@ describe('Turn is a tagged union', () => {
     };
 
     expectTypeOf(strayAnswer).toExtend<Turn>();
+  });
+});
+
+describe('InterviewState requires a language', () => {
+  it('rejects a state missing the locale field', () => {
+    // @ts-expect-error an InterviewState without a locale is incomplete
+    const missingLocale: InterviewState = { turns: [] };
+
+    expectTypeOf(missingLocale).toExtend<InterviewState>();
   });
 });

@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, type JSX } from 'react';
 
 import styles from './InterviewView.module.css';
-import type { InterviewApi } from './interview-api.ts';
+import type { CreatedSession, InterviewApi } from './interview-api.ts';
+import type { Locale } from '../locale/locale.ts';
+import { uiStrings } from '../locale/strings.ts';
 
 /**
  * One round of the interview in the browser: the question streaming in word by
@@ -9,11 +11,18 @@ import type { InterviewApi } from './interview-api.ts';
  *
  * The API client is injected rather than imported so no test touches the
  * network, and every state below is behaviour the `interview/interview-view`
- * scenarios pin — the stylesheet (tasks 20-22) restyles what this renders and
- * introduces no state of its own.
+ * scenarios pin — the stylesheet restyles what this renders and introduces no
+ * state of its own.
+ *
+ * `locale` is the chrome's language and may change while the view is on
+ * screen; every label re-renders in it. The session's language is a different
+ * value: it is fixed at creation, comes back from the API, and is what the
+ * question region declares. Changing `locale` therefore relabels the chrome
+ * and touches nothing else.
  */
 export interface InterviewViewProps {
   readonly api: InterviewApi;
+  readonly locale: Locale;
 }
 
 type Phase =
@@ -24,17 +33,21 @@ type Phase =
   | 'recorded'
   | 'failed';
 
-const STREAMING_ALTERNATIVE = 'the question is still being written';
 const ANSWER_FIELD_ID = 'interview-answer';
 
-export function InterviewView({ api }: InterviewViewProps): JSX.Element {
+export function InterviewView({
+  api,
+  locale,
+}: InterviewViewProps): JSX.Element {
   const [phase, setPhase] = useState<Phase>('connecting');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [recordedAt, setRecordedAt] = useState<string | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
-  const sessionId = useRef<string | null>(null);
+  const [session, setSession] = useState<CreatedSession | null>(null);
   const submitting = useRef(false);
+  const mountLocale = useRef(locale);
+  const copy = uiStrings[locale];
 
   useEffect(() => {
     const controller = new AbortController();
@@ -47,18 +60,18 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
     };
 
     const run = async (): Promise<void> => {
-      let id: string;
+      let created: CreatedSession;
       try {
-        id = await api.createSession();
+        created = await api.createSession(mountLocale.current);
       } catch (cause) {
         fail(cause);
         return;
       }
       if (abandoned()) return;
-      sessionId.current = id;
+      setSession(created);
       try {
         for await (const event of api.openQuestionStream(
-          id,
+          created.id,
           controller.signal,
         )) {
           if (abandoned()) return;
@@ -88,10 +101,9 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
   }, [api]);
 
   const submit = async (): Promise<void> => {
-    const id = sessionId.current;
     if (
       submitting.current ||
-      id === null ||
+      session === null ||
       phase !== 'complete' ||
       answer.trim() === ''
     ) {
@@ -100,7 +112,7 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
     submitting.current = true;
     setPhase('submitting');
     try {
-      const result = await api.submitAnswer(id, answer);
+      const result = await api.submitAnswer(session.id, answer);
       if (result.outcome === 'recorded') {
         setRecordedAt(clockLabel(new Date()));
         setPhase('recorded');
@@ -122,14 +134,14 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
   const submitDisabled = phase !== 'complete' || answer.trim() === '';
 
   return (
-    <section className={styles.view} aria-label="Interview">
+    <section className={styles.view} aria-label={copy.interviewRegion}>
       <p className={styles.kicker} aria-hidden="true">
-        The question
+        {copy.questionKicker}
       </p>
 
       {phase === 'connecting' ? (
         <p className={`${styles.question} ${styles.placeholder}`}>
-          Preparing the first question
+          {copy.questionPlaceholder}
           <span className={styles.cursorRule} aria-hidden="true" />
         </p>
       ) : null}
@@ -141,6 +153,7 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
             : styles.question
         }
         aria-live="polite"
+        lang={session?.locale}
         hidden={phase === 'connecting'}
       >
         {question}
@@ -158,13 +171,13 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
 
       {phase === 'connecting' ? (
         <p className={styles.note} role="status">
-          Reaching the model…
+          {copy.reachingModel}
         </p>
       ) : null}
 
       {phase === 'streaming' ? (
         <p className={styles.note} role="status">
-          {STREAMING_ALTERNATIVE}
+          {copy.streamingAlternative}
         </p>
       ) : null}
 
@@ -172,7 +185,7 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
         <div className={styles.error}>
           <div className={styles.errorBody}>
             <p className={styles.errorLabel} aria-hidden="true">
-              The question stopped
+              {copy.failureLabel}
             </p>
             <p className={styles.errorMessage} role="alert">
               {failure}
@@ -190,7 +203,7 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
           }}
         >
           <label className={styles.answerLabel} htmlFor={ANSWER_FIELD_ID}>
-            Your answer
+            {copy.answerLabel}
           </label>
           <textarea
             className={styles.answerField}
@@ -203,11 +216,11 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
           />
           <div className={styles.actions}>
             {phase === 'complete' ? (
-              <span className={styles.hint}>One question this round.</span>
+              <span className={styles.hint}>{copy.roundHint}</span>
             ) : null}
             {phase === 'submitting' ? (
               <span className={styles.hint} role="status">
-                Recording…
+                {copy.recording}
               </span>
             ) : null}
             <button
@@ -215,19 +228,19 @@ export function InterviewView({ api }: InterviewViewProps): JSX.Element {
               type="submit"
               disabled={submitDisabled}
             >
-              Record answer
+              {copy.submit}
               <span aria-hidden="true">&nbsp;&rarr;</span>
             </button>
           </div>
         </form>
       ) : null}
 
-      {phase === 'recorded' ? (
+      {phase === 'recorded' && recordedAt !== null ? (
         <div className={styles.answerBlock}>
-          <span className={styles.answerLabel}>Your answer</span>
+          <span className={styles.answerLabel}>{copy.answerLabel}</span>
           <p className={styles.savedAnswer}>{answer}</p>
           <p className={styles.confirm} role="status">
-            Recorded · {recordedAt} · saved to this session
+            {copy.recordedAt(recordedAt)}
           </p>
         </div>
       ) : null}

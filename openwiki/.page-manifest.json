@@ -2,81 +2,81 @@
   "schemaVersion": 1,
   "pages": {
     "/openwiki/architecture/domain-ports.md": {
-      "pageVersion": "sha256:15b74ff6c72458b888c080294d7b4ef9eab597b2b7a8a4325b3693539d67769c",
+      "pageVersion": "sha256:3cef2d3fe0b84e03a0be4dfeea57014b982b617f51f017dd5e6f9c62d008b841",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/architecture/http-server.md": {
       "pageVersion": "sha256:3a3ebc2b3c28f13fe014bd11c84d1b0d50551a0f8b24a34db1c3a6f5b45996d4",
       "completedBy": "claude-code",
       "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/architecture/interview-http-and-composition.md": {
-      "pageVersion": "sha256:bcdababcff01707fb4a2450b1ef311d4722008cdce7b09bf3c5184485cb64711",
+      "pageVersion": "sha256:1f3d8f09e1ad24794b7bf46e9a52d9715bdc821f53250f3b097a2abb5c48d7f2",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/architecture/interview-round.md": {
-      "pageVersion": "sha256:5bbf101ed73a0b067584d43f692cc2c960ffcc7e251e22715cd3d47ead7d4e37",
+      "pageVersion": "sha256:1491a0100fa885cd2756d8143cca73fe3cd859740b0bffeed36d6cda5ac2f994",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/architecture/llm-adapter.md": {
       "pageVersion": "sha256:7e3d7c384a1f4846bbe0b089de2584d3f61dd814085c9fb1137d684fb0660174",
       "completedBy": "claude-code",
       "completedRunId": "d8952ac9-afe4-409b-a089-f251ae698bc1",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/architecture/overview.md": {
-      "pageVersion": "sha256:109c65dcaf716af6858e1dd0dd9f2b84429b04919a562ba8b6b7e834a79a6a90",
+      "pageVersion": "sha256:f40a83cb30018ec2cde6a899779321f32ec80ddec41bcb48035c0a113aa1db6f",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/architecture/session-store-adapter.md": {
       "pageVersion": "sha256:a929cdc80f46b36632544268dfb567e1a51f7165b9f72d3ad3b1296a72ba1d62",
       "completedBy": "claude-code",
       "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/architecture/web-client.md": {
-      "pageVersion": "sha256:c8d67ff364692820bf4d7e3435797fdb5447db312ec30576f03040f64ac88bf7",
+      "pageVersion": "sha256:7a6111daa711579d0b0e38843d4eed23906c8a3a4a6079364148ef6dd6839b67",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/operations/toolchain-and-testing.md": {
-      "pageVersion": "sha256:bcb3dfade11e6c142ff1f670ae80b59f5ca038844b8c70a8d37b9c9d786115d2",
+      "pageVersion": "sha256:e0cfaa67f78588b0a01d17426592abfd5d33d84a678d093aee9e1977edadeeaa",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/quickstart.md": {
-      "pageVersion": "sha256:60e788aa78fbf97f9e6504a65aaf3ec1efee8dd18337c0a0e1f2c1b814167b26",
+      "pageVersion": "sha256:137967f32b9d7a4811b409b2b7262c581054d24612437dda6c61b6ab3a5df130",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     },
     "/openwiki/workflow/spec-driven-development.md": {
-      "pageVersion": "sha256:4eca35d661f1996c8e21e2395caa55cc9184554eadb0a5022baa399026d02316",
+      "pageVersion": "sha256:8287feb310d9fc9634a103393175dc553c2f48bae95d36f51cc1cd925fb645d9",
       "completedBy": "claude-code",
-      "completedRunId": "9d3c6427-bfa1-40bf-93a5-85321df2c92c",
-      "gitHead": "c6fffc225eef0256d6d993747b042330fe263835",
-      "sourceFingerprint": "sha256:5f0752ae8d8a27fbcbae7df90385f81d03c075c0f758fff80b75a45298942b4d"
+      "completedRunId": "f1053cac-2a8b-4308-9766-597258c4b580",
+      "gitHead": "084245c194183a41b3d7e828fd12407adbc28d91",
+      "sourceFingerprint": "sha256:193d7bd7ab3214f09dc53211596eefe811de6d9f07bed76d4726231a61775c2c"
     }
   }
 }

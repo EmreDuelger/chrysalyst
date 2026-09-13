@@ -73,6 +73,67 @@ function carriesThinkMarker(text: string): boolean {
   return text.toLowerCase().includes('<think>');
 }
 
+/*
+ * The function-word lists below are the live tier's substitute for a pattern
+ * match. Asserting a natural language from one sentence is the one place this
+ * plan's live tier can flake, so instead of matching a phrase, this counts how
+ * many of a small set of function words each language's question contains as
+ * whole words. Content words that are near-identical in both languages
+ * (`Produkt`/"product", `Problem`/"problem" in German) are excluded on
+ * purpose — a shared cognate cannot tell the languages apart. German `was` is
+ * excluded for the mirror reason: it is also an English verb, so it cannot
+ * tell the languages apart either. Matching is case-insensitive and
+ * whole-word, and a score counts the number of distinct list entries the
+ * question contains, not the number of occurrences — `functionWordScore`
+ * below filters the list once per entry, so a question using `das` four times
+ * still scores one. Both lists, and the threshold below, live only here per
+ * plan.md's "Live-tier risk" section: shipped code never needs to know what a
+ * function word is.
+ */
+const GERMAN_FUNCTION_WORDS = [
+  'der',
+  'die',
+  'das',
+  'und',
+  'welche',
+  'welches',
+  'für',
+  'Ihr',
+  'Ihre',
+  'Sie',
+  'möchten',
+  'beschreiben',
+] as const;
+
+const ENGLISH_FUNCTION_WORDS = [
+  'the',
+  'and',
+  'what',
+  'which',
+  'your',
+  'you',
+  'does',
+  'do',
+  'describe',
+  'solve',
+  'it',
+] as const;
+
+const FUNCTION_WORD_THRESHOLD = 3;
+
+function containsWholeWord(text: string, word: string): boolean {
+  const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(
+    `(?<![\\p{L}\\p{N}_])${escaped}(?![\\p{L}\\p{N}_])`,
+    'iu',
+  );
+  return pattern.test(text);
+}
+
+function functionWordScore(text: string, words: readonly string[]): number {
+  return words.filter((word) => containsWholeWord(text, word)).length;
+}
+
 function boundPort(handle: ServerHandle): number {
   const address = handle.server.address();
   if (address === null || typeof address === 'string') {
@@ -198,5 +259,84 @@ describe.skipIf((process.env.CHRYSALYST_LIVE_LLM ?? '') === '')(
       expect(transcript).toContain(question);
       expect(transcript).toContain(answer);
     });
+  },
+);
+
+describe.skipIf((process.env.CHRYSALYST_LIVE_LLM ?? '') === '')(
+  'A running Ollama asks the opening question in the requested language',
+  () => {
+    it.each([
+      {
+        locale: 'de',
+        ownWords: GERMAN_FUNCTION_WORDS,
+        otherWords: ENGLISH_FUNCTION_WORDS,
+      },
+      {
+        locale: 'en',
+        ownWords: ENGLISH_FUNCTION_WORDS,
+        otherWords: GERMAN_FUNCTION_WORDS,
+      },
+    ] as const)(
+      'asks in $locale, scoring higher on its own function words than the other language',
+      { timeout: 120_000 },
+      async ({ locale, ownWords, otherWords }) => {
+        sandbox = await mkdtemp(join(tmpdir(), 'chrysalyst-interview-live-'));
+        const dependencies = createDependenciesFromEnv({
+          ...process.env,
+          CHRYSALYST_SESSION_DIR: sandbox,
+        });
+        running = await startServer(createApp(dependencies), 0);
+        const base = `http://127.0.0.1:${String(boundPort(running))}`;
+
+        const created = await fetch(`${base}/interview`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ locale }),
+        });
+        expect(created.status).toBe(201);
+        const { id, locale: confirmedLocale } = (await created.json()) as {
+          id: string;
+          locale: string;
+        };
+        expect(confirmedLocale).toBe(locale);
+
+        const questionResponse = await fetch(
+          `${base}/interview/${id}/question`,
+        );
+        expect(questionResponse.status).toBe(200);
+        if (questionResponse.body === null) {
+          throw new Error('the question route returned no response body');
+        }
+
+        let announced: string | undefined;
+        const spoken: string[] = [];
+        for await (const frame of readSseEvents(questionResponse.body)) {
+          if (frame.event === 'token') {
+            spoken.push((frame.data as { text: string }).text);
+          } else if (frame.event === 'done') {
+            announced = (frame.data as { question: string }).question;
+          } else if (frame.event === 'error') {
+            throw new Error(
+              `the model failed the opening question in ${locale}: ${
+                (frame.data as { message: string }).message
+              }`,
+            );
+          }
+        }
+
+        const question = announced ?? spoken.join('');
+        const ownScore = functionWordScore(question, ownWords);
+        const otherScore = functionWordScore(question, otherWords);
+
+        console.info(
+          `[language] locale=${locale} ownScore=${String(ownScore)} otherScore=${String(otherScore)} question=${question}`,
+        );
+
+        expect(announced).toBeDefined();
+        expect(question.trim().length).toBeGreaterThan(0);
+        expect(ownScore).toBeGreaterThanOrEqual(FUNCTION_WORD_THRESHOLD);
+        expect(ownScore).toBeGreaterThan(otherScore);
+      },
+    );
   },
 );

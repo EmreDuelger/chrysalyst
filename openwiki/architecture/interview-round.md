@@ -3,14 +3,13 @@ type: architecture
 title: Interview-Runde (@chrysalyst/core)
 description: Die erste Domänenlogik von chrysalyst — der Session-Zustand als getaggte Turn-Liste mit ISO-String-Zeitstempeln, die drei Operationen begin/openingQuestion/recordAnswer über CoreDependencies, die Auflösen-entscheidet-Existenz / Pull-erreicht-das-Modell-Trennung, die prozess-lokale In-flight-Produktion (eine Inferenz pro Session) und das Markdown-Rendering des Transkripts.
 tags: [interview, domain-core, state-machine, streaming, async-generator, hexagonal-architecture]
-verified:
-  - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
 sources:
   - id: openwiki-source-d265cc7c06dcbefb6f92a01b
     resource: repo://packages/core/src/index.ts
   - id: openwiki-source-1f5e2ec8cd020d62ed6b5a14
     resource: repo://packages/core/src/interview/index.ts
+  - id: openwiki-source-15e22470495001481cf50cac
+    resource: repo://packages/core/src/interview/prompts.ts
   - id: openwiki-source-df99a04c4843621452957144
     resource: repo://packages/core/src/interview/single-turn-interview.ts
   - id: openwiki-source-81d7efa0b9c52df71ab93100
@@ -19,7 +18,10 @@ sources:
     resource: repo://packages/core/src/interview/transcript.ts
   - id: openwiki-source-9f1672a73d8c3832ee8e57d7
     resource: repo://specs/_decision/004-single-question-walking-skeleton.md
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
+verified:
+  - by: openwiki/0.5.0
+    at: 2026-09-13T13:26:03.722Z
 ---
 
 # Interview-Runde (@chrysalyst/core)
@@ -35,17 +37,21 @@ verbietet eine *Abhängigkeit*, nicht Domänencode.
 **Genau eine Runde.** M7 besitzt den Fragebaum, M8 die Turn-Schleife, M10 die
 Destillation. Jede Struktur, die hier für sie gebaut würde, wäre eine Annahme
 ohne ihre Anforderungen. Die Frage entsteht **kalt** aus einem festen
-System-Prompt (`OPENING_SYSTEM_PROMPT`, ein Modul-Konstant, kein Knopf für den
-Aufrufer) — es gibt keinen Ideen-Eingang; der kommt mit M7/M8.
+System-Prompt — seit M5 (DE/EN-Fundament) eines von zwei eigenständig
+verfassten Templates, je nach Sprache der Session (siehe
+[§ Zwei Sprachen: `openingPrompts`](#zwei-sprachen-openingprompts) unten) —
+es gibt keinen Ideen-Eingang; der kommt mit M7/M8.
 
 ## Der Zustand: `InterviewState`
 
 ```ts
-interface InterviewState { readonly turns: readonly Turn[] }
+interface InterviewState { readonly locale: Locale; readonly turns: readonly Turn[] }
 type Turn = AskedTurn | AnsweredTurn;   // getaggt über `status`
 ```
 
-Zwei Entwurfsentscheidungen (ADR `interviewstate-v1-turn-list-tagged-union`):
+Drei Entwurfsentscheidungen prägen den Zustand (ADR
+`interviewstate-v1-turn-list-tagged-union` aus 004; `locale` kam mit M5 dazu,
+siehe `specs/_decision/007-bilingual-ui-and-prompts.md`):
 
 - **Eine Liste ab v1, kein Frage/Antwort-Paar.** M8 wächst das Interview auf
   viele Turns; eine Liste kostet bei einem Element nichts, ein Paar erzwänge
@@ -57,6 +63,12 @@ Zwei Entwurfsentscheidungen (ADR `interviewstate-v1-turn-list-tagged-union`):
   ein geladener Turn ist reine Daten ohne Klasse, gegen die man testen könnte.
   `isAnswered(turn)` prüft `turn.status === 'answered'`, damit das Narrowing
   auch für einen gerade aus der Speicherung zurückgeparsten Turn hält.
+- **`locale` gehört zum Zustand, nicht zum Envelope.** Die Sprache ist eine
+  Eigenschaft der Session — was die Person interviewt wurde, nicht was ein
+  späterer Leser bevorzugt —, wird bei der Erstellung einmal festgelegt und
+  ändert sich nie. `schemaVersion` bleibt bei `1`: Das Envelope ist
+  unverändert, und ein Sprung hätte jede M3-Session ungelesen gemacht, deren
+  `state` kein `locale` trägt (siehe unten, `loadInterview`).
 
 Die Zeitstempel (`askedAt`, `answeredAt`) sind **ISO-8601-Strings, nie `Date`**:
 Der Session-Store gibt alles unter `state` genau so zurück, wie `JSON.parse` es
@@ -73,7 +85,7 @@ Abhängigkeiten einmal und gibt drei Operationen zurück
 
 | Operation | Vertrag |
 |---|---|
-| `begin(id)` | Öffnet eine Session unter `id`; eine Kennung, die schon eine hält, bleibt **unverändert** (kein Reset der Turns). |
+| `begin(id, locale)` | Öffnet eine Session unter `id` in der genannten Sprache; eine Kennung, die schon eine hält, bleibt **unverändert** (kein Reset der Turns, und die schon gespeicherte Sprache bleibt, auch wenn `begin` erneut mit einer anderen Sprache gerufen wird). |
 | `openingQuestion(id, signal?)` | Antwortet die Frage als die Chunks, aus denen sie besteht, oder `undefined`, wenn nie eine Session unter `id` begonnen wurde — dasselbe Abwesenheits-Vokabular wie der Store. |
 | `recordAnswer(id, answer)` | Schließt die offene Frage mit der Antwort ab; meldet `no-session` oder `no-open-question` statt zu werfen. |
 
@@ -136,6 +148,42 @@ losgelassen wurde, replayt so die gespeicherte Frage, statt das Modell ein
 zweites Mal über einen überholten Schnappschuss laufen zu lassen. (Auch das ein
 Expert-Review-Fund.)
 
+### `loadInterview` — der einzige Ladepunkt, seit M5
+
+Seit M5 läuft jedes Laden einer Session durch eine private `loadInterview(id)`
+— den **einzigen** Aufrufer von `deps.sessions.load` in dieser Datei. Der
+Store gibt `state` exakt so zurück, wie `JSON.parse` es produziert hat: eine
+vor M5 geschriebene Session trägt gar kein `locale`, und ein verirrter Schreib
+könnte einen nicht unterstützten Tag tragen. `loadInterview` ersetzt
+`state.locale` einmal durch `resolveLocale(state.locale)` (aus `locale.ts`),
+bevor irgendein Leser es sieht — die vier Call-Sites (`streamQuestion`,
+`begin`, `openingQuestion`, `recordAnswer`) lesen `state.locale` danach ohne
+eigene Prüfung.
+
+Das hat eine Schreib-Konsequenz, die keine Migration ist: Die zwei Saves, die
+den Zustand aus einer geladenen Session neu bauen (der gefragte Turn in
+`endProduction`, der beantwortete in `recordAnswer`), übernehmen
+`session.state.locale` aus der **normalisierten** Session. Eine M3-Session
+ohne `locale` bekommt also beim nächsten eigenen Fortschritt — einer neu
+gefragten oder beantworteten Frage — die aufgelöste Fallback-Sprache
+geschrieben. Das ist ein Nebeneffekt des nächsten Fortschritts der Session,
+kein Migrationslauf: Kein Prozess durchsucht `~/.chrysalyst/sessions/` und
+schreibt ungefragt, und eine Session, die nur gelesen wird, bleibt
+Byte-identisch.
+
+### Zwei Sprachen: `openingPrompts`
+
+`packages/core/src/interview/prompts.ts` hält `openingPrompts`, ein
+`Readonly<Record<Locale, OpeningPrompt>>` mit je einem System- und
+User-Template. Jedes Template ist **eigenständig verfasst**, nicht zur
+Laufzeit übersetzt, und nennt seine eigene Sprache explizit (das deutsche
+System-Template endet mit „Schreibe auf Deutsch.", das englische mit einem
+entsprechenden Satz auf Englisch) — ein einzelnes englisches Template mit
+einer angehängten „answer in X"-Zeile wäre die schwächere Konstruktion für ein
+kleines lokales Modell. `openingConversation(locale)` liest
+`openingPrompts[locale]` und baut daraus die `LlmRequest`; `startProduction`
+übergibt ihr `session.state.locale` aus der bereits normalisierten Session.
+
 ## `renderTranscript`
 
 `renderTranscript(session: StoredSession<InterviewState>)` gibt das Markdown
@@ -163,16 +211,30 @@ Text.
 | `app-built-by-factory-server-handed-the-app` | die App wird von einer Fabrik gebaut, der Server bekommt sie gereicht |
 | `styling-stack-plain-css-tokens-plus-css-modules` | plain CSS mit Token-Schicht + CSS Modules — der Styling-Stack fürs ganze Produkt |
 
+Seit M5 kommen sechs weitere ADRs in `specs/_decision/007-bilingual-ui-and-prompts.md`
+dazu, darunter `interviewstate-locale-schemaversion-unchanged` (siehe oben),
+`en-is-fallback-locale` (Englisch als Fallback für eine nicht erkannte
+Sprache — das Backend selbst, nicht speziell für Deutsch, gedacht) und
+`prompt-templates-authored-per-locale` (die Begründung hinter den
+eigenständigen Templates oben).
+
 ## Repräsentative Tests
 
-`packages/core/src/interview/single-turn-interview.test.ts` (17 Szenarien über
-drei Doubles) fixiert jedes Stück: Chunks in Reihenfolge, Speichern nur nach dem
-letzten Chunk, zwei nebenläufige Anfragen erreichen das Modell einmal, ein
-Aufrufer bricht ab ohne den anderen zu stören, Replay ohne zweite Inferenz,
-leere Produktion wird abgelehnt, `recordAnswer` über unbekannter Session /
-leerer Turn-Liste / schon beantwortetem Turn. `state.test-d.ts` prüft die
-getaggte Union auf Typ-Ebene; `transcript.test.ts` die drei Render-Zustände
-inkl. leerer Liste.
+`packages/core/src/interview/single-turn-interview.test.ts` fixiert jedes
+Stück: Chunks in Reihenfolge, Speichern nur nach dem letzten Chunk, zwei
+nebenläufige Anfragen erreichen das Modell einmal, ein Aufrufer bricht ab ohne
+den anderen zu stören, Replay ohne zweite Inferenz, leere Produktion wird
+abgelehnt, `recordAnswer` über unbekannter Session / leerer Turn-Liste / schon
+beantwortetem Turn. Seit M5 zusätzlich: die gespeicherte Sprache übersteht
+`begin`/`recordAnswer`, ein deutsches und ein englisches System/User-Template
+unterscheiden sich in beiden Nachrichten, und eine Session ohne oder mit
+nicht unterstützter Sprache fällt sowohl beim Lesen (Fallback-Templates) als
+auch beim nächsten Schreiben (aufgelöster Tag auf der Platte) korrekt zurück.
+`state.test-d.ts` prüft die getaggte Union und `InterviewState`s Sprachfeld
+auf Typ-Ebene; `locale.test.ts`/`locale.test-d.ts` das Sprach-Vokabular selbst;
+`prompts.test.ts`/`prompts.test-d.ts` die zweisprachigen Templates, inklusive
+eines `@ts-expect-error`, der eine Tabelle mit fehlender Sprache ablehnt;
+`transcript.test.ts` die drei Render-Zustände inkl. leerer Liste.
 
 ## Verwandte Seiten
 

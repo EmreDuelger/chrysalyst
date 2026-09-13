@@ -18,18 +18,16 @@ sources:
     resource: repo://packages/web/src/App.tsx
   - id: openwiki-source-40275cb92c3610938f16ade3
     resource: repo://pnpm-workspace.yaml
-  - id: openwiki-source-27db56ec5f5b550679beca36
-    resource: repo://specs/platform/monorepo-workspace/spec.md
-  - id: openwiki-source-2d3fac86f9ec693be8ecab61
-    resource: repo://specs/platform/web-shell/spec.md
   - id: openwiki-source-a0a8fcea3fc317de88a8e08c
     resource: repo://specs/roadmap.md
+  - id: openwiki-source-ab77cccc8878026473ecb6d2
+    resource: repo://specs/tooling/monorepo-workspace/spec.md
   - id: openwiki-source-1eddfe2a3e905b4c50618167
     resource: repo://tests/workspace.test.ts
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
+    at: 2026-09-13T13:26:03.722Z
 ---
 
 # Architekturüberblick
@@ -100,9 +98,17 @@ Modell → Hono-SSE → `core`-Use-Case → `session.json`. Vorhanden und getest
   `InterviewView`, ein SSE-Frame-Parser, ein editoriales Designsystem
   (`DESIGN.md`, plain CSS + Token-Schicht + CSS Modules)
 
-Es gibt **noch keine** Turn-Schleife, keinen Fragebaum, keine Destillation,
-keine Widerspruchsprüfung und keinen CI-Workflow. Die Frage entsteht kalt aus
-einem festen Prompt — kein Ideen-Eingang. Genau eine Runde.
+Seit M4 läuft eine CI-Pipeline gegen die hermetische Teststufe und das
+`core`-Coverage-Gate; seit M5 ist die Runde **zweisprachig** — die Sprache ist
+Teil von `InterviewState`, die Eröffnungs-Prompts existieren je einmal auf
+Deutsch und Englisch, und `packages/web` erkennt/erinnert die Sprache und
+zeigt jedes Label aus einem Wörterbuch. Details:
+[Interview-Runde](interview-round.md), [Interview-Route](interview-http-and-composition.md),
+[Browser-Client](web-client.md).
+
+Es gibt **noch keine** Turn-Schleife, keinen Fragebaum, keine Destillation und
+keine Widerspruchsprüfung. Die Frage entsteht weiterhin kalt aus einem festen
+Prompt — kein Ideen-Eingang. Genau eine Runde.
 
 ## Baureihenfolge: Walking Skeleton, dann vertiefen
 
@@ -119,8 +125,10 @@ das ist nur an einem echten Modell falsifizierbar.
 | M0 Monorepo-Scaffold | ✅ erledigt (`001-add-monorepo-scaffold`) |
 | M1 Ollama-LLM-Adapter | ✅ erledigt (`002-add-ollama-llm-adapter`) |
 | M2 Dateisystem-Session-Store | ✅ erledigt (`003-add-filesystem-session-store`) |
-| M3 Walking Skeleton + Engine-Spike | 🟡 teilweise — Plan `004-single-question-walking-skeleton` erledigt; `engine-structure-spike` noch offen |
-| M4…M18, P1 | ⬜ offen |
+| M3 Walking Skeleton + Engine-Spike | ✅ erledigt (`004-single-question-walking-skeleton`, `005-engine-structure-spike`) |
+| M4 CI-Test-Stufen + `core`-Coverage-Gate | ✅ erledigt (`006-ci-test-tiers`) |
+| M5 DE/EN-Fundament | ✅ erledigt (`bilingual-ui-and-prompts`) |
+| M6…M18, P1 | ⬜ offen |
 
 Zwei Chores stehen daneben: C1 (`openwiki --init` — dieses Wiki) und C2
 (minimale CI).
@@ -137,6 +145,9 @@ Entscheidungen, die für die ganze Roadmap gelten:
 - **Kein Cloud-LLM-SDK** irgendwo im Produktcode.
 - **`schemaVersion`** auf jeder persistierten Session ab M2 — vom
   [Session-Store](session-store-adapter.md) mit `schemaVersion 1` umgesetzt.
+  `TState` wächst über M2 → M5 → M8 → M9 → M14; M5 fügte `locale` zu
+  `InterviewState` hinzu, ohne `schemaVersion` zu heben — das Envelope blieb
+  unverändert, siehe [Interview-Runde](interview-round.md).
 - **Engine-Struktur** (hand-gerollter Zustandsautomat vs. LangGraph.js) —
   offen, Wegwerf-Spike im M3-Plan `engine-structure-spike`. Der Walking Skeleton
   baut bewusst keine Engine: seine `core`-Logik ist die einfachste Funktion über

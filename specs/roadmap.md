@@ -45,7 +45,7 @@ erste Meilenstein sie berührt.
 | **`LlmPort`-Adapter** | **Vercel AI SDK (`ai` v6)** in `packages/server`, hinter dem Port. Eine Schnittstelle für Ollama, llama.cpp und LM Studio; geprüftes SSE-Token-Streaming; `Output.object()` + zod für strukturierten Output mit Repair. `packages/core` importiert es nie. | fest |
 | **Strukturierter LLM-Output** | `Output.object()` + zod-Schema im Adapter. Kein hand-gerollter JSON-Parser. Der `LlmPort`-Vertrag bekommt in M10 eine Antwortform. | fest — Delta in M10 |
 | **Kein Cloud-LLM-SDK** | Weder Anthropic- noch OpenAI-SDK irgendwo im Produktcode. Die App läuft gegen lokale Modelle. | fest |
-| **On-Disk-Session-Schema** | Jede persistierte Session trägt ab dem ersten Schreiben ein `schemaVersion`-Feld. `TState` wächst über M2 → M8 → M9 → M14; ohne Versionsfeld brechen spätere Meilensteine bestehende Session-Ordner still. | fest — ab M2 |
+| **On-Disk-Session-Schema** | Jede persistierte Session trägt ab dem ersten Schreiben ein `schemaVersion`-Feld. `TState` wächst über M2 → M5 → M8 → M9 → M14; ohne Versionsfeld brechen spätere Meilensteine bestehende Session-Ordner still. | fest — ab M2 |
 
 ## Überblick
 
@@ -58,7 +58,7 @@ erste Meilenstein sie berührt.
 | M2 | Dateisystem-Session-Store | ✅ erledigt (`003-add-filesystem-session-store`) | M0 | — |
 | M3 | Walking Skeleton: eine echte Frage E2E + Engine-Spike | ✅ erledigt (004-single-question-walking-skeleton · 005-engine-structure-spike) | M1, M2 | 1 (dünn) |
 | M4 | CI-Test-Stufen + `core`-Coverage-Gate | ✅ erledigt (`006-ci-test-tiers`) | M3 | — (Leitplanke) |
-| M5 | DE/EN-Fundament | ⬜ offen | M3 | 1 (Constraint) |
+| M5 | DE/EN-Fundament | ✅ erledigt (bilingual-ui-and-prompts) | M3 | 1 (Constraint) |
 | M6 | Backend-Setup-Gate | ⬜ offen | M3 | 1 (Constraint) |
 | M7 | Fragebaum-Modell | ⬜ offen | M3, M5 | **1** |
 | M8 | Adaptive Fragewahl + Turn-Loop | ⬜ offen | M7 | **1** |

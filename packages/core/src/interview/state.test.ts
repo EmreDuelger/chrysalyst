@@ -35,12 +35,13 @@ describe('isAnswered', () => {
 });
 
 describe('InterviewState', () => {
-  it('round-trips through JSON with every instant returning as a string and the tag intact', () => {
-    const state: InterviewState = { turns: [ANSWERED_TURN] };
+  it('round-trips through JSON with every instant a string, the tag intact, and the language unchanged', () => {
+    const state: InterviewState = { locale: 'de', turns: [ANSWERED_TURN] };
 
     const parsed = JSON.parse(JSON.stringify(state)) as InterviewState;
 
     expect(parsed).toEqual(state);
+    expect(parsed.locale).toBe('de');
     expect(parsed.turns).toHaveLength(1);
 
     const turn = parsed.turns[0];

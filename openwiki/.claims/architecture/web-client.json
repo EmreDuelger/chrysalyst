@@ -1,46 +1,46 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:c8d67ff364692820bf4d7e3435797fdb5447db312ec30576f03040f64ac88bf7",
+  "pageVersion": "sha256:7a6111daa711579d0b0e38843d4eed23906c8a3a4a6079364148ef6dd6839b67",
   "claims": [
     {
       "id": "claim_91d3e9dd5a7d4bbe842a1c81d24b6864",
-      "statement": "@chrysalyst/web is the driving adapter: it speaks only to the HTTP API on loopback, declares no workspace package, imports no domain module, and the App shell mounts InterviewView with the API client as a prop so tests drive the view without a network.",
+      "statement": "@chrysalyst/web is the driving adapter: it speaks only to the HTTP API on loopback, declares no workspace package, imports no domain module, and the App shell mounts InterviewView with the API client and the chrome's language as props so tests drive the view without a network or a real browser language.",
       "evidence": [
         {
           "resource": "repo://packages/web/src/App.tsx",
-          "version": "repo-file-v1:sha256:80e9de2be589bb77753fd75c3e2bf852100182e73ee1387f5a8bfc4c87ebf815"
+          "version": "repo-file-v1:sha256:ea4ef4210c34cd503e2247b4569dca3df1a936d9e883af72266cb2c7819ee529"
         },
         {
-          "resource": "repo://packages/web/src/interview/InterviewView.tsx#L1-L40",
-          "version": "repo-lines-v1:sha256:6562e96ca7e640b59fdce4f59437cc37aa692df074ba7ef03e01c899d47fd554:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlZjE3NDNkNDQ2MzM0NTZjMTVkNWRiZTkyYTExOTE5MWE4NDE5ZmJmMDEzNzNmZTc3ZjViMjdkZTdiMjUzNzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2NWRlNjA0YjhmNTUxZjQ1ODAxMmY4OTAwNjA2NzE5ZjM4YTJhZGQ3ZWQ5OGQ1OGRhNDM0ZDk3MGI4NWVkZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NGUxZTI1NGM5MzJjYTNkMTI4OTExNTM0NTdiZDYzNjVlZTFjZTIwMWEwNGMwNTA4ZjhkOWVjZWVkZWEwNTUifQ"
-        },
-        {
-          "resource": "repo://specs/interview/interview-view/spec.md#L1-L12",
-          "version": "repo-lines-v1:sha256:6a909b4c57d70ed2f0a1ab5bf3d80250b7e4ab287ef52f248fe430a6f26bc482:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0NTU4ZTE4OGY5ZDZmZjU0ZWQ4ZDkzZWFjMGI2ZmYzODhlODNiYTgzNGVkN2YyNmMxOTc0YzVjNTdiNzkwNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRhNDhhNjQ0NjFiNTJkODMxNDIwMmMyOWIyZGRhZTVmMDgyNzc1YTAzMmZkZmE1MmMwNjIxY2I3M2MwM2E0NmQifQ"
+          "resource": "repo://specs/interview/interview-view/spec.md",
+          "version": "repo-file-v1:sha256:33b2734c15bfdb449f2d7441242e66ddab385aa100e00d70f3d48e091cd768da"
         }
       ]
     },
     {
       "id": "claim_248dc73786274696a0d66c2dd42252d8",
-      "statement": "InterviewView is a six-phase state machine (connecting, streaming, complete, submitting, recorded, failed): a mount-time useEffect creates a session then opens the question stream and appends chunks; an AbortController in cleanup aborts on unmount; a failure shows in place and the answer control never opens.",
+      "statement": "InterviewView is a six-phase state machine (connecting, streaming, complete, submitting, recorded, failed): a mount-time useEffect creates a session in the language frozen at mount (a ref) then opens the question stream and appends chunks; an AbortController in cleanup aborts on unmount; a failure shows in place and the answer control never opens; every label renders from the live `locale` prop via `uiStrings`.",
       "evidence": [
         {
-          "resource": "repo://packages/web/src/interview/InterviewView.tsx#L18-L118",
-          "version": "repo-lines-v1:sha256:099d9f18b654acf8e8b978d9acef6c47a3ecfa939bdf6e42eb44694a62fa24e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2Nzk0N2UxOGFmZTg1OGY5NDE0Njk3NmQxY2RkZjU5YWVmZWM3M2NkZGJiNjVhMGExMTE0ZWE3ZjQ4NzgzMTk5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3NGVhOTRjODJiMWM0MjI4NTMwODliMDIxOTdjYjhkY2ZkZWM1ZWNjMzhkYTNiYzc5YWE5MGQ3ODMwYTYwNjRmIn0"
+          "resource": "repo://packages/web/src/interview/InterviewView.tsx#L23-L34",
+          "version": "repo-lines-v1:sha256:49441b8a021e9f014626022fb6e4265899afa80f087d2858455abb54db1774f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1M2MxYTZiNGNjMjQzNjhhNmFlMGU1YTE3MzY4YmJjODVjNzRhM2JlZDFlZDdkYjBjMzgzMTc0ZTIyZDM1NDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyODZhOTIyZjczZDE5ZTAxN2UxZTFhM2ZlOWU2NjQ4MGRiYmM4NDY1YmY4ZGE2MzM4MTJhNTY3OTJhOTI2NDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkZTU4ZGQ1ZmNmZTZhYzBkMGY4MWYxNjdiNGVlNTkzYWU3N2M1MjNiYTk0ODNmMWUwNTM3YmJkYWYyOGU2YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmOGRhZjYyMTEyZjNlZWRmMzUyOWE5N2JlOGY3NjhmODVjNTE5NWFjMzQxODZkZTU5ZDdiOTExN2QwMjc0NjkifQ"
+        },
+        {
+          "resource": "repo://packages/web/src/interview/InterviewView.tsx#L38-L101",
+          "version": "repo-lines-v1:sha256:7d763622342bfd3e7f2ae7c8aaec7b0ab0d31269cfa08efb5e687398857e3d9e:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmNGEwMjJlOWM4NDE1NzNiOWJkMDI5Njk4YzI2OTljMzRiNzNiYTM0MDA0YzBmODE5ZDI2MjE3YmYyZDBiNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzOGQzNGVmMTk4MjQ4ZDc0MTcyM2RhNTgzNjc4NjdkM2M5NDIwMmI5ZWZjYTljY2YwODQ3NzAwMzAyODEyZjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmOGRhZjYyMTEyZjNlZWRmMzUyOWE5N2JlOGY3NjhmODVjNTE5NWFjMzQxODZkZTU5ZDdiOTExN2QwMjc0NjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0NWJiZTE1ZDU3NWVkM2UzYjFiODliOWRhZmQ2ZWY0NWQyYjQ2NGM2YWYzMTQzMTE2YThkZmJjOGRlODMyYWYifQ"
         }
       ]
     },
     {
       "id": "claim_c0e849ee6d814d018ddeffc3c54f6055",
-      "statement": "The view reads the event stream with fetch and a ReadableStream rather than EventSource, so the transport is a function tests replace and the parser is exercised on the chunk boundaries a real network produces; interface copy is English until M5.",
+      "statement": "The view reads the event stream with fetch and a ReadableStream rather than EventSource, so the transport is a function tests replace and the parser is exercised on the chunk boundaries a real network produces; since M5 interface copy is served per locale from the uiStrings dictionary rather than hardcoded English.",
       "evidence": [
         {
-          "resource": "repo://packages/web/src/interview/interview-api.ts#L60-L110",
-          "version": "repo-lines-v1:sha256:66116e121d0bd66f2053bcf3367335b879af49f4a2f1c39f277c0cc0b16226ff:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1YzJjZTg4ODk0ZWQ3MGNkNzdkYjZjMTQzYzJlM2YxZTU0YzM2YWZkODhhN2FhYjI3ZDBkNTdkOGRkMGYyYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNjUwMWEzNTgwMTA4YmViMTJkZTJiMzE5NGE1MzdlMjA1MjA0ODRkZGIxYjc3NWQzYzdlNmNiMmFkOGUzYmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4M2I3NjBjNTE4NzBmMDE5NWM3Njk4YThmYTY5OTFkZmIwZTAzZmJiM2VkMjE3MjQ1NzhmYjFmOWYyNjkwNWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4MWJjZTQyNTAwOGRmOWVjYjBhOTU1YzlhMmFmZTM1Zjc0MDgzOTcwM2M1MDRlMDljYzY4NDg5ZWI2OTUyZjgifQ"
+          "resource": "repo://packages/web/src/interview/interview-api.ts#L101-L126",
+          "version": "repo-lines-v1:sha256:c652d9a9dc02beeab5098cfa63c26de78ebefb3f5e2e40bd950363a90e067bfa:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YmRhZjI1NThmYmQ4MGQ2YTc1ODQxNjQ4Mzg2OWY5N2MyNmNjNjlkODQ5YzdjMzRkNGEyMGFiNDk3ZjFhMDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MmE0MjkzODJiMmUxNDcxOGUwZTM3YjA1NzBhOGExNzAyOTkxZmNkODQ5OGNkODQwNjBhOGJmNGYwNTAxN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExZjdmM2QyM2JhZmM5YWMzYzhlNmI5NWJhMzQzYjE1MmQ5NzExOTdlNzc1M2FjYTFlYjk3NmFmYTFmYTY0MWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkNWVhOTY1OWNiN2Q1ZDZhMzk2MGU0Njc3ODhjNWRhZTI0M2MxNjU2MTE5NDk3MjhjMzQwZTNkMDZlYmNiNTIifQ"
         },
         {
-          "resource": "repo://specs/interview/interview-view/spec.md#L5-L10",
-          "version": "repo-lines-v1:sha256:74d56a25f711e498151dae1520f524cc259314f8d48a08b4a22c20f0880e6ccd:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmI0YzkwZmJjOGIzYmM0OTIxZjRlOTM2ZDA3MmFmNmM0NDY2ZWFiM2RmMGFhYmY5MGY2ZjYxZDk1MjA2MDY5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDJkOGViZGY3Mzg0NjljNjAyNDI4NTcxOTM5NThjY2IyZDc5MjZiNzQ5MWVhZjkzZWYwY2RmOTc0ZDRhMDc2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzc3NWI0NzY4OTM5Njc2NDAyMTQ0Njk0MWY5ZDJhYzRkNjRhYjZhODU0YzY5YjQxMGRmYWJhMWZjZWE5YmViYyJ9"
+          "resource": "repo://packages/web/src/interview/interview-api.ts#L150-L170",
+          "version": "repo-lines-v1:sha256:d920ab7f763118e9863ce723f16d7d69a7aeb434a30ac706b168f0569839f4d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiMDA0NzQ2YjJmOTgyZjMwYzVjNGVlOWRiNDcyNjlhMGVlOTY3Y2Y1NmQ0YzUyYmU5MGY2ZDU3OTJlMGQ2NWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMmYyYjI4NWJkNGJiZGRlOGY4NDQ3NDgwYjBhM2JlOWFkYzlmNjNiOTAwYjNmZWQ2OWYxZmMwNGRmMTk2NjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjNTdjOTRjMzViN2RiNzFmMTM4YTJhNzgxMDRjMTAyZjIzOWU3NjNkYjlkYzEyZDMyMTY3ODhhMGM4OGMzMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAzZWFiYzg4MDgwN2ZhMGFiNTdjZWZiNWVmYTYyY2M4ODVmNTMxOWI2ZTNkYjZiZTA1NmE1N2M4OWEyN2UwZDIifQ"
         }
       ]
     },
@@ -59,8 +59,8 @@
       "statement": "The parser keeps data byte-for-byte and never throws; decoding it into one of the three payload shapes and rejecting an unknown event name or a malformed data payload is interview-api.ts's job, and the parser is checked at every byte boundary of tests/fixtures/interview-sse-frames.txt against pure string identity.",
       "evidence": [
         {
-          "resource": "repo://packages/web/src/interview/interview-api.ts#L1-L25",
-          "version": "repo-lines-v1:sha256:55e98a8c173b26577876e4dbe5bc68842d6ce28ca78c975c6522d593e1c68072:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxYWZjOWViNDhlYjk0OWQ1N2RhZGNlOTMzYzA0N2Y3NDZlM2QxNmE0N2Y1MDRjMjc3MjFmNTQ0YmQ1ZTU5MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRkNzhmMzI0ZDk3YzNmMGU3ZDYzMDczZjY3ZTYxNGFlNjg0ZjE5N2JiZDJmNWZmOTExODVmMjQyNTA3ZTU3MWIifQ"
+          "resource": "repo://packages/web/src/interview/interview-api.ts#L9-L27",
+          "version": "repo-lines-v1:sha256:d295c6f226707c9e41c285a369a9bdedc0c306dc7a04721fec47d1f830dda70c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MmE0MjkzODJiMmUxNDcxOGUwZTM3YjA1NzBhOGExNzAyOTkxZmNkODQ5OGNkODQwNjBhOGJmNGYwNTAxN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyNzM2Y2UwOTJhY2NiZmVjZTU4ZDgxOWRlMTEwNDFlYmE5NDZkNjg0OGM0OWMwMWJjNTJhZjFmYjI4MTliMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzZDI5YjYwYjgwYmE2YzIwODBlNjUxZjM5Yjk2M2MyNzNhYmQyZGFlNTEzMGQ3NDVjMTY1NGZhMDcwNmFlMzkifQ"
         },
         {
           "resource": "repo://packages/web/src/interview/sse-frames.ts#L28-L50",
@@ -70,11 +70,11 @@
     },
     {
       "id": "claim_6cc443b26b49490ba96da88929cec914",
-      "statement": "@chrysalyst/web keeps no dependency on @chrysalyst/server and restates the wire contract itself — the three SSE payload shapes and the two JSON bodies — because hc<AppType> cannot type an SSE event name or payload; tests/fixtures/interview-sse-frames.txt is the executable half both sides' tests are written from, so a rename on either side fails a run.",
+      "statement": "@chrysalyst/web keeps no dependency on @chrysalyst/server and restates the wire contract itself — the three SSE payload shapes and, since M5, three JSON bodies including the language-bearing session-creation request/response — because hc<AppType> cannot type an SSE event name or payload; tests/fixtures/interview-sse-frames.txt is the executable half both sides' tests are written from, so a rename on either side fails a run.",
       "evidence": [
         {
-          "resource": "repo://packages/web/src/interview/interview-api.ts#L1-L44",
-          "version": "repo-lines-v1:sha256:e0292414b69798f655519f9031060aa817824019ee92b864ddf7fc5438879f56:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxYWZjOWViNDhlYjk0OWQ1N2RhZGNlOTMzYzA0N2Y3NDZlM2QxNmE0N2Y1MDRjMjc3MjFmNTQ0YmQ1ZTU5MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmMzlhYmUyMGVmMGRkNjViN2JkMThhZWMwYWU1MTgyZDJlZWMzMGE5ZmQyOTk5MjQyMzQ0NjBhODRlNjhmYjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2MjVmNzE0MDk5NDRkNjY5ZjRjYTU4MTk0NTc4MDcxZWI4NDY0MWE0NzEwZjBkNTIwN2EwOTlhODBiZWVmN2YifQ"
+          "resource": "repo://packages/web/src/interview/interview-api.ts#L9-L27",
+          "version": "repo-lines-v1:sha256:d295c6f226707c9e41c285a369a9bdedc0c306dc7a04721fec47d1f830dda70c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MmE0MjkzODJiMmUxNDcxOGUwZTM3YjA1NzBhOGExNzAyOTkxZmNkODQ5OGNkODQwNjBhOGJmNGYwNTAxN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyNzM2Y2UwOTJhY2NiZmVjZTU4ZDgxOWRlMTEwNDFlYmE5NDZkNjg0OGM0OWMwMWJjNTJhZjFmYjI4MTliMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzZDI5YjYwYjgwYmE2YzIwODBlNjUxZjM5Yjk2M2MyNzNhYmQyZGFlNTEzMGQ3NDVjMTY1NGZhMDcwNmFlMzkifQ"
         },
         {
           "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L113-L138",
@@ -150,21 +150,21 @@
     },
     {
       "id": "claim_a800159011f948b781f62de4a64a6987",
-      "statement": "InterviewView.test.tsx drives the view through a fake InterviewApi across all nine interview-view scenarios in jsdom, and StrictMode's dev double-invoke leaves one extra never-questioned session directory per page load, which is expected.",
+      "statement": "InterviewView.test.tsx drives the view through a fake InterviewApi across the interview-view scenarios in jsdom, including the M5 language scenarios (chrome relabelling without a second session, the session's own locale on the question region), and StrictMode's dev double-invoke leaves one extra never-questioned session directory per page load, which is expected.",
       "evidence": [
         {
           "resource": "repo://packages/web/src/interview/InterviewView.test.tsx",
-          "version": "repo-file-v1:sha256:2325a40ed04d83b52e45cf4fe148dc15c6c6ed4e6486dfe1e3751a5a99b81f1b"
+          "version": "repo-file-v1:sha256:de41380c65b88103d54d587fbe4710111ee6043104e38663a24809923c31862f"
         },
         {
           "resource": "repo://specs/interview/interview-view/spec.md",
-          "version": "repo-file-v1:sha256:7a0b8f746df2b7e1caf06c745b0a6910ca00c5410764ba375645d23e7e2b381c"
+          "version": "repo-file-v1:sha256:33b2734c15bfdb449f2d7441242e66ddab385aa100e00d70f3d48e091cd768da"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-10T15:50:21.943Z"
+    "at": "2026-09-13T13:26:03.722Z"
   }
 }

@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:bcdababcff01707fb4a2450b1ef311d4722008cdce7b09bf3c5184485cb64711",
+  "pageVersion": "sha256:1f3d8f09e1ad24794b7bf46e9a52d9715bdc821f53250f3b097a2abb5c48d7f2",
   "claims": [
     {
       "id": "claim_f7fabcf8cbed47b7af54379fdb5040f8",
-      "statement": "interview-routes.ts is the sole place the interview's vocabulary is mapped to HTTP: undefined-session becomes 404, a no-open-question outcome becomes 409, an unusable body becomes 400, begin becomes 201 with { id }, and a recorded answer becomes 204 — no status code appears in the domain.",
+      "statement": "interview-routes.ts is the sole place the interview's vocabulary is mapped to HTTP: undefined-session becomes 404, a no-open-question outcome becomes 409, an unusable body becomes 400, begin becomes 201 with { id, locale }, and a recorded answer becomes 204 — no status code appears in the domain.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/routes/interview-routes.ts#L100-L167",
-          "version": "repo-lines-v1:sha256:d3e8125774a659aa931dfacd3ffd7dc979c57e05aceb590cfc57818735a670d1:eyJzZWxlY3RlZExpbmVDb3VudCI6NjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ODJiODkzNTQ3NmIxMzk5OTAyM2IyMTNkMGI3ZWIyNDI1ZDk4NjFlMjM2OGZlZDI4YjQzMGY4MGM1NDRhYjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUzZjgzNDI3Y2JmNGE2ZDhmZWVhNTY0Y2FmZmNkMWMxZTUzZTc4Y2ZkYmZlNzNhZmUzNDBjODAyNTViZjVhNTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L118-L195",
+          "version": "repo-lines-v1:sha256:1dad90a7bdad4a725bf835c977bb64434e9ae2e37e67f9a9d2e402792c07997c:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxNTA3MjAxNzdhYTVmZjkzZGJmNTQ4YTIxMjg4NDA5NDkxM2M2NmEyZTUzYzk1YzZmZTg1NzQ2N2E1Yzk0NDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExYmFlZDFjODZkZTFlZWE3YTE4NWQ2YmFmYjRmNjdlMjcwMWQ1ZjBjNjczYzNkOWEwNGYwNzMzZTdiNGMzYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         },
         {
-          "resource": "repo://specs/interview/interview-http-api/spec.md#L1-L20",
-          "version": "repo-lines-v1:sha256:52387cb13b52a270e912bfe3c98c1e3828f9f0d139648a6e612267a518f39e5d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3YTRjN2Y1YzhhZDQ4MzE0NGFkZGYxOGU4ODgwYjA3Yjk4OWVjZDFlMjY3YWFjZjA5NDdkMjZhODRmYjY3MDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA5MjFmNGU4YzRkMmViZjRiYzhkYWEzMWI4OWMzMWM5ODNlN2E1Njc2ZGMyZTBiZWI3NmNlMjExNTQ2OTVjOWYifQ"
+          "resource": "repo://specs/interview/interview-http-api/spec.md",
+          "version": "repo-file-v1:sha256:f0c5fe08e459a7c37aa1744a7ee9b04baf0eb662e3b3a32d670a7675cc060b1e"
         }
       ]
     },
@@ -21,8 +21,8 @@
       "statement": "The session identifier is minted in the POST /interview route with randomUUID(), not in the domain, because randomness is ambient nondeterminism like the system clock and save is handed an identifier rather than inventing one.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/routes/interview-routes.ts#L101-L108",
-          "version": "repo-lines-v1:sha256:9bc326331c9e1f0bcdb84f8947619489ea7b753c3eb170002752c8692c153972:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTcyYTQyOTM4MmIyZTE0NzE4ZTBlMzdiMDU3MGE4YTE3MDI5OTFmY2Q4NDk4Y2Q4NDA2MGE4YmY0ZjA1MDE3YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQ3NWU5NGE5MDRhYzQ5YjMxNTRkNDY3MmE2NmU4NjI5Yjg2ZGFjNzRlM2UyOTM3YmU2OTI3YWUzZGExMWM1MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmNiNzVhY2NjOGVhNTMwZmU4Zjg2ODJjMDM1OTM0YTZjYjljMGQ5ZGNkNWUyZTY0OWJiNDljZTZjMWM3NDMxYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTU0NDU2MTA3YmI0ZGI1OWQwODlkYTNhYjc4MGI4YmJlNzM4NDFlZDg0MTE1MTJmOTVmNzBjYWY3MGQ4ZTcwMyJ9"
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L118-L135",
+          "version": "repo-lines-v1:sha256:0f5804bf5351fbff796a4a38ab080a426270b647efb5741006371e013add0a8a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxNTA3MjAxNzdhYTVmZjkzZGJmNTQ4YTIxMjg4NDA5NDkxM2M2NmEyZTUzYzk1YzZmZTg1NzQ2N2E1Yzk0NDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzMjFhZTIxNmQ5ZmI4ZjUzODUwNzAzYzhlOWFjZTNlYTU5ZjNiMWIzMGI3N2MxMGJlM2U0ZjFkODQyZTU1ZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExYmFlZDFjODZkZTFlZWE3YTE4NWQ2YmFmYjRmNjdlMjcwMWQ1ZjBjNjczYzNkOWEwNGYwNzMzZTdiNGMzYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjYmYzZGYzZTJlOWViMWM3OGYwZDlmYzIxYTUzNzI1YzQ3MTkyZjYwMWVkOGQ1OGEyY2ViZDNlNTIwYWVkYTMifQ"
         }
       ]
     },
@@ -31,8 +31,8 @@
       "statement": "The question stream carries exactly three SSE event types — token {text}, done {question}, error {message} — each data field a single line of JSON, because JSON.stringify escapes a newline so no model chunk can split one SSE frame into two; there is no id field and no reconnection protocol.",
       "evidence": [
         {
-          "resource": "repo://packages/server/src/routes/interview-routes.ts#L20-L36",
-          "version": "repo-lines-v1:sha256:febc514e8780fd2d80f89d72de96e638d7146ff2b4d5d559e4cb34f9227ba1f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MTYxMjgzYjAyOTUxYTYwNmFiOWQ2ODNlNTk1ZWI4YjIyZGE4MWEyNzYzZjQ0YjllOTcwODQ3NzVkMTMyYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5MzlhMTQxZTdjNmJjZGQ4N2U4YWIyOTE1YWJkNzhlNjY0OTUxZDM4OTYyODRmMTU1ZmY3MWU3MTlhYzE1N2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkYTZhYzU5OGE3MWI1ZjI2YWQxZTc2NGNlNDk2NGFjOWNlM2UwZWUwNzdiNDdhOWUzMjIyZWU5OTFiMDZjMjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZjVkZjkxYTM1M2IyNjc3MTFkNmM3OWViNmU5NzVlZWM4MzFkMmYzMzYxNTkwYzc1OGY4NjM5MGNlNGI0ODMifQ"
+          "resource": "repo://packages/server/src/routes/interview-routes.ts#L44-L46",
+          "version": "repo-lines-v1:sha256:c8896285d191f7ceb59e8c6eb5ceabf0080e0a00a06b4db9d4c366010112ad38:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDE0YTA1YTg3ZmYwNzk0ZmI4OTBhYmJkMmZlYmRiMjMzMDEzMTRjMWFmOTBlYmRkYjRlNWE2ZDI5MDg0YjNhNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzNmMzcxZDk4YTQwMzMyM2ZmNDVjMGI1OWYxZWZkNmVmMzQ3YWZjNDQwNmU3NGQ1YjA1YWNmZGI4OTAyNWUyNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTQ4ZjYxMjMzMjkxZDUwMmVhNzUxY2I0ZjU2MmU2M2U2NWFiYjQ1OTY1MDZhYTkyY2I1OWY0ODU4ODYyZmZlZiJ9"
         },
         {
           "resource": "repo://specs/_decision/004-single-question-walking-skeleton.md#L57-L82",
@@ -122,21 +122,21 @@
     },
     {
       "id": "claim_bdb19f7643834413af0925d9fd76b13c",
-      "statement": "interview-routes.test.ts drives the app through app.request(...) over three fake-model factories (chunkedLlm / rejectingLlm / endlessLlm) and a mkdtemp directory, asserting frames byte-for-byte against tests/fixtures/interview-sse-frames.txt with no socket and no daemon; interview-routes.live.test.ts runs the same path against a real qwen3:8b and measures time to first token.",
+      "statement": "interview-routes.test.ts drives the app through app.request(...) over three fake-model factories (chunkedLlm / rejectingLlm / endlessLlm) and a mkdtemp directory, asserting frames byte-for-byte against tests/fixtures/interview-sse-frames.txt with no socket and no daemon, and since M5 also covers the locale fallback and refusal scenarios via it.each against tests/fixtures/interview-locales.json; interview-routes.live.test.ts runs the same path against a real qwen3:8b and, since M5, adds a per-language it.each asserting a function-word score.",
       "evidence": [
         {
           "resource": "repo://packages/server/src/routes/interview-routes.live.test.ts",
-          "version": "repo-file-v1:sha256:7284279d3885709c89f1c46c57f0ef5e65e0eb87008adfa857bfff7addfe6cc4"
+          "version": "repo-file-v1:sha256:0943a0cb8af5cef696f2717c7e9023715024d8ccb14ef0817562a7d1acaa6cd4"
         },
         {
           "resource": "repo://packages/server/src/routes/interview-routes.test.ts#L1-L60",
-          "version": "repo-lines-v1:sha256:2085de215dac527ab29f6685472ecfdf2c3190285e6b717968f7840e4556124e:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YWRjNmU5Y2ExNjhjYTVkMmFhMGVjM2IwMjdiNTk3ZGY1NGI1ZDEzN2Y5Zjc4ODU0MzkwMGI4NTZiNmUyODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5NWZhMGYxMTE3YjVlYTQwNDM0MTQwZGRlMWEzNDBjNzIwZGRiZjMyNjIxMmUxOTE4MzhkNGIxNTZkMzE2YmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1NWJkMWU0OTQ3M2FkZDU2NzFkOGNiODE3ZjhhMGU5NWM0MzEzNjZmNmViODY1MDJlYjRjY2QwNGRmZjlmODYifQ"
+          "version": "repo-lines-v1:sha256:61b8900ad74f642de8133ee8bc218f0d841ca5ba44da9c74d425fceeb828fdff:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YWRjNmU5Y2ExNjhjYTVkMmFhMGVjM2IwMjdiNTk3ZGY1NGI1ZDEzN2Y5Zjc4ODU0MzkwMGI4NTZiNmUyODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5NWZhMGYxMTE3YjVlYTQwNDM0MTQwZGRlMWEzNDBjNzIwZGRiZjMyNjIxMmUxOTE4MzhkNGIxNTZkMzE2YmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1NWJkMWU0OTQ3M2FkZDU2NzFkOGNiODE3ZjhhMGU5NWM0MzEzNjZmNmViODY1MDJlYjRjY2QwNGRmZjlmODYifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-10T15:50:21.943Z"
+    "at": "2026-09-13T13:26:03.722Z"
   }
 }

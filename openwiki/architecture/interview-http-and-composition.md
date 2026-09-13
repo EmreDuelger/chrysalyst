@@ -3,9 +3,6 @@ type: architecture
 title: Interview-Route, SSE-Kontrakt und Kompositionswurzel
 description: Wie packages/server die Interview-Vertikale über HTTP verdrahtet — die drei Routen (Session anlegen, Frage streamen, Antwort aufnehmen), der Server-Sent-Events-Kontrakt token/done/error mit einzeiligem JSON, die Übersetzung der Domänen-Vokabeln in Statuscodes an der Grenze, und die Kompositionswurzel als einziger Ort mit einem konkreten Adapter.
 tags: [http, server-sent-events, sse, composition-root, hono, interview, dependency-injection]
-verified:
-  - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
 sources:
   - id: openwiki-source-abd0a1ef3f59dbd18dcf5018
     resource: repo://packages/core/src/interview/transcript.ts
@@ -29,7 +26,10 @@ sources:
     resource: repo://specs/interview/interview-http-api/spec.md
   - id: openwiki-source-b1e8b3a8bdfc48eb2e09cd13
     resource: repo://tests/fixtures/interview-sse-frames.txt
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
+verified:
+  - by: openwiki/0.5.0
+    at: 2026-09-13T13:26:03.722Z
 ---
 
 # Interview-Route, SSE-Kontrakt und Kompositionswurzel
@@ -55,7 +55,8 @@ die das Interview schon getroffen hat:
 | `recordAnswer` → `no-session` | `404` |
 | `recordAnswer` → `no-open-question` (keine Frage wartet, oder schon beantwortet) | `409` |
 | Body ist kein JSON / kein `{ answer }` mit Text | `400`, benennt den Grund |
-| `begin` erfolgreich | `201` mit `{ id }` |
+| `begin` erfolgreich | `201` mit `{ id, locale }` |
+| Body nennt eine nicht unterstützte Sprache | `400`, benennt den abgelehnten Wert und die unterstützten Tags |
 | `recordAnswer` → `recorded` | `204`, kein Body |
 
 Die Session-Kennung wird **hier** geprägt (`randomUUID()` in der
@@ -75,9 +76,24 @@ Hono-Instanz, damit der Rückgabetyp jede Route trägt.
 
 ### `POST /interview`
 
-Prägt eine `id`, ruft `interview.begin(id)`, antwortet `201` mit `{ id }`.
+Prägt eine `id`, liest optional `{ locale }` aus dem Body, ruft
+`interview.begin(id, locale)`, antwortet `201` mit `{ id, locale }`.
 **Keine Inferenz** — die Route antwortet sofort, und der Session-Ordner
 entsteht mit einer leeren Turn-Liste.
+
+Seit M5 (DE/EN-Fundament) trägt der Body optional `{ locale }`. Die Route
+liest `locale` als `unknown` per `zod` (`sessionCreation`), nicht als
+`Locale`-Literal, weil ein nicht unterstützter Tag und ein Wert, der gar kein
+String ist, beide erst hier — gegen `isLocale` aus `@chrysalyst/core` —
+geprüft werden: kein Body, ein nicht-JSON-Body und ein Objekt ohne `locale`
+gelten alle als „nichts genannt" und fallen auf `FALLBACK_LOCALE` zurück; ein
+Body, der `locale` nennt, aber mit einem nicht unterstützten Tag, ist ein
+Aufrufer-Fehler und wird mit `400` abgelehnt, den abgelehnten Wert und die
+unterstützten Tags benennend, ohne eine Session anzulegen. Diese Unterscheidung
+— Abwesenheit fällt zurück, Falschheit wird abgelehnt — zieht dieselbe Linie
+wie `SessionStorePort.load`s Abwesenheit-vs.-Beschädigung-Regel. `core`
+liefert `SUPPORTED_LOCALES`, `FALLBACK_LOCALE` und `isLocale`; die Route
+erfindet kein eigenes Vokabular.
 
 ### `GET /interview/:id/question` — der Strom
 
@@ -177,13 +193,26 @@ montiert** — vorher trug die App nur `/health`.
 
 ## Repräsentative Tests
 
-`packages/server/src/routes/interview-routes.test.ts` (15 Szenarien) montiert die
-App über drei Fake-Modell-Faktoren (`chunkedLlm` / `rejectingLlm` /
-`endlessLlm`) und ein `mkdtemp`-Verzeichnis, treibt sie mit `app.request(...)`
-und prüft die Frames byte-genau gegen die Fixture — kein Socket, kein
-Daemon. `interview-routes.live.test.ts` fährt denselben Pfad gegen ein echtes
-`qwen3:8b`, misst die Zeit bis zum ersten Token (zuletzt ~2,1 s warm) und
-prüft, dass die gespeicherte Frage keinen `<think>`-Marker trägt.
+`packages/server/src/routes/interview-routes.test.ts` montiert die App über
+drei Fake-Modell-Faktoren (`chunkedLlm` / `rejectingLlm` / `endlessLlm`) und
+ein `mkdtemp`-Verzeichnis, treibt sie mit `app.request(...)` und prüft die
+Frames byte-genau gegen die Fixture — kein Socket, kein Daemon. Seit M5 deckt
+sie zusätzlich `it.each`-Fälle für die drei „nichts genannt"-Body-Formen (kein
+Body, nicht-JSON, `{}`) und für die Ablehnung eines nicht unterstützten oder
+nicht-String-`locale`-Werts ab, und prüft bei letzterer, dass kein
+Session-Verzeichnis entsteht.
+
+`interview-routes.live.test.ts` fährt denselben Pfad gegen ein echtes
+`qwen3:8b`: ein Feasibility-Fall misst die Zeit bis zum ersten Token und prüft,
+dass die gespeicherte Frage keinen `<think>`-Marker trägt, und seit M5 ein
+zweiter Fall — `it.each` über beide Sprachen — legt eine Session in der
+genannten Sprache an und zählt, wie viele einer kleinen deutschen bzw.
+englischen Funktionswort-Liste (`der/die/das/und/…` gegen `the/and/what/…`)
+die gestreamte Frage als ganzes Wort enthält; er verlangt einen Score von
+mindestens drei für die eigene Sprache und einen strikt höheren Score als die
+andere. Das ersetzt einen Muster-Match, der bei einer Umformulierung des
+Modells brechen würde, durch eine Schwelle, die sprachtypische Funktionswörter
+statt exakter Formulierungen prüft.
 
 ## Verwandte Seiten
 

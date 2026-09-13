@@ -22,14 +22,14 @@ sources:
     resource: repo://specs/_recorded/004-single-question-walking-skeleton/verification-report.md
   - id: openwiki-source-f8781635478575fa5f0ade0a
     resource: repo://specs/interview/single-question-interview/spec.md
-  - id: openwiki-source-27db56ec5f5b550679beca36
-    resource: repo://specs/platform/monorepo-workspace/spec.md
   - id: openwiki-source-a0a8fcea3fc317de88a8e08c
     resource: repo://specs/roadmap.md
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+  - id: openwiki-source-ab77cccc8878026473ecb6d2
+    resource: repo://specs/tooling/monorepo-workspace/spec.md
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
+    at: 2026-09-13T13:26:03.722Z
 ---
 
 # Spec-getriebene Entwicklung (speq)
@@ -72,19 +72,22 @@ Fix Spec-Verhalten, zurück in `/speq:plan`); reine UI-Politur direkt über
 | `specs/platform/<feature>/spec.md` | Permanente Feature-Specs der Plattform-Schicht, Szenarien im Gherkin-Stil (`GIVEN`/`WHEN`/`THEN`) |
 | `specs/adapters/<feature>/spec.md` | Permanente Feature-Specs der Adapter-Schicht |
 | `specs/interview/<feature>/spec.md` | Permanente Feature-Specs der Interview-Domäne (seit M3) |
+| `specs/tooling/<feature>/spec.md` | Permanente Feature-Specs für Werkzeugkette/CI (seit M4, aus `platform/` herausgelöst) |
 | `specs/_plans/<name>/` | Pläne in Arbeit: `plan.md`, `decision-log.md`, Spec-Deltas, Reviews |
 | `specs/_recorded/NNN-<name>/` | Archivierte Pläne, fortlaufend nummeriert |
 | `specs/_decision/NNN-<name>.md` | Zu ADRs beförderte Entscheidungen |
 
-Aktuell hält `specs/platform/` acht Features (u. a. `monorepo-workspace`,
-`llm-port`, `session-store-port`, `http-server`, die Port-Verträge),
-`specs/adapters/` zwei (`ollama-llm-adapter`, `filesystem-session-store`) und die
-seit M3 neue Domäne `specs/interview/` drei: `single-question-interview` (die
-Domänenregeln), `interview-http-api` (der HTTP/SSE-Kontrakt) und `interview-view`
-(die Browser-Ansicht) — bewusst nach Änderungsgrund geschnitten, weil M8 den
-Wire-Kontrakt ändert, M5/impeccable die Ansicht und M7 die Domänenregeln. Vier
-Pläne sind aufgezeichnet: `001-add-monorepo-scaffold`, `002-add-ollama-llm-adapter`,
-`003-add-filesystem-session-store` und `004-single-question-walking-skeleton`.
+Aktuell hält `specs/platform/` sieben Features (`clock-port`, `core-ports-contract`,
+`http-server`, `llm-port`, `search-port`, `session-store-port`, `web-shell`),
+`specs/adapters/` zwei (`ollama-llm-adapter`, `filesystem-session-store`),
+`specs/tooling/` zwei (`monorepo-workspace`, `ci-pipeline` — seit M4 aus
+`platform/` herausgelöst) und die seit M3 neue Domäne `specs/interview/` drei:
+`single-question-interview` (die Domänenregeln), `interview-http-api` (der
+HTTP/SSE-Kontrakt) und `interview-view` (die Browser-Ansicht) — bewusst nach
+Änderungsgrund geschnitten, weil M8 den Wire-Kontrakt ändert, M5/impeccable die
+Ansicht und M7 die Domänenregeln geändert haben bzw. ändern werden. Sieben
+Pläne sind aufgezeichnet, `001-add-monorepo-scaffold` bis
+`007-bilingual-ui-and-prompts`.
 
 ### Feature-Specs abfragen
 
@@ -107,15 +110,22 @@ getaggte Turn-Liste, core rendert das Transkript (Store nimmt den Renderer
 optional), der SSE-Kontrakt token/done/error, die Interview-Fabrik über
 `CoreDependencies`, `packages/web` ohne Server-Abhängigkeit, die App-Fabrik, und
 der Styling-Stack (plain CSS + Token-Schicht + CSS Modules).
+`007-bilingual-ui-and-prompts.md` hält sechs: `locale` gehört zum
+`InterviewState`, `schemaVersion` bleibt unverändert, die Prompt-Templates sind
+je Sprache eigenständig verfasst, kein i18n-Framework, das Wörterbuch ist ein
+typisierter Record statt eines `t()`-Helpers, und das Fehler-Label (nicht die
+Fehlermeldung selbst) folgt der Chrome-Sprache.
 
 ## Die Roadmap
 
 `specs/roadmap.md` ordnet die Arbeit in Meilensteine **M0…M18** plus einen
 Post-v1-Meilenstein **P1**, dazu zwei Chores (C1 `openwiki --init`, C2 minimale
-CI). Stand: M0, M1 und M2 erledigt; **M3 ist teilweise erledigt** — sein erster
-Plan `single-question-walking-skeleton` (004) ist aufgezeichnet, der zweite
-`engine-structure-spike` steht noch aus, der Meilenstein bleibt ⬜ offen. Alles
-Übrige ab M4 offen.
+CI, beide erledigt). Stand: **M0 bis M5 sind erledigt** — Monorepo-Scaffold,
+Ollama-LLM-Adapter, Dateisystem-Session-Store, Walking Skeleton
+(`004-single-question-walking-skeleton` + `005-engine-structure-spike`),
+CI-Test-Stufen (`006-ci-test-tiers`) und das DE/EN-Fundament
+(`007-bilingual-ui-and-prompts`). **M6** (Backend-Setup-Gate) ist der oberste
+noch offene Meilenstein.
 
 ### Sequenzierung: Walking Skeleton
 
@@ -130,12 +140,12 @@ Interviewführung) nur an einem echten Modell falsifizierbar ist. Details:
 | Leitplanke | Entscheidung | Status |
 |------------|--------------|--------|
 | Kein Agent-Framework in der Domäne | Die Interview-Engine lebt in `packages/core` als eigener, deterministischer Code — kein LangChain/LangGraph/deepagents als Domänen-Abhängigkeit | fest |
-| Engine-Struktur | Hand-gerollter Zustandsautomat **oder** LangGraph.js in `core`; beide als Wegwerf-Spike, ADR vor M7 | offen — M3-Plan `engine-structure-spike` (der Walking Skeleton baut bewusst keine Engine) |
+| Engine-Struktur | Hand-gerollter Zustandsautomat über direktem `SessionStorePort`-Zugriff, kein LangGraph.js in `core` | entschieden — M3-Spike `005-engine-structure-spike` maß Persistenz-Integrationskosten und entschied zugunsten des Zustandsautomaten |
 | Styling-Stack | plain CSS + `:root`-Token-Schicht + ein CSS-Modul pro Komponente; kein CSS-in-JS/Utility-Framework/Preprocessor | umgesetzt — seit M3 (`decision-log [10]`, ADR `styling-stack-plain-css-tokens-plus-css-modules`) |
 | `LlmPort`-Adapter | Vercel AI SDK (`ai` v6) in `packages/server`, hinter dem Port; `packages/core` importiert es nie | fest |
 | Strukturierter LLM-Output | `Output.object()` + zod-Schema im Adapter; der `LlmPort`-Vertrag bekommt in M10 eine Antwortform | fest — Delta in M10 |
 | Kein Cloud-LLM-SDK | Weder Anthropic- noch OpenAI-SDK irgendwo im Produktcode | fest |
-| On-Disk-Session-Schema | Jede persistierte Session trägt ab dem ersten Schreiben ein `schemaVersion`-Feld | umgesetzt — `schemaVersion 1` am Envelope seit M2 |
+| On-Disk-Session-Schema | Jede persistierte Session trägt ab dem ersten Schreiben ein `schemaVersion`-Feld. `TState` wächst über M2 → M5 → M8 → M9 → M14 | umgesetzt — `schemaVersion 1` am Envelope seit M2, unverändert durch M5 (`locale` kam zum Zustand, nicht zum Envelope) |
 
 ## Unterstützende Werkzeuge
 

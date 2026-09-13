@@ -3,9 +3,6 @@ type: architecture
 title: Browser-Client und Designsystem (@chrysalyst/web)
 description: packages/web als treibender Adapter — die streamende Frage-Ansicht InterviewView mit ihren sechs Phasen, der SSE-Frame-Parser, der den Wire-Kontrakt neu deklarierende interview-api.ts, der Vite-Dev-Proxy, und das editoriale Designsystem (DESIGN.md, plain CSS mit Token-Schicht plus CSS Modules, selbstgehostete Faces).
 tags: [web-client, react, server-sent-events, sse-parser, design-system, css-modules, driving-adapter]
-verified:
-  - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
 sources:
   - id: openwiki-source-13f507d8e6ca477b916c3558
     resource: repo://packages/web/DESIGN.md
@@ -31,7 +28,10 @@ sources:
     resource: repo://specs/_decision/004-single-question-walking-skeleton.md
   - id: openwiki-source-fa62f324d4b2f87d9fd0ecfa
     resource: repo://specs/interview/interview-view/spec.md
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
+verified:
+  - by: openwiki/0.5.0
+    at: 2026-09-13T13:26:03.722Z
 ---
 
 # Browser-Client und Designsystem (@chrysalyst/web)
@@ -46,16 +46,18 @@ trägt ihre eigene Deklaration der drei Wire-Shapes, die sie konsumiert.
 `packages/web/src/interview/InterviewView.tsx` besitzt das ganze Gespräch mit der
 API; die Shell (`App.tsx`) nennt nur das Produkt und montiert die Ansicht, ruft
 selbst keine Route. Der API-Client ist ein Prop, sodass ein Test die Ansicht
-ohne Netz treibt.
+ohne Netz treibt. `InterviewViewProps` trägt seit M5 zusätzlich `locale: Locale`
+— dazu mehr in [§ Sprache](#sprache-seit-m5-detectlocale-uistrings-und-die-eingefrorene-session-sprache)
+unten.
 
-| Phase | Was der Nutzer sieht |
+| Phase | Was der Nutzer sieht (Label aus `uiStrings`) |
 |---|---|
-| `connecting` | „Preparing the first question", blinkende Cursor-Linie, kein Antwort-Feld |
-| `streaming` | die Frage erscheint Token für Token in einer `aria-live`-Region, Streaming-Indikator läuft |
-| `complete` | Frage vollständig; Antwort-Feld und „Record answer" werden aktiv |
-| `submitting` | „Recording…", beide Controls gesperrt, ein zweites Absenden abgelehnt |
-| `recorded` | „Recorded · HH:MM · saved to this session", beide Controls zu |
-| `failed` | Fehler in place („The question stopped" + rohe Backend-Meldung), Antwort-Feld bleibt zu |
+| `connecting` | `questionPlaceholder`, blinkende Cursor-Linie, kein Antwort-Feld |
+| `streaming` | die Frage erscheint Token für Token in einer `aria-live`-Region, `streamingAlternative` als Indikator |
+| `complete` | Frage vollständig; Antwort-Feld und `submit` werden aktiv |
+| `submitting` | `recording`, beide Controls gesperrt, ein zweites Absenden abgelehnt |
+| `recorded` | `recordedAt(time)`, beide Controls zu |
+| `failed` | Fehler in place (`failureLabel` + rohe, unübersetzte Backend-Meldung), Antwort-Feld bleibt zu |
 
 Ein `useEffect` legt beim Mount eine Session an (`createSession`), öffnet dann
 den Frage-Strom und schreibt die Chunks in den Zustand. Ein `AbortController` im
@@ -64,7 +66,48 @@ Cleanup bricht bei Unmount ab. Die Ansicht liest den Strom mit `fetch` +
 die Tests ersetzen, und der Parser wird an Chunk-Grenzen geübt, die ein echtes
 Netz produziert.
 
-Die **Oberfläche ist Englisch**; M5 macht sie zweisprachig.
+### Sprache seit M5: `detectLocale`, `uiStrings`, und die eingefrorene Session-Sprache
+
+`App.tsx` **besitzt die Sprache der Chrome**: `locale`-State, initialisiert aus
+`initialLocale ?? detectLocale(languages, storage)`. `detectLocale` (in
+`packages/web/src/locale/locale.ts`, das eigene, von `@chrysalyst/core`
+unabhängige Vokabular — `packages/web` kann `core` nicht importieren) prüft
+zuerst eine erinnerte Wahl (`localStorage`, Schlüssel `chrysalyst.locale`),
+sonst den ersten unterstützten Basis-Subtag aus der `languages`-Liste
+(`de-AT` matcht auf `de`), sonst `FALLBACK_LOCALE` (`en`). Beide
+Storage-Zugriffe sind defensiv verpackt — ein Browser mit blockierten
+Website-Daten wirft beim Lesen *und* Schreiben von `localStorage`, und keiner
+der beiden Fehler darf die App unbenutzbar machen. Eine Wahl über den
+`<select>` im Topbar ruft `rememberLocale`, das denselben Fehler defensiv
+schluckt.
+
+`InterviewView` bekommt die Chrome-Sprache als lebendiges Prop und rendert
+jedes Label neu, wenn sie wechselt — aber sie **friert die Sprache der
+Session einmal beim Mount ein**, per `useRef(locale)` (`mountLocale`), und
+übergibt genau diesen eingefrorenen Wert an `createSession`. Der Grund steht
+im Komponenten-Doc-Kommentar: `locale` fehlt bewusst in der Dependency-Liste
+des Frage-Effekts. Stünde es dort, würde ein Sprachwechsel während eines
+laufenden Interviews den ganzen Effekt erneut laufen lassen — eine verwaiste
+zweite Session, eine zweite Inferenz. Ein Wechsel relabelt also nur die
+Chrome; die Frage bleibt in der Sprache, in der sie gestellt wurde, und die
+Frage-Region trägt `lang={session?.locale}` (die Sprache der Session), nicht
+die der Chrome.
+
+`packages/web/src/locale/strings.ts` deklariert `UiStrings` (dreizehn
+Mitglieder) und `uiStrings: Readonly<Record<Locale, UiStrings>>`, mit `en.ts`
+und `de.ts` als den beiden Sprachdateien. Jede Komponente liest ausschließlich
+aus `uiStrings[locale]` — kein Inline-Literal außer dem Produktnamen
+`chrysalyst` und den Sprach-Endonymen `Deutsch`/`English` (die aus
+`LOCALE_ENDONYMS` kommen, nicht aus dem Wörterbuch, weil sich ein
+Sprachname nie selbst übersetzt). Die Fehlermeldung unter `failureLabel`
+bleibt bewusst unübersetzt, egal welche Seite sie geschrieben hat — nur das
+Label darüber ist ein Chrome-Label wie jedes andere.
+
+**Der Sprachregler ist funktional fertig, aber noch ungestylt.** Er trägt
+einen Accessible Name, beide Endonyme, meldet die aktive Sprache und ist per
+Tastatur bedienbar — aber die impeccable-Subphase, die ihm einen Platz im
+[Designsystem](#das-designsystem) gibt, stand zum Zeitpunkt dieser Seite noch
+aus (Plan-Task 17, `bilingual-ui-and-prompts` § Design Direction).
 
 ## Der SSE-Frame-Parser: `sse-frames.ts`
 
@@ -102,6 +145,14 @@ type QuestionEvent =
   | { event: 'done'; question: string }
   | { event: 'error'; message: string };
 ```
+
+Seit M5 trägt die Session-Erstellung auch die Sprache: `createSession(locale)`
+sendet `{ locale }` im Body und löst `{ id, locale }` auf (`CreatedSession`).
+Zwei Ablehnungen sind unterschieden: fehlt `locale` oder ist es kein String,
+greift `readString`s bestehende Meldung; ist es ein String, aber kein
+unterstützter Tag, wirft das Modul eine neue, eigene Meldung, die die
+unterstützten Sprachen (`SUPPORTED_LOCALES` aus dem lokalen `locale.ts`)
+nennt.
 
 `tests/fixtures/interview-sse-frames.txt` ist die **ausführbare Hälfte** dieses
 Kontrakts: der [Route-Test](interview-http-and-composition.md) prüft, dass der
@@ -153,13 +204,24 @@ Anti-Chatbot-Signal: eine Haarlinie, nie hüpfende Punkte.
 
 ## Repräsentative Tests
 
-`InterviewView.test.tsx` (jsdom, 9 Szenarien) treibt die Ansicht über einen
-injizierten `InterviewApi`-Fake durch jede Phase: connecting-Label vor dem ersten
-Chunk, Chunks in die Live-Region, Indikator nur während des Streams, Feld erst
-bei `done` offen, Absenden bestätigt und schließt beide Controls, In-flight
-lehnt ein zweites Absenden ab, leere Antwort sendet nichts, ein Fehler-Event
-hält das Antwort-Control zu. `sse-frames.test.ts` fährt die Fixture durch jede
-Split-Position.
+`InterviewView.test.tsx` (jsdom) treibt die Ansicht über einen injizierten
+`InterviewApi`-Fake durch jede Phase: connecting-Label vor dem ersten Chunk,
+Chunks in die Live-Region, Indikator nur während des Streams, Feld erst bei
+`done` offen, Absenden bestätigt und schließt beide Controls, In-flight lehnt
+ein zweites Absenden ab, leere Antwort sendet nichts, ein Fehler-Event hält
+das Antwort-Control zu. Seit M5 zusätzlich: jedes Label kommt für beide
+Sprachen aus `uiStrings`, die Session wird in der Mount-Sprache angelegt, ein
+Sprachwechsel während des laufenden Interviews relabelt nur die Chrome (keine
+zweite Session, keine zweite Inferenz), und die Frage-Region trägt `lang` der
+Session-, nicht der Chrome-Sprache. `sse-frames.test.ts` fährt die Fixture
+durch jede Split-Position. `packages/web/src/locale/locale.test.ts` prüft
+`detectLocale`/`rememberLocale` gegen eine gestellte Sprachliste und
+Storage-Stubs, inklusive eines Stubs, dessen Getter bzw. `setItem` wirft;
+`strings.test.ts`/`strings.test-d.ts` prüfen, dass beide Wörterbücher
+vollständig sind und ein `@ts-expect-error` ein fehlendes Mitglied bzw. eine
+fehlende Sprache ablehnt; `App.test.tsx` prüft den Regler (Accessible Name,
+beide Endonyme, Tastaturbedienbarkeit), `documentElement.lang` und dass
+defekter Storage die App nicht unbrauchbar macht.
 
 **Bekannter Nicht-Bug:** `<StrictMode>` doppelt in dev die Effekte — jeder
 Seiten-Load legt einen zusätzlichen, nie befragten Session-Ordner an. Ein Orphan

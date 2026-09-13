@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:bcb3dfade11e6c142ff1f670ae80b59f5ca038844b8c70a8d37b9c9d786115d2",
+  "pageVersion": "sha256:e0cfaa67f78588b0a01d17426592abfd5d33d84a678d093aee9e1977edadeeaa",
   "claims": [
     {
       "id": "claim_46564d5605e941d38fb088ba19b801bd",
@@ -50,11 +50,11 @@
     },
     {
       "id": "claim_e48317ebb2ad4c43863e651cd292329c",
-      "statement": "Each package has its own vitest.config.ts plus one at the repo root: core and server enable typecheck-in-test (so type tests surface as test failures), web uses the jsdom environment with the React plugin, and the root config includes only tests/**/*.test.ts.",
+      "statement": "Each package has its own vitest.config.ts plus one at the repo root: core, server, and — since M5 — web all enable typecheck-in-test (so *.test-d.ts type tests surface as test failures rather than being silently uncollected), web additionally uses the jsdom environment with the React plugin, and the root config includes only tests/**/*.test.ts.",
       "evidence": [
         {
           "resource": "repo://packages/core/vitest.config.ts",
-          "version": "repo-file-v1:sha256:d2b8eab0df0fe56a24e5240313c9a21ed478c413857f224639b5d2564c25b6d5"
+          "version": "repo-file-v1:sha256:c9ef2408ef4e295e0b949d86ec3ca911031f5d6d83c976e5b8bdbf62b519a7fc"
         },
         {
           "resource": "repo://packages/server/vitest.config.ts",
@@ -62,7 +62,7 @@
         },
         {
           "resource": "repo://packages/web/vitest.config.ts",
-          "version": "repo-file-v1:sha256:7d8aed032ef0df3b551d9a05a72701e11cc1ee149b7f3f98fa9ce805e45388c3"
+          "version": "repo-file-v1:sha256:b36f8e3d2a6b215d40453113570c7b77d506e2540965a80675a103290fc3e150"
         },
         {
           "resource": "repo://vitest.config.ts",
@@ -97,8 +97,8 @@
           "version": "repo-lines-v1:sha256:9f35198ccd19ed6676c598eac6b0cd6fc97df3911e845b85f7fc55537a633445:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3MzI3NzVlZWU3NzAwMThkYjdkNzlkMDM1YTAxNjMwMTVhMDE2ZGUxN2ViYmY4ODg0OTAyZWM2ZDFkOWZjZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MjliYzZjZDhiM2Y1NGFjYjk5YTExOTM4ZjViYjZiYWQxODJmZTI1YmYyMTE1N2NmZDIzZmFlNGNkNzdhNWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkMWVjNDFhMTNhOWZlYWRkYmRjMjU1YzJjOTRhMDk5MjY0Yjk4MjRjOGIxZjcxMmNkMWM1ZGQyNTIxNGI4YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiYzIzNDNkYTQ4OWYzYTA2MTM2NTM2OTQ4MjE0OTg1M2Y3MDA3NjdiOTM1MmQyM2U1NTFlM2U5MjIxNjU0MjcifQ"
         },
         {
-          "resource": "repo://specs/platform/monorepo-workspace/spec.md#L55-L78",
-          "version": "repo-lines-v1:sha256:fb95ba6938d342fc00566ccb4cb0be6c595593750c210d1d6bb30c996b91197d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhMjA4NzYyNDczMmQ5OTg3NTgxNmEwMDIxMzAzMzI1OTY4OGY3OTFiMWJkMzcxMTE0YTAxYzg2Y2I0ZTI5NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE0Nzc1ZDdiN2QyNWY3MjQ0Yjk3ODM4MjA1N2UyYjZhMTUyNDhlZTkzYmJiNzcyM2YyN2I5MjI4YTI2OTkzZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://specs/tooling/monorepo-workspace/spec.md#L60-L78",
+          "version": "repo-lines-v1:sha256:5c9c0a08617681507475edb6071a7c79284cd700d70f0c86fa440634e601ef5e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4NGUyMmJkYzU1MTlkZDIxMTc4NTBmMGFiZTlmODU1NjgwY2VjOGE2YTY0OTZiMmY1OTU4MTQ2ODZlOGIzODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzN2U0OWFlNjVjZjI3MjFmNTEwY2ExNjMxYmIxZTg0YzA3YjY5NjkwMWE3Y2EwY2EwMTgxN2I4OTI5Yjg0NzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyY2ZjZDFkYzNmOTc2MDMyNmE4NTViNDk3YzU2OTQ0N2QyNGRiMjExMDM0OTVlZDkzMjllYWVjZjY4ZmVhZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhMjA4NzYyNDczMmQ5OTg3NTgxNmEwMDIxMzAzMzI1OTY4OGY3OTFiMWJkMzcxMTE0YTAxYzg2Y2I0ZTI5NmIifQ"
         }
       ]
     },
@@ -150,7 +150,7 @@
         },
         {
           "resource": "repo://tests/fixtures/README.md",
-          "version": "repo-file-v1:sha256:0d00bad5cb017105196514e98a384ba1d49ca411d1b792db215f4e11e71a2f3e"
+          "version": "repo-file-v1:sha256:09983c8468cd0f44ddb6ab503c33ee1b543bca0990bffa407c2c25412115fe2a"
         },
         {
           "resource": "repo://tests/fixtures/interview-sse-frames.txt",
@@ -160,11 +160,11 @@
     },
     {
       "id": "claim_639a577b23e84c8a9a61c3b9c610da68",
-      "statement": "Since M3 there are two *.live.test.ts files, both gated on CHRYSALYST_LIVE_LLM: the LLM adapter's and interview-routes.live.test.ts, which runs the whole session-to-SSE-to-persistence path against a real model, measures time to first token (last measured qwen3:8b ~2.1s warm, ceiling 30s) and asserts the stored question carries no <think> marker — those figures are the M3 feasibility note.",
+      "statement": "Since M3 there are two *.live.test.ts files, both gated on CHRYSALYST_LIVE_LLM: the LLM adapter's and interview-routes.live.test.ts. The latter's feasibility case runs the whole session-to-SSE-to-persistence path against a real model, measures time to first token (last measured qwen3:8b ~2.1s warm, ceiling 30s) and asserts the stored question carries no <think> marker (the M3 feasibility note); since M5 it also carries an it.each per-language case asserting a function-word score against the real model's question.",
       "evidence": [
         {
           "resource": "repo://packages/server/src/routes/interview-routes.live.test.ts",
-          "version": "repo-file-v1:sha256:7284279d3885709c89f1c46c57f0ef5e65e0eb87008adfa857bfff7addfe6cc4"
+          "version": "repo-file-v1:sha256:0943a0cb8af5cef696f2717c7e9023715024d8ccb14ef0817562a7d1acaa6cd4"
         },
         {
           "resource": "repo://tests/workspace.test.ts#L155-L191",
@@ -174,11 +174,11 @@
     },
     {
       "id": "claim_3177ebf5e1ac425db91ec6c831f28323",
-      "statement": "The packages/web jsdom suite is the densest since M3: nine InterviewView scenarios driven through an injected InterviewApi fake, plus the SSE frame parser checked against every split position of the shared fixture.",
+      "statement": "The packages/web jsdom suite is the densest in the repo: the InterviewView scenarios (including, since M5, the chrome-language and session-language scenarios) driven through an injected InterviewApi fake, plus the SSE frame parser checked against every split position of the shared fixture, plus the M5 locale-detection, dictionary, and shell-level test files.",
       "evidence": [
         {
           "resource": "repo://packages/web/src/interview/InterviewView.test.tsx",
-          "version": "repo-file-v1:sha256:2325a40ed04d83b52e45cf4fe148dc15c6c6ed4e6486dfe1e3751a5a99b81f1b"
+          "version": "repo-file-v1:sha256:de41380c65b88103d54d587fbe4710111ee6043104e38663a24809923c31862f"
         },
         {
           "resource": "repo://packages/web/src/interview/sse-frames.test.ts",
@@ -207,6 +207,6 @@
   ],
   "verification": {
     "by": "openwiki/0.5.0",
-    "at": "2026-09-10T15:50:21.943Z"
+    "at": "2026-09-13T13:26:03.722Z"
   }
 }

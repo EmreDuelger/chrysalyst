@@ -3,9 +3,6 @@ type: operations
 title: Toolchain und Teststrategie
 description: Der Build- und Qualitäts-Werkzeugkasten von chrysalyst — pnpm-Workspace mit catalog:-Versionierung, Node-Type-Stripping ohne Build, die Vitest-Aufteilung, ESLint strictTypeChecked, Prettier und die zweistufige Test-Konvention.
 tags: [toolchain, pnpm, vitest, eslint, prettier, testing, ci]
-verified:
-  - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
 sources:
   - id: openwiki-source-f235d856bed1fd44853c5195
     resource: repo://.prettierignore
@@ -41,8 +38,8 @@ sources:
     resource: repo://pnpm-workspace.yaml
   - id: openwiki-source-9f1672a73d8c3832ee8e57d7
     resource: repo://specs/_decision/004-single-question-walking-skeleton.md
-  - id: openwiki-source-27db56ec5f5b550679beca36
-    resource: repo://specs/platform/monorepo-workspace/spec.md
+  - id: openwiki-source-ab77cccc8878026473ecb6d2
+    resource: repo://specs/tooling/monorepo-workspace/spec.md
   - id: openwiki-source-b1e8b3a8bdfc48eb2e09cd13
     resource: repo://tests/fixtures/interview-sse-frames.txt
   - id: openwiki-source-587768439c42bdfd0095606f
@@ -53,7 +50,10 @@ sources:
     resource: repo://tsconfig.base.json
   - id: openwiki-source-fbadcd8591b65031efaaedce
     resource: repo://vitest.config.ts
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
+verified:
+  - by: openwiki/0.5.0
+    at: 2026-09-13T13:26:03.722Z
 ---
 
 # Toolchain und Teststrategie
@@ -106,9 +106,15 @@ Jedes Paket hat eine eigene `vitest.config.ts`, plus eine an der Wurzel:
   `typecheck.enabled`.
 - **`packages/web/vitest.config.ts`** — `environment: 'jsdom'` mit dem
   React-Plugin. Seit M3 die dichteste Suite: die
-  [`InterviewView`](../architecture/web-client.md)-Szenarien (9, jsdom, über
+  [`InterviewView`](../architecture/web-client.md)-Szenarien (jsdom, über
   einen injizierten `InterviewApi`-Fake) und der SSE-Frame-Parser gegen **jede
-  Split-Position** der geteilten Fixture.
+  Split-Position** der geteilten Fixture. Seit M5 setzt die Config zusätzlich
+  `typecheck.enabled: true` (analog zu `core`) — ohne diese Zeile sammelt
+  `vitest run` in `packages/web` **kein** `*.test-d.ts` ein, weil Vitests
+  Standard-`include` sie nicht matcht und `typecheck.include` erst greift,
+  sobald `typecheck` aktiv ist. Die ersten `*.test-d.ts`-Dateien des Pakets
+  (`locale.test-d.ts`, `strings.test-d.ts`) prüfen genau das, was diese Zeile
+  freischaltet.
 - **`vitest.config.ts` (Wurzel)** — `include: ['tests/**/*.test.ts']`, also nur
   die Workspace-übergreifende Suite `tests/workspace.test.ts`.
 
@@ -124,6 +130,20 @@ der [Route-Test](../architecture/interview-http-and-composition.md) in
 Parser-Test in `packages/web`, dass sie zu den drei Payload-Shapes zurück
 dekodieren. Ein Rename oder eine Formatänderung auf einer Seite lässt einen Lauf
 fehlschlagen, nicht nur einen Browser.
+
+### Die geteilte Sprach-Fixture, seit M5
+
+`tests/fixtures/interview-locales.json` hält `{ supported, fallback,
+createSessionField }` — dieselbe Rolle wie die SSE-Fixture, aber für das
+Sprach-Vokabular. Die unterstützten Tags, die Fallback-Sprache und der Name
+des Request-Felds sind eine Domänen-Entscheidung, die `@chrysalyst/core`
+besitzt; `packages/web` kann `core` nicht importieren und restated die drei
+Werte deshalb eigenständig. Drei Leser prüfen ihr eigenes Vokabular gegen
+diese eine Datei: `packages/core`s `locale.test.ts`, `packages/server`s
+`interview-routes.test.ts` und `packages/web`s `locale.test.ts`. Ein
+umbenannter Tag, eine geänderte Fallback-Sprache oder ein umbenanntes
+Request-Feld lässt einen Lauf fehlschlagen statt nur einen Browser —
+`tests/fixtures/README.md` führt das im Detail.
 
 ## Linting und Formatierung
 
@@ -167,11 +187,16 @@ Tests laufen in zwei Stufen:
    echter Infrastruktur und laufen nur, wenn `CHRYSALYST_LIVE_LLM` einen
    nicht-leeren Wert hat. Seit M3 gibt es **zwei**: die des
    [LLM-Adapters](../architecture/llm-adapter.md) und
-   `interview-routes.live.test.ts`, die den ganzen E2E-Pfad (Session → SSE-Strom →
-   Persistenz) gegen ein echtes Modell fährt, die **Zeit bis zum ersten Token**
-   misst (zuletzt `qwen3:8b` ~2,1 s warm, Ceiling 30 s) und assertet, dass die
-   gespeicherte Frage keinen `<think>`-Marker trägt. Beide Zahlen sind die
-   Machbarkeits-Notiz, die der M3-Verification-Report führt.
+   `interview-routes.live.test.ts`. Deren Feasibility-Fall fährt den ganzen
+   E2E-Pfad (Session → SSE-Strom → Persistenz) gegen ein echtes Modell, misst
+   die **Zeit bis zum ersten Token** (zuletzt `qwen3:8b` ~2,1 s warm, Ceiling
+   30 s) und assertet, dass die gespeicherte Frage keinen `<think>`-Marker
+   trägt — die Machbarkeits-Notiz, die der M3-Verification-Report führt. Seit
+   M5 kommt ein zweiter Fall dazu, `it.each` über beide Sprachen: er legt eine
+   Session in der genannten Sprache an und zählt Treffer aus einer kleinen
+   deutschen bzw. englischen Funktionswort-Liste in der gestreamten Frage
+   (Schwelle ≥ 3, strikt höher als die andere Sprache) — Details auf
+   [Interview-Route](../architecture/interview-http-and-composition.md).
 
 Jede `*.live.test.ts` gatet ihre Suite mit
 `describe.skipIf((process.env.CHRYSALYST_LIVE_LLM ?? '') === '')` — eine nicht
@@ -189,9 +214,9 @@ Top-Level-`await`, damit das bloße Einsammeln der Datei nichts kontaktiert.
   value` — der extrahierte Guard-Ausdruck wird mit `runInNewContext` gegen ein
   Stub-`process` ausgewertet: `undefined` → skip, `''` → skip, `'1'` → run.
 
-M4 der Roadmap baut die CI-Pipeline gegen dieses Tag aus; ein CI-Lauf ohne
-`CHRYSALYST_LIVE_LLM` meldet die Live-Tests als übersprungen, nicht als
-fehlgeschlagen.
+M4 der Roadmap baute die CI-Pipeline gegen dieses Tag aus (`006-ci-test-tiers`);
+ein CI-Lauf ohne `CHRYSALYST_LIVE_LLM` meldet die Live-Tests als
+übersprungen, nicht als fehlgeschlagen.
 
 ## Verwandte Seiten
 

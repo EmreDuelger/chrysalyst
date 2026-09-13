@@ -26,10 +26,10 @@ sources:
     resource: repo://specs/mission.md
   - id: openwiki-source-a0a8fcea3fc317de88a8e08c
     resource: repo://specs/roadmap.md
-generated: { by: "claude-code", at: "2026-09-10T15:50:21.943Z" }
+generated: { by: "claude-code", at: "2026-09-13T13:26:03.722Z" }
 verified:
   - by: openwiki/0.5.0
-    at: 2026-09-10T15:50:21.943Z
+    at: 2026-09-13T13:26:03.722Z
 ---
 
 # Quickstart
@@ -54,8 +54,9 @@ der [Browser-Client](architecture/web-client.md) mit einem editorialen
 Designsystem.
 
 Genau **eine Runde** — kein Turn-Loop, kein Fragebaum, keine Destillation, kein
-CI-Workflow, kein Ideen-Eingang (die Frage entsteht kalt). Die Oberfläche ist
-Englisch bis M5.
+Ideen-Eingang (die Frage entsteht kalt). Seit M4 läuft eine CI-Pipeline; seit
+M5 ist die Oberfläche **zweisprachig** (Deutsch/Englisch, per Sprachregler im
+Topbar) und die Session trägt ihre eigene Sprache.
 
 ## Das Layout
 
@@ -64,7 +65,7 @@ packages/
   core/     @chrysalyst/core   — Domänen-Ports als Typen + die Interview-Runde als Wert-Export
   server/   @chrysalyst/server — Adapter (LLM, Session-Store) + Hono-HTTP-Server, SSE-Interview-Route, Kompositionswurzel
   web/      @chrysalyst/web    — Vite + React; die streamende Frage-Ansicht, ein treibender Adapter
-specs/      Mission, Roadmap, Feature-Specs (platform/ adapters/ interview/), Pläne, ADRs
+specs/      Mission, Roadmap, Feature-Specs (platform/ adapters/ interview/ tooling/), Pläne, ADRs
 tests/      workspace.test.ts + fixtures/ (u. a. die geteilte SSE-Frame-Fixture)
 openwiki/   dieses Wiki
 ```

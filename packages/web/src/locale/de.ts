@@ -15,4 +15,9 @@ export const de: UiStrings = {
   recordedAt: (time) => `Gespeichert · ${time} · in dieser Sitzung`,
   failureLabel: 'Die Frage ist abgebrochen',
   languageControl: 'Sprache',
+  languageSwitchLabel: 'Die Sprache wurde gewechselt',
+  languageSwitchPrompt:
+    'Das Interview in dieser Sprache zu beginnen verwirft Ihre getippte Antwort.',
+  languageSwitchDiscard: 'Verwerfen und neu beginnen',
+  languageSwitchKeep: 'Antwort behalten',
 };

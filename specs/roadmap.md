@@ -197,7 +197,7 @@ Lauf je fehlschlagen.
 Prompt-Templates** je Locale ausgelagert. Das Modell wird angewiesen, in der
 Sprache des Nutzers zu interviewen.
 
-**Pläne:** `bilingual-ui-and-prompts`
+**Pläne:** `bilingual-ui-and-prompts` · `change-language-switch-restarts-interview`
 
 **Fertig, wenn:** Locale-Umschaltung ändert die Oberfläche *und* die Sprache, in
 der das Modell fragt — je ein `live`-Test pro Locale. Ab hier verfasst jeder
@@ -398,7 +398,10 @@ benutzbar, alle Constraints messbar erfüllt.
 **Liefert:** Lesen und Exportieren bestehender Sessions bei fehlendem Backend
 (schließt den halben Constraint aus M6). Gemessenes
 Streaming-Performance-Budget. Konsolidierender impeccable-Designdurchgang über die
-Interview-Oberfläche. First-Run-README.
+Interview-Oberfläche — offen aus `change-language-switch-restarts-interview`:
+Task 4 (Finish-Review sowie die 1280px/400px-Zeile in § Manual Testing) konnte
+mangels Browser-Zugriff in der Implementierungs-Sandbox nicht laufen
+(`playwright-chrome-blocked`) und reiht sich hier ein. First-Run-README.
 
 **Pläne:** `streaming-performance-budget` · `interview-ui-design-pass`
 (First-Run-Doku über die Doku-Abkürzung, kein eigener Plan)

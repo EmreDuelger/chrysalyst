@@ -312,16 +312,41 @@ var(--accent)`, `1rem` top padding, `1.25rem` top margin. Copy:
   the failure and the recovery (e.g. "Check that Ollama is running, then reload.").
 - Replaces the answer block entirely; never overlays.
 
+### Language Switch Request
+
+- **Character:** an inline question, not a failure — the chrome's language changed
+  while a draft answer was still at risk, and the view asks before it acts.
+- **Style:** a region opened the same way as Inline Error — `border-top: 1px solid
+var(--rule)` and `2.5rem` top margin — but takes **no** left rule of any kind,
+  unlike Inline Error's 2px vermilion `border-left`. It renders directly below the
+  answer form, with the draft still visible above it.
+- **Label:** `The language changed` — Label type, Soft Ink, `aria-hidden`.
+- **Prompt:** "Starting the interview in this language discards the answer you have
+  typed." — Caption type (15px / 1.55), Near-Black Ink, `role="alert"`.
+- **Actions:** a right-aligned row (`justify-content: flex-end`), `1.5rem` gap,
+  `1rem` top margin — Action type (13px, 600, tracked 0.04em) on both controls.
+  `Keep my answer` is Near-Black Ink; `Discard and restart` is Soft Ink, quieter
+  than Keep, and both are quieter than the vermilion `Record answer →` above them.
+- **No vermilion in this block's own resting state.** This is a question being
+  asked, not a failure being reported, so it earns none of the accent under the
+  One Red Rule (see Colors § Named Rules): the one vermilion element permitted
+  per state stays `Record answer →`, which remains the answer-recording action
+  even while this request is on screen. Keyboard focus on either action uses
+  the system's standard `outline: 2px solid var(--accent)` ring, as every other
+  control in the view does — that ring is a focus indicator, not an accent
+  allocation under the One Red Rule.
+
 ### The Six View States (state table)
 
-| State      | Question region                                                                  | Answer form                                                                              | Indicator                                                  | Accent moment                                         | Live region                    |
-| ---------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------- | ------------------------------ |
-| connecting | placeholder "Preparing the first question", Soft Ink @0.65, blinking cursor rule | hidden                                                                                   | note "Reaching the model…" (`role=status`)                 | none                                                  | question `<p>` hidden          |
-| streaming  | question fills token-by-token, serif, blinking cursor rule trailing              | visible; textarea + submit disabled                                                      | note "the question is still being written" (`role=status`) | none                                                  | `aria-live=polite` on question |
-| complete   | full question, no cursor                                                         | active; textarea enabled, hint "One question this round.", submit enabled when non-blank | none                                                       | none                                                  | polite                         |
-| submitting | question static                                                                  | textarea + submit disabled, hint "Recording…" (`role=status`)                            | none                                                       | none                                                  | polite                         |
-| recorded   | question static                                                                  | form removed                                                                             | none                                                       | confirmation line + vermilion top rule, 0.45s fade-in | confirm line `role=status`     |
-| failed     | question frozen Soft Ink @0.55, static (non-blinking) cursor rule                | form removed                                                                             | none                                                       | error label + 2px vermilion left rule                 | message `role=alert`           |
+| State                                       | Question region                                                                  | Answer form                                                                              | Indicator                                                  | Accent moment                                         | Live region                    |
+| ------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------- | ------------------------------ |
+| connecting                                  | placeholder "Preparing the first question", Soft Ink @0.65, blinking cursor rule | hidden                                                                                   | note "Reaching the model…" (`role=status`)                 | none                                                  | question `<p>` hidden          |
+| streaming                                   | question fills token-by-token, serif, blinking cursor rule trailing              | visible; textarea + submit disabled                                                      | note "the question is still being written" (`role=status`) | none                                                  | `aria-live=polite` on question |
+| complete                                    | full question, no cursor                                                         | active; textarea enabled, hint "One question this round.", submit enabled when non-blank | none                                                       | none                                                  | polite                         |
+| complete (variant: language switch request) | full question, no cursor                                                         | active; textarea enabled with draft intact, hint "One question this round."              | none                                                       | none                                                  | switch prompt `role=alert`     |
+| submitting                                  | question static                                                                  | textarea + submit disabled, hint "Recording…" (`role=status`)                            | none                                                       | none                                                  | polite                         |
+| recorded                                    | question static                                                                  | form removed                                                                             | none                                                       | confirmation line + vermilion top rule, 0.45s fade-in | confirm line `role=status`     |
+| failed                                      | question frozen Soft Ink @0.55, static (non-blinking) cursor rule                | form removed                                                                             | none                                                       | error label + 2px vermilion left rule                 | message `role=alert`           |
 
 ## Do's and Don'ts
 

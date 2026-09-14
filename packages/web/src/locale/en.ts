@@ -15,4 +15,9 @@ export const en: UiStrings = {
   recordedAt: (time) => `Recorded · ${time} · saved to this session`,
   failureLabel: 'The question stopped',
   languageControl: 'Language',
+  languageSwitchLabel: 'The language changed',
+  languageSwitchPrompt:
+    'Starting the interview in this language discards the answer you have typed.',
+  languageSwitchDiscard: 'Discard and restart',
+  languageSwitchKeep: 'Keep my answer',
 };

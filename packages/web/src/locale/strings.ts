@@ -3,10 +3,10 @@ import { en } from './en.ts';
 import type { Locale } from './locale.ts';
 
 /**
- * Every piece of interface copy the interview shell and view display, in the
- * shape both language dictionaries must satisfy. `recordedAt` is the one
- * entry that interpolates a value — everything else is a fixed string for
- * its language.
+ * Every piece of interface copy the interview shell, view and setup screen
+ * display, in the shape both language dictionaries must satisfy. `recordedAt`
+ * and the four `setup*` entries taking arguments interpolate a value — every
+ * other entry is a fixed string for its language.
  */
 export interface UiStrings {
   readonly interviewRegion: string;
@@ -22,6 +22,15 @@ export interface UiStrings {
   readonly recordedAt: (time: string) => string;
   readonly failureLabel: string;
   readonly languageControl: string;
+  readonly setupRegion: string;
+  readonly setupHeading: string;
+  readonly setupChecking: string;
+  readonly setupUnreachable: (backend: string) => string;
+  readonly setupUnreachableStep: (backend: string) => string;
+  readonly setupModelMissing: (backend: string, model: string) => string;
+  readonly setupModelMissingStep: (backend: string, model: string) => string;
+  readonly setupRecheck: string;
+  readonly setupFailureLabel: string;
 }
 
 /** Every supported language's complete copy, keyed by {@link Locale}. */

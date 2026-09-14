@@ -4,6 +4,7 @@ import { generateText, streamText } from 'ai';
 
 const DEFAULT_BASE_URL = 'http://127.0.0.1:11434/v1';
 const DEFAULT_MODEL = 'llama3.2:3b';
+const DEFAULT_BACKEND_NAME = 'Ollama';
 const PROVIDER_NAME = 'openai-compatible';
 const UNREACHABLE: LlmBackendStatus = { available: false, models: [] };
 
@@ -134,6 +135,18 @@ export function llmConfigFromEnv(
     baseUrl: orDefault(env.CHRYSALYST_LLM_BASE_URL, DEFAULT_BASE_URL),
     defaultModel: orDefault(env.CHRYSALYST_LLM_MODEL, DEFAULT_MODEL),
   };
+}
+
+/**
+ * The name chrysalyst shows for the configured backend. Resolved beside the
+ * loopback defaults it belongs with, and deliberately not part of
+ * `OpenAiCompatibleLlmConfig`: the adapter never sends it, so a caller
+ * constructing a config would owe a value the adapter would only ignore.
+ */
+export function llmBackendNameFromEnv(
+  env: NodeJS.ProcessEnv = process.env,
+): string {
+  return orDefault(env.CHRYSALYST_LLM_BACKEND_NAME, DEFAULT_BACKEND_NAME);
 }
 
 function orDefault(value: string | undefined, fallback: string): string {

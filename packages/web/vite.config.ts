@@ -13,6 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/interview': apiServer,
+      '/status': apiServer,
     },
   },
 });

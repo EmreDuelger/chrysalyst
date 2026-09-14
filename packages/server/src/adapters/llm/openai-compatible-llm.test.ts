@@ -6,12 +6,14 @@ import { describe, expect, it } from 'vitest';
 
 import {
   createOpenAiCompatibleLlm,
+  llmBackendNameFromEnv,
   llmConfigFromEnv,
 } from './openai-compatible-llm.ts';
 
 const OLLAMA_BASE_URL = 'http://127.0.0.1:11434/v1';
 const LM_STUDIO_BASE_URL = 'http://127.0.0.1:1234/v1';
 const DEFAULT_MODEL = 'llama3.2:3b';
+const DEFAULT_BACKEND_NAME = 'Ollama';
 const EVENT_STREAM = {
   status: 200,
   headers: { 'content-type': 'text/event-stream' },
@@ -484,11 +486,12 @@ describe('createOpenAiCompatibleLlm', () => {
 });
 
 describe('llmConfigFromEnv', () => {
-  it('defaults to Ollama on loopback and lets each variable override', () => {
+  it('resolves the base URL, the default model and the backend name, overriding each from the environment', () => {
     expect(llmConfigFromEnv({})).toEqual({
       baseUrl: OLLAMA_BASE_URL,
       defaultModel: DEFAULT_MODEL,
     });
+    expect(llmBackendNameFromEnv({})).toBe(DEFAULT_BACKEND_NAME);
 
     expect(
       llmConfigFromEnv({ CHRYSALYST_LLM_BASE_URL: LM_STUDIO_BASE_URL }),
@@ -503,6 +506,16 @@ describe('llmConfigFromEnv', () => {
     });
 
     expect(
+      llmBackendNameFromEnv({ CHRYSALYST_LLM_BACKEND_NAME: 'LM Studio' }),
+    ).toBe('LM Studio');
+    expect(
+      llmConfigFromEnv({ CHRYSALYST_LLM_BACKEND_NAME: 'LM Studio' }),
+    ).toEqual({
+      baseUrl: OLLAMA_BASE_URL,
+      defaultModel: DEFAULT_MODEL,
+    });
+
+    expect(
       llmConfigFromEnv({
         CHRYSALYST_LLM_BASE_URL: '',
         CHRYSALYST_LLM_MODEL: '',
@@ -511,6 +524,9 @@ describe('llmConfigFromEnv', () => {
       baseUrl: OLLAMA_BASE_URL,
       defaultModel: DEFAULT_MODEL,
     });
+    expect(llmBackendNameFromEnv({ CHRYSALYST_LLM_BACKEND_NAME: '' })).toBe(
+      DEFAULT_BACKEND_NAME,
+    );
 
     const source = readFileSync(
       fileURLToPath(new URL('./openai-compatible-llm.ts', import.meta.url)),

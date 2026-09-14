@@ -15,4 +15,15 @@ export const en: UiStrings = {
   recordedAt: (time) => `Recorded · ${time} · saved to this session`,
   failureLabel: 'The question stopped',
   languageControl: 'Language',
+  setupRegion: 'Setup',
+  setupHeading: 'chrysalyst needs a language model',
+  setupChecking: 'Checking the language model…',
+  setupUnreachable: (backend) => `chrysalyst cannot reach ${backend}.`,
+  setupUnreachableStep: (backend) => `Start ${backend}, then check again.`,
+  setupModelMissing: (backend, model) =>
+    `${backend} is running, but it does not hold the model ${model}.`,
+  setupModelMissingStep: (backend, model) =>
+    `Install ${model} in ${backend}, then check again.`,
+  setupRecheck: 'Check again',
+  setupFailureLabel: 'The status check failed',
 };

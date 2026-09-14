@@ -4,7 +4,11 @@ import type { CoreDependencies, InterviewState } from '@chrysalyst/core';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { createApp } from './app.ts';
+import type { BackendDescriptor } from './backend-readiness.ts';
 import { type ServerHandle, startServer } from './server.ts';
+
+/** The descriptor this suite never reads; it drives `/health` alone. */
+const BACKEND: BackendDescriptor = { name: 'Ollama', model: 'llama3.2:3b' };
 
 let running: ServerHandle | undefined;
 
@@ -31,7 +35,7 @@ function untouchedDependencies(): CoreDependencies<InterviewState> {
 }
 
 function testApp() {
-  return createApp(untouchedDependencies());
+  return createApp(untouchedDependencies(), BACKEND);
 }
 
 function boundAddress(handle: ServerHandle): AddressInfo {

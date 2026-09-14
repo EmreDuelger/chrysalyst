@@ -15,4 +15,16 @@ export const de: UiStrings = {
   recordedAt: (time) => `Gespeichert · ${time} · in dieser Sitzung`,
   failureLabel: 'Die Frage ist abgebrochen',
   languageControl: 'Sprache',
+  setupRegion: 'Einrichtung',
+  setupHeading: 'chrysalyst braucht ein Sprachmodell',
+  setupChecking: 'Das Sprachmodell wird geprüft …',
+  setupUnreachable: (backend) => `chrysalyst erreicht ${backend} nicht.`,
+  setupUnreachableStep: (backend) =>
+    `Starten Sie ${backend} und prüfen Sie dann erneut.`,
+  setupModelMissing: (backend, model) =>
+    `${backend} läuft, hält aber das Modell ${model} nicht bereit.`,
+  setupModelMissingStep: (backend, model) =>
+    `Installieren Sie ${model} in ${backend} und prüfen Sie dann erneut.`,
+  setupRecheck: 'Erneut prüfen',
+  setupFailureLabel: 'Die Statusprüfung ist fehlgeschlagen',
 };

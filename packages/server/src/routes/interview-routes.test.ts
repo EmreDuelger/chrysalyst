@@ -16,6 +16,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createFilesystemSessionStore } from '../adapters/session-store/filesystem-session-store.ts';
 import { createApp } from '../app.ts';
+import type { BackendDescriptor } from '../backend-readiness.ts';
+
+/** The descriptor the interview routes never read; `/status` has its own suite. */
+const BACKEND: BackendDescriptor = { name: 'Ollama', model: 'llama3.2:3b' };
 
 /*
  * The wire contract lives in one file outside every package. This suite asserts
@@ -116,6 +120,33 @@ function chunkedLlm(chunks: readonly string[]): FakeLlm {
   return fake;
 }
 
+/**
+ * A model double for a backend the setup gate reports as unavailable:
+ * `status` resolves unavailable and both inference methods reject without
+ * ever being expected to run, so a test can prove the replay-and-answer path
+ * never reaches them.
+ */
+function deadBackendLlm(): FakeLlm {
+  const requests: LlmRequest[] = [];
+  return {
+    requests,
+    observedCancellation: false,
+    status: () => Promise.resolve({ available: false, models: [] }),
+    complete: (request: LlmRequest) => {
+      requests.push(request);
+      return Promise.reject(new Error('the backend is unavailable'));
+    },
+    stream: (request: LlmRequest) => {
+      requests.push(request);
+      return {
+        [Symbol.asyncIterator]: () => ({
+          next: () => Promise.reject(new Error('the backend is unavailable')),
+        }),
+      };
+    },
+  };
+}
+
 /** A model double whose stream rejects the moment it is iterated. */
 function rejectingLlm(message: string): FakeLlm {
   const requests: LlmRequest[] = [];
@@ -196,7 +227,7 @@ function buildApp(
     { rootDir, renderTranscript },
   ),
 ): Harness {
-  const app = createApp({ llm, sessions, clock: scriptedClock() });
+  const app = createApp({ llm, sessions, clock: scriptedClock() }, BACKEND);
   return { app, llm, sessions };
 }
 
@@ -603,4 +634,48 @@ describe('POST /interview/:id/answer', () => {
       expect(envelope.state.turns[0].status).toBe('asked');
     },
   );
+});
+
+describe('interview/interview-http-api', () => {
+  it('replays a stored question and records its answer while the backend reports unavailable', async () => {
+    const sessions = createFilesystemSessionStore<InterviewState>({
+      rootDir,
+      renderTranscript,
+    });
+    const { app: liveApp } = buildApp(chunkedLlm(modelChunks), sessions);
+    const id = await createSession(liveApp);
+    await streamQuestionToEnd(liveApp, id);
+
+    const deadLlm = deadBackendLlm();
+    const { app: deadApp } = buildApp(deadLlm, sessions);
+
+    const replayBody = await (
+      await deadApp.request(`/interview/${id}/question`)
+    ).text();
+    const decoded = splitFrames(replayBody).map(decodeFrame);
+    expect(decoded.at(-1)).toEqual({
+      event: 'done',
+      data: { question: fullQuestion },
+    });
+
+    const answerResponse = await deadApp.request(`/interview/${id}/answer`, {
+      method: 'POST',
+      headers: JSON_HEADERS,
+      body: JSON.stringify({ answer: 'Eine App fuer Rezepte.' }),
+    });
+    expect(answerResponse.status).toBe(204);
+
+    const envelope = JSON.parse(await readEnvelope(id)) as {
+      state: { turns: { status: string; answer: string }[] };
+    };
+    expect(envelope.state.turns[0]).toMatchObject({
+      status: 'answered',
+      answer: 'Eine App fuer Rezepte.',
+    });
+
+    expect(deadLlm.requests).toEqual([]);
+
+    const statusResponse = await deadApp.request('/status');
+    expect(await statusResponse.json()).toMatchObject({ ready: false });
+  });
 });

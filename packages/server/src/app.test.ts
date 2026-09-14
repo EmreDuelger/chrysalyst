@@ -3,6 +3,10 @@ import { describe, expect, it } from 'vitest';
 
 import pkg from '../package.json' with { type: 'json' };
 import { createApp } from './app.ts';
+import type { BackendDescriptor } from './backend-readiness.ts';
+
+/** The descriptor these routes never read; `/status` has its own suite. */
+const BACKEND: BackendDescriptor = { name: 'Ollama', model: 'llama3.2:3b' };
 
 /**
  * Dependencies this suite's routes never reach. Every port refuses rather than
@@ -22,7 +26,7 @@ function untouchedDependencies(): CoreDependencies<InterviewState> {
 
 describe('app', () => {
   it('answers GET /health with ok and the manifest version', async () => {
-    const app = createApp(untouchedDependencies());
+    const app = createApp(untouchedDependencies(), BACKEND);
 
     const response = await app.request('/health');
 
@@ -35,7 +39,7 @@ describe('app', () => {
   });
 
   it('answers 404 for an unknown route', async () => {
-    const app = createApp(untouchedDependencies());
+    const app = createApp(untouchedDependencies(), BACKEND);
 
     const response = await app.request('/does-not-exist');
 

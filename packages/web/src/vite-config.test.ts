@@ -18,6 +18,16 @@ describe('web dev server proxy', () => {
     expect(proxy?.['/interview']).toBe('http://127.0.0.1:3000');
   });
 
+  it("routes the status route and the interview prefix to the API's loopback address", () => {
+    const proxy = (viteConfig as ProxyConfig).server?.proxy;
+
+    expect(proxy).toBeDefined();
+    expect(Object.keys(proxy ?? {})).toContain('/status');
+    expect(proxy?.['/status']).toBe('http://127.0.0.1:3000');
+    expect(Object.keys(proxy ?? {})).toContain('/interview');
+    expect(proxy?.['/interview']).toBe('http://127.0.0.1:3000');
+  });
+
   it('adds no proxy for a route it does not own', () => {
     const proxy = (viteConfig as ProxyConfig).server?.proxy ?? {};
 

@@ -1,0 +1,6 @@
+{
+  "route": "/status",
+  "readyFields": ["ready", "backend", "model"],
+  "reasonField": "reason",
+  "reasons": ["unreachable", "model-missing"]
+}

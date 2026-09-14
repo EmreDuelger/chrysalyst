@@ -4,9 +4,11 @@ import { join } from 'node:path';
 
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { llmConfigFromEnv } from '../adapters/llm/openai-compatible-llm.ts';
 import { createApp } from '../app.ts';
-import { createDependenciesFromEnv } from '../composition.ts';
+import {
+  backendDescriptorFromEnv,
+  createDependenciesFromEnv,
+} from '../composition.ts';
 import { startServer, type ServerHandle } from '../server.ts';
 
 /*
@@ -161,13 +163,12 @@ describe.skipIf((process.env.CHRYSALYST_LIVE_LLM ?? '') === '')(
   { timeout: 120_000 },
   () => {
     it('streams a reasoning-free question, times the first token, and persists the round', async () => {
-      const model = llmConfigFromEnv(process.env).defaultModel;
       sandbox = await mkdtemp(join(tmpdir(), 'chrysalyst-interview-live-'));
-      const dependencies = createDependenciesFromEnv({
-        ...process.env,
-        CHRYSALYST_SESSION_DIR: sandbox,
-      });
-      running = await startServer(createApp(dependencies), 0);
+      const env = { ...process.env, CHRYSALYST_SESSION_DIR: sandbox };
+      const dependencies = createDependenciesFromEnv(env);
+      const backend = backendDescriptorFromEnv(env);
+      const model = backend.model;
+      running = await startServer(createApp(dependencies, backend), 0);
       const base = `http://127.0.0.1:${String(boundPort(running))}`;
 
       const created = await fetch(`${base}/interview`, { method: 'POST' });
@@ -281,11 +282,12 @@ describe.skipIf((process.env.CHRYSALYST_LIVE_LLM ?? '') === '')(
       { timeout: 120_000 },
       async ({ locale, ownWords, otherWords }) => {
         sandbox = await mkdtemp(join(tmpdir(), 'chrysalyst-interview-live-'));
-        const dependencies = createDependenciesFromEnv({
-          ...process.env,
-          CHRYSALYST_SESSION_DIR: sandbox,
-        });
-        running = await startServer(createApp(dependencies), 0);
+        const env = { ...process.env, CHRYSALYST_SESSION_DIR: sandbox };
+        const dependencies = createDependenciesFromEnv(env);
+        running = await startServer(
+          createApp(dependencies, backendDescriptorFromEnv(env)),
+          0,
+        );
         const base = `http://127.0.0.1:${String(boundPort(running))}`;
 
         const created = await fetch(`${base}/interview`, {

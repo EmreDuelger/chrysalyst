@@ -63,3 +63,27 @@ event contract.
 
 A renamed tag, a changed fallback or a renamed request field fails a run rather
 than only a browser.
+
+## `backend-status.json`
+
+The `platform/backend-status` and `platform/backend-setup-gate` contracts' shared
+wire shape for `GET /status`: `{ route, readyFields, reasonField, reasons }`. The
+route path, the three fields a ready answer carries (`ready`, `backend`, `model`),
+the name of the field a blocked answer explains itself through (`reason`), and the
+two fault names that field can hold (`unreachable`, `model-missing`) are a contract
+`packages/server` produces and `packages/web` consumes over HTTP with no shared
+package between them, so this fixture is what keeps the two sides' restatements of
+that shape honest, the way `interview-sse-frames.txt` and `interview-locales.json`
+already do for their own contracts.
+
+### Who reads it
+
+- **`packages/server`'s readiness test** (`backend-readiness.test.ts`) reads the
+  field names and the fault names to build its `GET /status` assertions against
+  `createApp(deps, backend)`.
+- **`packages/web`'s probe test** (`backend-status.test.ts`) reads the same route,
+  fields and fault names to assert `fetchBackendReadiness`'s parsing and rejection
+  behaviour against the fixture-agreement scenario.
+
+A renamed field, a renamed fault or a moved route fails a run rather than only a
+browser.

@@ -6,7 +6,10 @@ import { renderTranscript } from '@chrysalyst/core';
 import type { InterviewState, StoredSession } from '@chrysalyst/core';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { createDependenciesFromEnv } from './composition.ts';
+import {
+  backendDescriptorFromEnv,
+  createDependenciesFromEnv,
+} from './composition.ts';
 
 describe('createDependenciesFromEnv', () => {
   let sandbox: string;
@@ -24,6 +27,7 @@ describe('createDependenciesFromEnv', () => {
     return {
       CHRYSALYST_LLM_BASE_URL: 'http://127.0.0.1:9999/v1',
       CHRYSALYST_LLM_MODEL: 'composition-test-model',
+      CHRYSALYST_LLM_BACKEND_NAME: 'Composition Test Backend',
       CHRYSALYST_SESSION_DIR: join(sandbox, 'sessions'),
     };
   }
@@ -46,17 +50,21 @@ describe('createDependenciesFromEnv', () => {
     };
   }
 
-  it('assembles llm, sessions with the transcript renderer, and clock, omits search, and touches no disk', async () => {
+  it('assembles llm, sessions, clock and the backend descriptor from one environment, and touches no disk', async () => {
     const fetchSpy = vi
       .spyOn(globalThis, 'fetch')
       .mockResolvedValue(new Response('{}', { status: 503 }));
     const sessionDir = join(sandbox, 'sessions');
+    const env = suppliedEnv();
 
     const before = Date.now();
-    const deps = createDependenciesFromEnv(suppliedEnv());
+    const deps = createDependenciesFromEnv(env);
+    const backend = backendDescriptorFromEnv(env);
 
     expect(fetchSpy).not.toHaveBeenCalled();
     await expect(access(sessionDir)).rejects.toThrow();
+    expect(backend.model).toBe(env.CHRYSALYST_LLM_MODEL);
+    expect(backend.name).toBe(env.CHRYSALYST_LLM_BACKEND_NAME);
 
     const now = deps.clock.now();
     expect(now).toBeInstanceOf(Date);

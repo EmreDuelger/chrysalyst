@@ -13,6 +13,17 @@ describe('hc<AppType> client', () => {
     assertType<unknown>(client.unknown);
   });
 
+  it('exposes the status route beside health and the interview routes', () => {
+    const client = hc<AppType>('http://localhost');
+
+    expectTypeOf(client.status.$get).toBeFunction();
+    expectTypeOf(client.health.$get).toBeFunction();
+    expectTypeOf(client.interview.$post).toBeFunction();
+
+    // @ts-expect-error the app declares no `/statuses` route beside `/status`
+    assertType<unknown>(client.statuses);
+  });
+
   it('exposes the interview routes with a typed path parameter and rejects an undefined route', () => {
     const client = hc<AppType>('http://localhost');
 

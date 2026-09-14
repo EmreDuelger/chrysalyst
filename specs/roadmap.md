@@ -398,7 +398,10 @@ benutzbar, alle Constraints messbar erfüllt.
 **Liefert:** Lesen und Exportieren bestehender Sessions bei fehlendem Backend
 (schließt den halben Constraint aus M6). Gemessenes
 Streaming-Performance-Budget. Konsolidierender impeccable-Designdurchgang über die
-Interview-Oberfläche. First-Run-README.
+Interview-Oberfläche — trägt aus `llm-backend-setup-gate` (M6) die offene
+`impeccable-finish-reviewer`-Abnahme von `SetupGuide.tsx` sowie die noch nicht
+gelaufene § Manual Testing-Zeile bei 1280px/400px nach; beides blieb dort unrun,
+weil der Browser-Check aus § Dependencies in diesem Sandbox fehlschlug. First-Run-README.
 
 **Pläne:** `streaming-performance-budget` · `interview-ui-design-pass`
 (First-Run-Doku über die Doku-Abkürzung, kein eigener Plan)

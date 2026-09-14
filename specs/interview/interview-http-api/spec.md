@@ -4,11 +4,13 @@ Publishes the one round of the interview over HTTP — a session resource, a Ser
 
 ## Background
 
-`@chrysalyst/server` builds its Hono app from a dependency set rather than at module scope: `createApp(dependencies)` returns the chained app, and `AppType` is that function's return type, so a `hc` client still knows every route. The composition root in `main.ts` is the only place that constructs concrete adapters — the OpenAI-compatible language model, the filesystem session store, and a clock reading the system time — from the process environment.
+`@chrysalyst/server` builds its Hono app from a dependency set rather than at module scope: `createApp(dependencies, backend)` returns the chained app, and `AppType` is that function's return type, so a `hc` client still knows every route. The second argument is the backend descriptor `platform/backend-status` specifies and the interview routes never read it. The composition root in `main.ts` is the only place that constructs concrete adapters — the OpenAI-compatible language model, the filesystem session store, and a clock reading the system time — and the only place that resolves that descriptor, both from the process environment.
 
 The stream carries three event types and no others. `token` carries one chunk of the question, `done` carries the finished question, and `error` carries a human-readable message. Every event's `data` is a single-line JSON object, because `JSON.stringify` escapes a newline and so no payload can split one SSE frame into two. The stream carries no `id` field: this feature has no reconnection protocol, and a client that loses the stream re-requests it and receives the stored question.
 
 The question is produced once. The route that creates a session performs no inference, so it answers immediately; the model is reached on the first request for the question and its output is stored before the `done` event is written. A `done` event therefore means the question is on disk. Two requests for one session's question that overlap in time still reach the model once, because the interview holds a single in-flight production per session.
+
+A session already on disk is reachable whatever the backend is doing. Replaying a stored question and recording an answer reach the store and the clock alone, so neither depends on a language model being available, and neither is gated on the status route's answer.
 
 Abandonment reaches the app as a cancelled response body, not as a cancelled request: Node's adapter closes the writable side when the client disconnects, which cancels the body reader and aborts the stream. A scenario that abandons a stream therefore stops reading the body rather than aborting a request signal.
 
@@ -142,6 +144,15 @@ Session creation takes the language to hold the interview in. The route reads it
 * *AND* the response body MUST be JSON carrying a `message` field
 * *AND* the stored session MUST still hold an unanswered turn
 
+### Scenario: A stored session stays readable while the backend is unavailable
+
+* *GIVEN* a session whose question has already been streamed to its end, and a language model whose `status` reports the backend unavailable and whose `complete` and `stream` reject
+* *WHEN* a second `GET /interview/:id/question` request is read to the end and a `POST /interview/:id/answer` request carrying a valid body is then dispatched
+* *THEN* the question stream MUST replay the stored question and close with a `done` event, framed exactly as it is over a reachable backend
+* *AND* the answer route MUST respond with status `204` and the session's `session.json` on disk MUST hold the answer
+* *AND* neither request MUST reach the language model
+* *AND* `GET /status` on the same app MUST report that backend as not ready, so one app shows both halves at once
+
 ### Scenario: The app's routes reach a typed client
 
 * *GIVEN* the app type exported by `@chrysalyst/server`
@@ -153,8 +164,8 @@ Session creation takes the language to hold the interview in. The route reads it
 ### Scenario: The composition root builds the real adapters from the environment
 
 * *GIVEN* a process environment
-* *WHEN* the composition root resolves the dependency set
-* *THEN* the set MUST carry a language model built from `CHRYSALYST_LLM_BASE_URL` and `CHRYSALYST_LLM_MODEL`
+* *WHEN* the composition root resolves the dependency set and the backend descriptor
+* *THEN* the set MUST carry a language model built from `CHRYSALYST_LLM_BASE_URL` and `CHRYSALYST_LLM_MODEL`, and the descriptor MUST name the backend's display name and that same default model, resolved through the one resolver that owns those defaults so the two cannot disagree
 * *AND* the set MUST carry a session store built from `CHRYSALYST_SESSION_DIR` and configured with the interview's transcript renderer
 * *AND* the set MUST carry a clock whose `now` answers the current system time, and MUST omit `search`, which no adapter implements yet
-* *AND* resolving the set MUST NOT open a socket, read a file, or create a directory
+* *AND* resolving either of them MUST NOT open a socket, read a file, or create a directory, because the backend is probed when `platform/backend-status` is asked and not when the process boots

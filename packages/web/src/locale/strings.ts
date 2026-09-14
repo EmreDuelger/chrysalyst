@@ -22,6 +22,10 @@ export interface UiStrings {
   readonly recordedAt: (time: string) => string;
   readonly failureLabel: string;
   readonly languageControl: string;
+  readonly languageSwitchLabel: string;
+  readonly languageSwitchPrompt: string;
+  readonly languageSwitchDiscard: string;
+  readonly languageSwitchKeep: string;
 }
 
 /** Every supported language's complete copy, keyed by {@link Locale}. */

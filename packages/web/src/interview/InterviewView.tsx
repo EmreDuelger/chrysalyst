@@ -17,8 +17,17 @@ import { uiStrings } from '../locale/strings.ts';
  * `locale` is the chrome's language and may change while the view is on
  * screen; every label re-renders in it. The session's language is a different
  * value: it is fixed at creation, comes back from the API, and is what the
- * question region declares. Changing `locale` therefore relabels the chrome
- * and touches nothing else.
+ * question region declares. Because that second value cannot be changed once
+ * its session exists, changing `locale` mid-round restarts the interview in a
+ * second session — asking first when that would discard text the person has
+ * typed and can still see, and relabelling and nothing more once the answer
+ * is on the wire.
+ *
+ * The restart fires on a *change* in `locale` — detected against `chosen`,
+ * the chrome language the view has already acted on — never on a standing
+ * difference from the round's language. A standing condition would re-assert
+ * itself on the very next render after a decline, so the request could never
+ * actually be dismissed.
  */
 export interface InterviewViewProps {
   readonly api: InterviewApi;
@@ -33,6 +42,31 @@ type Phase =
   | 'recorded'
   | 'failed';
 
+/**
+ * Which round is running and the language it was started FOR — never the
+ * language the creation response named, which lives in `session.locale`. The
+ * two are allowed to differ, so a restart trigger reading the response would
+ * restart again on every answer that differed, forever. `index` makes a
+ * restart into the round's own language a new value, so the effect re-runs;
+ * it is never rendered.
+ */
+interface Round {
+  readonly index: number;
+  readonly locale: Locale;
+}
+
+/**
+ * A round is open while it can still be restarted — that is, until the answer
+ * is on the wire. Openness decides whether a switch restarts at all; whether
+ * a draft is at risk decides on its own whether it asks first.
+ */
+const OPEN_PHASES: ReadonlySet<Phase> = new Set<Phase>([
+  'connecting',
+  'streaming',
+  'complete',
+  'failed',
+]);
+
 const ANSWER_FIELD_ID = 'interview-answer';
 
 export function InterviewView({
@@ -45,9 +79,30 @@ export function InterviewView({
   const [recordedAt, setRecordedAt] = useState<string | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
   const [session, setSession] = useState<CreatedSession | null>(null);
+  const [round, setRound] = useState<Round>(() => ({ index: 0, locale }));
+  const [chosen, setChosen] = useState<Locale>(locale);
+  const [pending, setPending] = useState(false);
   const submitting = useRef(false);
-  const mountLocale = useRef(locale);
+  const region = useRef<HTMLElement>(null);
+  const answerField = useRef<HTMLTextAreaElement>(null);
   const copy = uiStrings[locale];
+
+  const showAnswerForm =
+    phase === 'streaming' || phase === 'complete' || phase === 'submitting';
+  const draftAtRisk = showAnswerForm && answer.trim() !== '';
+
+  const beginRound = (next: Locale): void => {
+    setRound((current) => ({ index: current.index + 1, locale: next }));
+  };
+
+  if (locale !== chosen) {
+    setChosen(locale);
+    if (locale === round.locale) setPending(false);
+    else if (OPEN_PHASES.has(phase)) {
+      if (draftAtRisk) setPending(true);
+      else beginRound(locale);
+    }
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -60,9 +115,18 @@ export function InterviewView({
     };
 
     const run = async (): Promise<void> => {
+      setQuestion('');
+      setAnswer('');
+      setSession(null);
+      setFailure(null);
+      setRecordedAt(null);
+      setPhase('connecting');
+      setPending(false);
+      submitting.current = false;
+
       let created: CreatedSession;
       try {
-        created = await api.createSession(mountLocale.current);
+        created = await api.createSession(round.locale);
       } catch (cause) {
         fail(cause);
         return;
@@ -98,7 +162,7 @@ export function InterviewView({
     return () => {
       controller.abort();
     };
-  }, [api]);
+  }, [api, round]);
 
   const submit = async (): Promise<void> => {
     if (
@@ -110,6 +174,7 @@ export function InterviewView({
       return;
     }
     submitting.current = true;
+    setPending(false);
     setPhase('submitting');
     try {
       const result = await api.submitAnswer(session.id, answer);
@@ -128,13 +193,35 @@ export function InterviewView({
     }
   };
 
-  const showAnswerForm =
-    phase === 'streaming' || phase === 'complete' || phase === 'submitting';
+  const changeAnswer = (next: string): void => {
+    setAnswer(next);
+    if (next.trim() !== '' || !pending) return;
+    setPending(false);
+    if (locale !== round.locale) beginRound(locale);
+  };
+
+  const keepAnswer = (): void => {
+    setPending(false);
+    answerField.current?.focus();
+  };
+
+  const discardAnswer = (): void => {
+    setPending(false);
+    beginRound(locale);
+    region.current?.focus();
+  };
+
   const answerDisabled = phase !== 'complete';
   const submitDisabled = phase !== 'complete' || answer.trim() === '';
+  const asking = pending && OPEN_PHASES.has(phase) && draftAtRisk;
 
   return (
-    <section className={styles.view} aria-label={copy.interviewRegion}>
+    <section
+      className={styles.view}
+      aria-label={copy.interviewRegion}
+      ref={region}
+      tabIndex={-1}
+    >
       <p className={styles.kicker} aria-hidden="true">
         {copy.questionKicker}
       </p>
@@ -208,10 +295,11 @@ export function InterviewView({
           <textarea
             className={styles.answerField}
             id={ANSWER_FIELD_ID}
+            ref={answerField}
             value={answer}
             disabled={answerDisabled}
             onChange={(event) => {
-              setAnswer(event.target.value);
+              changeAnswer(event.target.value);
             }}
           />
           <div className={styles.actions}>
@@ -233,6 +321,33 @@ export function InterviewView({
             </button>
           </div>
         </form>
+      ) : null}
+
+      {asking ? (
+        <div className={styles.switchRequest}>
+          <p className={styles.switchLabel} aria-hidden="true">
+            {copy.languageSwitchLabel}
+          </p>
+          <p className={styles.switchPrompt} role="alert">
+            {copy.languageSwitchPrompt}
+          </p>
+          <div className={styles.switchActions}>
+            <button
+              className={styles.switchKeep}
+              type="button"
+              onClick={keepAnswer}
+            >
+              {copy.languageSwitchKeep}
+            </button>
+            <button
+              className={styles.switchDiscard}
+              type="button"
+              onClick={discardAnswer}
+            >
+              {copy.languageSwitchDiscard}
+            </button>
+          </div>
+        </div>
       ) : null}
 
       {phase === 'recorded' && recordedAt !== null ? (
